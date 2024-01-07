@@ -32,7 +32,7 @@
 #     "hello.js":
 #       runner: node
 #     "any.go":
-#       runner: go run
+#       runner: go 
 
 pre-push:
   commands:
@@ -47,4 +47,4 @@ pre-push:
       run: git add .
     git-commit:
       priority: 4
-      run: git commit -m `style linter format files`
+      run: git commit -m "style[lint]"
