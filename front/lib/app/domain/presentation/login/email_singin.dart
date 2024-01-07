@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:front/domain/presentation/login/component/checkbox_text_row.dart';
-import 'package:front/domain/presentation/login/component/hinted_textfield.dart';
-import 'package:front/domain/presentation/login/component/rounded_elvatedbutton.dart';
+import 'package:front/app/domain/presentation/login/component/checkbox_text_row.dart';
+import 'package:front/app/domain/presentation/login/component/hinted_textfield.dart';
+import 'package:front/app/domain/presentation/login/component/rounded_elvatedbutton.dart';
 
 class EmailSignInScreen extends StatefulWidget {
   const EmailSignInScreen({super.key});
