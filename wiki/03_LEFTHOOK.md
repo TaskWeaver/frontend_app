@@ -26,3 +26,6 @@ brew install lefthook
 lefthook run pre-commit
 lefthook run pre-push
 ```
+
+## yml 작성하기
+- [docs](https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md)
