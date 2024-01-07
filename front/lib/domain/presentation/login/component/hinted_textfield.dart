@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 
 class HintedTextField extends StatelessWidget {
-  final String? title;
-  final String hintText;
-  final FormFieldSetter<String> onSaved;
-  final FormFieldValidator<String> validator;
-  final void Function(String?)? onChanged;
   const HintedTextField(
       {super.key,
       this.title,
@@ -13,10 +8,15 @@ class HintedTextField extends StatelessWidget {
       required this.onSaved,
       required this.validator,
       this.onChanged});
+  final String? title;
+  final String hintText;
+  final FormFieldSetter<String> onSaved;
+  final FormFieldValidator<String> validator;
+  final void Function(String?)? onChanged;
 
   @override
   Widget build(BuildContext context) {
-    TextStyle textStyle = const TextStyle(
+    var textStyle = const TextStyle(
       fontSize: 12,
       color: Colors.black,
     );

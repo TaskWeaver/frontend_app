@@ -33,7 +33,7 @@ class _EmailSignInScreenState extends State<EmailSignInScreen> {
               child: Center(
                 child: Column(
                   children: [
-                    const Text("회원가입"),
+                    const Text('회원가입'),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
@@ -43,50 +43,50 @@ class _EmailSignInScreenState extends State<EmailSignInScreen> {
                           shape: BoxShape.circle, // 동그라미 모양
                           color: Colors.grey[300], // 회색
                         ),
-                        child: const Center(child: Text("이미지")),
+                        child: const Center(child: Text('이미지')),
                       ),
                     ),
                     HintedTextField(
-                      hintText: "아이디",
-                      onSaved: (String? val) {
+                      hintText: '아이디',
+                      onSaved: (val) {
                         id = val;
                       },
                       validator: idValidator,
                     ),
                     HintedTextField(
-                      hintText: "닉네임",
-                      onSaved: (String? val) {
+                      hintText: '닉네임',
+                      onSaved: (val) {
                         nickName = val;
                       },
                       validator: nickNameValidator,
                     ),
                     HintedTextField(
-                      hintText: "비밀번호",
-                      onChanged: (String? val) {
+                      hintText: '비밀번호',
+                      onChanged: (val) {
                         confirmPassword = val;
                       },
-                      onSaved: (String? val) {
+                      onSaved: (val) {
                         password = val;
                       },
                       validator: passwordValidator,
                     ),
                     HintedTextField(
-                      hintText: "비밀번호확인",
-                      onSaved: (String? val) {
+                      hintText: '비밀번호확인',
+                      onSaved: (val) {
                         confirmPassword = val;
                       },
                       validator: confirmPasswordValidator,
                     ),
                     HintedTextField(
-                      hintText: "이름",
-                      onSaved: (String? val) {
+                      hintText: '이름',
+                      onSaved: (val) {
                         name = val;
                       },
                       validator: nameValidator,
                     ),
                     HintedTextField(
-                      hintText: "전화번호",
-                      onSaved: (String? val) {
+                      hintText: '전화번호',
+                      onSaved: (val) {
                         phoneNumber = val;
                       },
                       validator: phoneNumberValidator,
@@ -142,7 +142,7 @@ class _EmailSignInScreenState extends State<EmailSignInScreen> {
                       height: 10,
                     ),
                     RoundedElevatedButton(
-                      text: "회원가입",
+                      text: '회원가입',
                       onPressed: onSingInPressed,
                     ),
                     const SizedBox(
