@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front/config/routes.dart';
 
+/// {@category Architecture}
 void main() async {
   runApp(const MyApp());
 }
