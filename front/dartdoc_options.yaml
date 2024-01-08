@@ -1,5 +1,5 @@
 dartdoc:
-
+  
   nodoc: ['lib/config/**', 'lib/domain/**']
   categories:
     "Architecture":
