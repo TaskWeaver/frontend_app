@@ -1,7 +1,7 @@
 import 'package:front/app/domain/presentation/home/home.dart';
 import 'package:front/app/domain/presentation/login/email_singin.dart';
 import 'package:front/app/domain/presentation/login/login.dart';
-import 'package:front/app/domain/presentation/login/signIn.dart';
+import 'package:front/app/domain/presentation/login/signin.dart';
 
 class RouteName {
   static const home = '/';
