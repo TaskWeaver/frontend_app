@@ -7,7 +7,7 @@ class RoundedElevatedButton extends StatelessWidget {
   final VoidCallback onPressed;
   @override
   Widget build(BuildContext context) {
-    TextStyle textStyle = const TextStyle(color: Colors.black, fontSize: 12);
+    var textStyle = const TextStyle(color: Colors.black, fontSize: 12);
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(

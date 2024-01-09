@@ -5,7 +5,7 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle textStyle = const TextStyle(
+    var textStyle = const TextStyle(
       fontSize: 12,
       color: Colors.black,
     );
@@ -16,24 +16,24 @@ class SignInScreen extends StatelessWidget {
           child: Center(
             child: Column(children: [
               Text(
-                "회원가입",
+                '회원가입',
                 style: textStyle,
               ),
               const SizedBox(
                 height: 10,
               ),
               Text(
-                "회원가입 방식을 선택해주세요",
+                '회원가입 방식을 선택해주세요',
                 style: textStyle,
               ),
               const SizedBox(
                 height: 10,
               ),
-              CustomButton("이메일로 회원가입", () {
+              CustomButton('이메일로 회원가입', () {
                 Navigator.pushNamed(context, '/emailSignIn'); // 로그인 화면으로 이동
               }),
-              CustomButton("카카오로 회원가입", () {}),
-              CustomButton("네이버로 회원가입", () {}),
+              CustomButton('카카오로 회원가입', () {}),
+              CustomButton('네이버로 회원가입', () {}),
             ]),
           ),
         ),
@@ -43,9 +43,9 @@ class SignInScreen extends StatelessWidget {
 }
 
 class CustomButton extends StatelessWidget {
+  const CustomButton(this.buttonText, this.onPressed, {super.key});
   final String buttonText;
   final VoidCallback onPressed;
-  const CustomButton(this.buttonText, this.onPressed, {super.key});
 
   @override
   Widget build(BuildContext context) {

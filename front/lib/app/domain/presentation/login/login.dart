@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:front/domain/presentation/login/component/checkbox_text_row.dart';
-import 'package:front/domain/presentation/login/component/hinted_textfield.dart';
-import 'package:front/domain/presentation/login/component/rounded_elvatedbutton.dart';
+import 'package:front/app/domain/presentation/login/component/checkbox_text_row.dart';
+import 'package:front/app/domain/presentation/login/component/hinted_textfield.dart';
+import 'package:front/app/domain/presentation/login/component/rounded_elvatedbutton.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -26,21 +26,21 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
             child: Column(children: [
-              const Text("로그인"),
+              const Text('로그인'),
               const SizedBox(
                 height: 20,
               ),
               HintedTextField(
-                  title: "아이디",
-                  hintText: "아이디를 입력하세요",
-                  onSaved: (String? val) {
+                  title: '아이디',
+                  hintText: '아이디를 입력하세요',
+                  onSaved: (val) {
                     id = val;
                   },
                   validator: idValidator),
               HintedTextField(
-                  title: "비밀번호",
-                  hintText: "비밀번호를 입력하세요",
-                  onSaved: (String? val) {
+                  title: '비밀번호',
+                  hintText: '비밀번호를 입력하세요',
+                  onSaved: (val) {
                     password = val;
                   },
                   validator: passwordValidator),
@@ -54,25 +54,25 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
               ),
               RoundedElevatedButton(
-                text: "로그인",
+                text: '로그인',
                 onPressed: () {},
               ),
               TextButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/signIn');
                   },
-                  child: Text("회원가입", style: textStyle)),
+                  child: Text('회원가입', style: textStyle)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextButton(
                     onPressed: () {},
-                    child: Text("아이디 찾기", style: textStyle),
+                    child: Text('아이디 찾기', style: textStyle),
                   ),
-                  Text("|", style: textStyle),
+                  Text('|', style: textStyle),
                   TextButton(
                     onPressed: () {},
-                    child: Text("비밀번호 찾기", style: textStyle),
+                    child: Text('비밀번호 찾기', style: textStyle),
                   )
                 ],
               ),
@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Colors.black,
                 ),
               ),
-              Text("SNS 로그인", style: textStyle),
+              Text('SNS 로그인', style: textStyle),
               const SizedBox(
                 height: 16,
               ),
