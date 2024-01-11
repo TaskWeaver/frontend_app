@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
@@ -30,7 +31,7 @@ class SignInScreen extends StatelessWidget {
                 height: 10,
               ),
               CustomButton('이메일로 회원가입', () {
-                Navigator.pushNamed(context, '/emailSignIn'); // 로그인 화면으로 이동
+                context.go('/emailSignup'); // 로그인 화면으로 이동
               }),
               CustomButton('카카오로 회원가입', () {}),
               CustomButton('네이버로 회원가입', () {}),
