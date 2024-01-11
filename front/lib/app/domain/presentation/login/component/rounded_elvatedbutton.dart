@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class RoundedElevatedButton extends StatelessWidget {
   const RoundedElevatedButton(
@@ -29,4 +31,15 @@ class RoundedElevatedButton extends StatelessWidget {
       ),
     );
   }
+}
+
+@widgetbook.UseCase(name: '', type: RoundedElevatedButton)
+Widget loginScreenUseCase(BuildContext context) {
+  return Expanded(
+      child: Center(
+        child: RoundedElevatedButton(
+            text: context.knobs
+                .string(label: 'text', initialValue: 'RoundedElevataedButton'),
+            onPressed: () {}),
+      ));
 }

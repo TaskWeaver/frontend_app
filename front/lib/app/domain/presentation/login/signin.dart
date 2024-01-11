@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
@@ -72,4 +73,12 @@ class CustomButton extends StatelessWidget {
       ),
     );
   }
+}
+
+@widgetbook.UseCase(
+  name: '',
+  type: SignInScreen,
+)
+Widget loginScreenUseCase(BuildContext context) {
+  return const SignInScreen();
 }
