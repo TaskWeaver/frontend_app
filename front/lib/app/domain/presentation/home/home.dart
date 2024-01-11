@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -10,7 +11,7 @@ class HomeScreen extends StatelessWidget {
         body: Center(
             child: ElevatedButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/login'); // 로그인 화면으로 이동
+            context.go('/login'); // 로그인 화면으로 이동
           },
           child: const Text('로그인'),
         )));

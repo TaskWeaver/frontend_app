@@ -12,11 +12,12 @@ class MyApp extends StatelessWidget {
 
     /// {@category Architecture}
     var config = AppConfig.of(context)!;
-
-    return MaterialApp(
-      title: config.appName,
-      debugShowCheckedModeBanner: false,
-      routes: nameRoutes,
-    );
+    return MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        title: config.appName,
+        routeInformationParser: router.routeInformationParser,
+        routeInformationProvider: router.routeInformationProvider,
+        routerDelegate: router.routerDelegate,
+      );
   }
 }
