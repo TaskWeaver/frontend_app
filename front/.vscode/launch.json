@@ -1,0 +1,34 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "front",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main/main_dev.dart"
+    },
+    {
+      "name": "front (profile mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile",
+      "program": "lib/main/main_qa.dart"
+    },
+    {
+      "name": "front (release mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release",
+      "program": "lib/main/main_production.dart"
+    },
+    {
+      "name": "widgetbook",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main/widgetbook.dart"
+    }
+  ]
+}
