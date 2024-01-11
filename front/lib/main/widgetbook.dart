@@ -20,7 +20,40 @@ class WidgetbookApp extends StatelessWidget {
     return Widgetbook.material(
       // Use the generated directories variable
       directories: directories,
-      addons: [],
+      addons: [
+        MaterialThemeAddon(
+          themes: [
+            WidgetbookTheme(
+              name: 'Light',
+              data: ThemeData.light(),
+            ),
+            WidgetbookTheme(
+              name: 'Dark',
+              data: ThemeData.dark(),
+            ),
+          ],
+        ),
+        TextScaleAddon(
+          scales: [1.0, 2.0],
+        ),
+        LocalizationAddon(
+          locales: [
+            const Locale('en', 'US'),
+            const Locale('ko', 'KR')
+          ],
+          localizationsDelegates: [
+            DefaultWidgetsLocalizations.delegate,
+            DefaultMaterialLocalizations.delegate,
+          ],
+        ),
+        DeviceFrameAddon(
+          devices: [
+            Devices.ios.iPhoneSE,
+            Devices.ios.iPhone13,
+          ],
+          initialDevice: Devices.ios.iPhone13
+        ),
+      ],
       integrations: [
         // To make addons & knobs work with Widgetbook Cloud
         WidgetbookCloudIntegration(),
