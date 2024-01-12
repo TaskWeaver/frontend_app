@@ -1,0 +1,14 @@
+dartdoc:
+  nodoc: ['lib/config/**', 'lib/domain/**']
+  categories:
+    "Architecture":
+      markdown: lib/topics/architecture.md
+    "Component":
+      markdown: lib/topics/component.md
+  categoryOrder: 
+    - "Architecture"
+    - "Component"
+
+  
+
+  
