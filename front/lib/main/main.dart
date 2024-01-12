@@ -9,6 +9,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // Call AppConfig.of(context) anywhere to obtain the
     // environment specific configuration
+
+    /// {@category Architecture}
     var config = AppConfig.of(context)!;
 
     return MaterialApp(
