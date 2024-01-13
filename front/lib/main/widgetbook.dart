@@ -1,11 +1,10 @@
 // widgetbook.dart
 
 import 'package:flutter/material.dart';
+// Import the generated directories variable
+import 'package:front/main/widgetbook.directories.g.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
-
-// Import the generated directories variable
-import 'widgetbook.directories.g.dart';
 
 void main() {
   runApp(const WidgetbookApp());

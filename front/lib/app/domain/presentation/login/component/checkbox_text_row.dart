@@ -36,7 +36,7 @@ Widget checkboxTextRowUseCase(BuildContext context) {
   return Expanded(
     child: Center(
       child: CheckboxTextRow(
-          text: context.knobs.string(label: "text", initialValue: 'CheckboxTextRow'),
+          text: context.knobs.string(label: 'text', initialValue: 'CheckboxTextRow'),
           value: context.knobs.boolean(label: 'value', initialValue: false),
           onChanged: (_) {}),
     ),
