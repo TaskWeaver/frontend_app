@@ -2,17 +2,25 @@ import 'package:front/app/domain/presentation/home/home.dart';
 import 'package:front/app/domain/presentation/login/email_singin.dart';
 import 'package:front/app/domain/presentation/login/login.dart';
 import 'package:front/app/domain/presentation/login/signin.dart';
+import 'package:go_router/go_router.dart';
 
-class RouteName {
-  static const home = '/';
-  static const login = '/login';
-  static const signIn = '/signIn';
-  static const emailSignIn = '/emailSignIn';
-}
+final router = GoRouter(initialLocation: '/', routes: [
+  GoRoute(path: '/', builder: (context, state) => const HomeScreen(), routes: [
+    GoRoute(
+      path: 'login',
+      name: 'login',
+      builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+        path: 'signup',
+        name: 'signup',
+        builder: (context, state) => const SignInScreen(),
+    ),
+    GoRoute(
+      path: 'emailSignup',
+      name: 'emailSignup',
+      builder: (context, state) => const EmailSignInScreen(),
+    ),
+  ]),
+]);
 
-var nameRoutes = {
-  RouteName.home: (context) => const HomeScreen(),
-  RouteName.login: (context) => const LoginScreen(),
-  RouteName.signIn: (context) => const SignInScreen(),
-  RouteName.emailSignIn: (context) => const EmailSignInScreen(),
-};

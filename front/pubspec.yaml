@@ -37,6 +37,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   
+  # widgetbook
+  widgetbook_annotation: ^3.1.0
+  widgetbook: ^3.7.1
+  
+  # router
+  go_router: ^13.0.1
 
 dev_dependencies:
   import_sorter: ^4.6.0
@@ -49,6 +55,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  build_runner: ^2.4.7
+  widgetbook_generator: ^3.7.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

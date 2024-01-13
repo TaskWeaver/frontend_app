@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:front/app/domain/presentation/login/component/checkbox_text_row.dart';
 import 'package:front/app/domain/presentation/login/component/hinted_textfield.dart';
 import 'package:front/app/domain/presentation/login/component/rounded_elvatedbutton.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class EmailSignInScreen extends StatefulWidget {
   const EmailSignInScreen({super.key});
@@ -220,4 +221,12 @@ class _EmailSignInScreenState extends State<EmailSignInScreen> {
       print(phoneNumber);
     }
   }
+}
+
+@widgetbook.UseCase(
+  name: '',
+  type: EmailSignInScreen,
+)
+Widget loginScreenUseCase(BuildContext context) {
+  return const EmailSignInScreen();
 }

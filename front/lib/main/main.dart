@@ -9,12 +9,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // Call AppConfig.of(context) anywhere to obtain the
     // environment specific configuration
-    var config = AppConfig.of(context)!;
 
-    return MaterialApp(
-      title: config.appName,
-      debugShowCheckedModeBanner: false,
-      routes: nameRoutes,
-    );
+    /// {@category Architecture}
+    var config = AppConfig.of(context)!;
+    return MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        title: config.appName,
+        routeInformationParser: router.routeInformationParser,
+        routeInformationProvider: router.routeInformationProvider,
+        routerDelegate: router.routerDelegate,
+      );
   }
 }

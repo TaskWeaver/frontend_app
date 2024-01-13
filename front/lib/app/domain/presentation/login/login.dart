@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:front/app/domain/presentation/login/component/checkbox_text_row.dart';
 import 'package:front/app/domain/presentation/login/component/hinted_textfield.dart';
 import 'package:front/app/domain/presentation/login/component/rounded_elvatedbutton.dart';
+import 'package:go_router/go_router.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -59,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/signIn');
+                    context.go('/signup');
                   },
                   child: Text('회원가입', style: textStyle)),
               Row(
@@ -126,4 +128,12 @@ class _LoginScreenState extends State<LoginScreen> {
   String? passwordValidator(String? val) {
     return null;
   }
+}
+
+@widgetbook.UseCase(
+  name: '',
+  type: LoginScreen,
+)
+Widget loginScreenUseCase(BuildContext context) {
+  return const LoginScreen();
 }
