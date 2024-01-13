@@ -1,36 +1,28 @@
-bool checkStrValidatePattern(String value, String pattern) {
+bool checkStrValidatePattern(String? value, String pattern) {
+  if(value == null) return false;
   var regex = RegExp(pattern);
   return regex.hasMatch(value);
 }
 
-bool checkStrIsSame(String value1, String value2){
+bool checkStrIsSame(String? value1, String? value2){
+  if(value1 == null || value2 == null) return false;
   return value1 == value2;
 }
 
-bool checkStrIsPassValidate(String value, bool Function(String value) validate){
+bool checkStrIsPassValidate(String? value, bool Function(String value) validate){
+  if(value == null) return false;
   return validate(value);
 }
 
-class Key {
-  Key({required this.name, this.required = false});
-  String name;
-  bool required;
+bool checkStrIsPassMinLength(String? value, num minNumber){
+  if(value == null) return false;
+  return value.length >= minNumber;
 }
 
-class Data {
-  Data({required this.name, this.value, this.options});
-  String name;
-  dynamic value;
-  Options? options;
+bool checkStrIsPassMaxLength(String? value, num naxNumber){
+  if(value == null) return false;
+  return value.length <= naxNumber;
 }
-
-class Options {
-  Options({this.required = false, this.validate});
-  bool required;
-  // ignore: avoid_annotating_with_dynamic
-  bool Function(dynamic value)? validate;
-}
-
 
 bool checkIsNotEmpty(value) {
   if (value == null) {
@@ -52,12 +44,5 @@ bool checkIsNotEmpty(value) {
   return true;
 }
 
-bool checkIsValidateFormat(List<Data> target, List<Key> keyList) {
-  var mustKey = keyList.where((key) => key.required);
-  var mustNameKey = mustKey.map((key) => key.name).toList();
-  var filteredValue = target.where((data) =>
-      mustNameKey.contains(data.name) && checkIsNotEmpty(data.value) && data.options!.validate!(data.value));
 
-  return mustKey.length == filteredValue.length;
-}
 

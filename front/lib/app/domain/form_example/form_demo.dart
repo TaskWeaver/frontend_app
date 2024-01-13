@@ -5,6 +5,11 @@ import 'package:front/shared/atom/hinted_textfield.dart';
 import 'package:front/shared/helper/helper.dart';
 import 'package:front/shared/mixin/mixin.dart';
 
+String passwordRegexPatternString = r'^(?=.*[a-zA-Z].*[a-zA-Z])(?=.*\d).{3,}$';
+
+// BUG: 비밀번호 확인 체크
+// TODO: onSubmit 함수 마무리
+// TODO: handler state, setState로 관리 찾기
 class EmailSignInFormBuilderExampleScreen extends StatefulWidget {
   const EmailSignInFormBuilderExampleScreen({Key? key}) : super(key: key);
 
@@ -32,37 +37,37 @@ class _EmailSignInFormBuilderExampleScreenState extends State<EmailSignInFormBui
                     HintedTextField(
                       hintText: '아이디',
                       validator: formHandler.validateField('id', 
-                          FieldValidateBuilder(emtpyMessage: 'id를 입력해주세요')
+                          FieldValidationBuilder.field('id').required('id를 입력해주세요').build()
                       ),
                     ),
                     HintedTextField(
                       hintText: '닉네임',
                        validator: formHandler.validateField('nickname', 
-                          FieldValidateBuilder(emtpyMessage: 'nickname을 입력해주세요')
+                          FieldValidationBuilder.field('nickname').required('닉네임을 입력해주세요').min(2, '2글자 이상 입력해주세요').build()
                       ),
                     ),
                     HintedTextField(
                       hintText: '비밀번호',
                       validator: formHandler.validateField('password', 
-                        FieldValidateBuilder(emtpyMessage: 'password를 입력해주세요')
+                        FieldValidationBuilder.field('password').required('비밀번호를 입력해주세요').pattern(passwordRegexPatternString, '영어 대소문자, 숫자가 2개 이상 사용되어야 합니다.').build()
                       ),
                     ),
                     HintedTextField(
                       hintText: '비밀번호확인',
                       validator: formHandler.validateField('passwordCheck', 
-                          FieldValidateBuilder(emtpyMessage: 'password를 입력해주세요')
+                        FieldValidationBuilder.field('passwordCheck').required('비밀번호를 확인해주세요').sameAs(formHandler.readValue('password', ''), '비밀번호와 일치하지 않습니다.').build()
                       ),
                     ),
                     HintedTextField(
                       hintText: '이름',
                       validator: formHandler.validateField('name', 
-                          FieldValidateBuilder(emtpyMessage: 'name을 입력해주세요')
+                        FieldValidationBuilder.field('name').build()
                       ),
                     ),
                     HintedTextField(
                       hintText: '전화번호',
                       validator: formHandler.validateField('phoneNumber', 
-                          FieldValidateBuilder(emtpyMessage: 'phoneNumber을 입력해주세요')
+                        FieldValidationBuilder.field('phoneNumber').build()
                       ),
                     ),
                     CheckboxTextRow(
