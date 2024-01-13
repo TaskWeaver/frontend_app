@@ -9,11 +9,17 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(title: const Text('홈')),
         body: Center(
-            child: ElevatedButton(
-          onPressed: () {
-            context.go('/login'); // 로그인 화면으로 이동
-          },
-          child: const Text('로그인'),
-        )));
+            child: Column(children: [ElevatedButton(
+              onPressed: () {
+                context.go('/login'); // 로그인 화면으로 이동
+              },
+              child: const Text('로그인'),
+            ), ElevatedButton(
+              onPressed: () {
+                context.go('/example'); // 로그인 화면으로 이동
+              },
+              child: const Text('Example'),
+            )],)
+        ));
   }
 }
