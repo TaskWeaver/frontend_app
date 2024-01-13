@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 import 'package:go_router/go_router.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -73,4 +74,12 @@ class CustomButton extends StatelessWidget {
       ),
     );
   }
+}
+
+@widgetbook.UseCase(
+  name: '',
+  type: SignInScreen,
+)
+Widget loginScreenUseCase(BuildContext context) {
+  return const SignInScreen();
 }
