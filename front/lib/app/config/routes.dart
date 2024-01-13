@@ -1,4 +1,4 @@
-import 'package:front/app/domain/form_example/email_signup.dart';
+import 'package:front/app/domain/form_example/form_demo.dart';
 import 'package:front/app/domain/presentation/home/home.dart';
 import 'package:front/app/domain/presentation/login/email_singin.dart';
 import 'package:front/app/domain/presentation/login/login.dart';
