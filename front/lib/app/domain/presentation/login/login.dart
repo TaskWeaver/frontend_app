@@ -3,6 +3,7 @@ import 'package:front/app/domain/presentation/login/component/checkbox_text_row.
 import 'package:front/app/domain/presentation/login/component/hinted_textfield.dart';
 import 'package:front/app/domain/presentation/login/component/rounded_elvatedbutton.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -60,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/signIn');
+                    context.go('/signup');
                   },
                   child: Text('회원가입', style: textStyle)),
               Row(
