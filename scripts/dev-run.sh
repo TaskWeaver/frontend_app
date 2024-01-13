@@ -1,1 +1,1 @@
-flutter run -t lib/main/main_dev.dart
+fvm flutter run -t lib/main/main_dev.dart -d chrome
