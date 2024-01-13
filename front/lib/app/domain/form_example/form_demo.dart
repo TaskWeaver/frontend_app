@@ -1,78 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/domain/presentation/login/component/checkbox_text_row.dart';
-import 'package:front/app/domain/presentation/login/component/hinted_textfield.dart';
 import 'package:front/app/domain/presentation/login/component/rounded_elvatedbutton.dart';
-
-class EmailFormHandler {
-  GlobalKey<FormState> formKey = GlobalKey();
-
-  String? id;
-  String? nickName;
-  String? confirmPassword;
-  String? password;
-  String? name;
-  String? phoneNumber;
-  bool personalInfoAgreed = false;
-  bool termsAgreed = false;
-  bool allAgreed = false;
-
-  String? idValidator(String? val) {
-    if (val == null || val.isEmpty) {
-      return 'ID를 입력해주세요';
-    }
-    return null;
-  }
-
-  String? nickNameValidator(String? val) {
-    if (val == null || val.isEmpty) {
-      return '닉네임을 입력해주세요';
-    }
-    return null;
-  }
-
-  String? passwordValidator(String? val) {
-    if (val == null || val.isEmpty) {
-      return '비밀번호를 입력해주세요';
-    }
-    return null;
-  }
-
-  String? confirmPasswordValidator(String? val) {
-    if (val == null || val.isEmpty) {
-      return '비밀번호를 입력해주세요';
-    }
-    if (val != confirmPassword) {
-      return '비밀번호가 일치하지 않습니다';
-    }
-    return null;
-  }
-
-  String? nameValidator(String? val) {
-    if (val == null || val.isEmpty) {
-      return '이름을 입력해주세요';
-    }
-    return null;
-  }
-
-  String? phoneNumberValidator(String? val) {
-    if (val == null || val.isEmpty) {
-      return '전화번호를 입력해주세요';
-    }
-    return null;
-  }
-
-  void updateAllAgreed() {
-    allAgreed = personalInfoAgreed && termsAgreed;
-  }
-
-  bool validate() {
-    return formKey.currentState?.validate() ?? false;
-  }
-
-  void save() {
-    formKey.currentState?.save();
-  }
-}
+import 'package:front/shared/atom/hinted_textfield.dart';
+import 'package:front/shared/helper/helper.dart';
+import 'package:front/shared/mixin/mixin.dart';
 
 class EmailSignInFormBuilderExampleScreen extends StatefulWidget {
   const EmailSignInFormBuilderExampleScreen({Key? key}) : super(key: key);
@@ -81,11 +12,12 @@ class EmailSignInFormBuilderExampleScreen extends StatefulWidget {
   State<EmailSignInFormBuilderExampleScreen> createState() => _EmailSignInFormBuilderExampleScreenState();
 }
 
-class _EmailSignInFormBuilderExampleScreenState extends State<EmailSignInFormBuilderExampleScreen> {
-  final EmailFormHandler formHandler = EmailFormHandler();
+class _EmailSignInFormBuilderExampleScreenState extends State<EmailSignInFormBuilderExampleScreen> with StateHandlerMixin {
+  final FormHandler formHandler = FormHandler();
 
   @override
   Widget build(BuildContext context) {
+    formHandler.init(setStateHandler);
     return Form(
       key: formHandler.formKey,
       child: SafeArea(
@@ -99,59 +31,48 @@ class _EmailSignInFormBuilderExampleScreenState extends State<EmailSignInFormBui
                     const Text('Form Demo'),
                     HintedTextField(
                       hintText: '아이디',
-                      onSaved: (val) {
-                        formHandler.id = val;
-                      },
-                      validator: formHandler.idValidator,
+                      validator: formHandler.validateField('id', 
+                          FieldValidateBuilder(emtpyMessage: 'id를 입력해주세요')
+                      ),
                     ),
                     HintedTextField(
                       hintText: '닉네임',
-                      onSaved: (val) {
-                        formHandler.nickName = val;
-                      },
-                      validator: formHandler.nickNameValidator,
+                       validator: formHandler.validateField('nickname', 
+                          FieldValidateBuilder(emtpyMessage: 'nickname을 입력해주세요')
+                      ),
                     ),
                     HintedTextField(
                       hintText: '비밀번호',
-                      onChanged: (val) {
-                        formHandler.confirmPassword = val;
-                      },
-                      onSaved: (val) {
-                        formHandler.password = val;
-                      },
-                      validator: formHandler.passwordValidator,
+                      validator: formHandler.validateField('password', 
+                        FieldValidateBuilder(emtpyMessage: 'password를 입력해주세요')
+                      ),
                     ),
                     HintedTextField(
                       hintText: '비밀번호확인',
-                      onSaved: (val) {
-                        formHandler.confirmPassword = val;
-                      },
-                      validator: formHandler.confirmPasswordValidator,
+                      validator: formHandler.validateField('passwordCheck', 
+                          FieldValidateBuilder(emtpyMessage: 'password를 입력해주세요')
+                      ),
                     ),
                     HintedTextField(
                       hintText: '이름',
-                      onSaved: (val) {
-                        formHandler.name = val;
-                      },
-                      validator: formHandler.nameValidator,
+                      validator: formHandler.validateField('name', 
+                          FieldValidateBuilder(emtpyMessage: 'name을 입력해주세요')
+                      ),
                     ),
                     HintedTextField(
                       hintText: '전화번호',
-                      onSaved: (val) {
-                        formHandler.phoneNumber = val;
-                      },
-                      validator: formHandler.phoneNumberValidator,
+                      validator: formHandler.validateField('phoneNumber', 
+                          FieldValidateBuilder(emtpyMessage: 'phoneNumber을 입력해주세요')
+                      ),
                     ),
                     CheckboxTextRow(
                       text: '모두 동의',
-                      value: formHandler.allAgreed,
-                      onChanged: (value) {
-                        setState(() {
-                          formHandler.allAgreed = value!;
-                          formHandler.personalInfoAgreed = value;
-                          formHandler.termsAgreed = value;
-                        });
-                      },
+                      value: formHandler.readValue('allAgreed', false),
+                      onChanged: formHandler.validateCheck('allAgreed', (fields) {
+                          formHandler.updateField('personalInfoAgreed',fields['allAgreed']);
+                          formHandler.updateField('termsAgreed',fields['allAgreed']);
+                        }
+                      ),
                     ),
                     Expanded(
                       flex: 0,
@@ -167,23 +88,19 @@ class _EmailSignInFormBuilderExampleScreenState extends State<EmailSignInFormBui
                           child: Column(
                             children: [
                               CheckboxTextRow(
-                                value: formHandler.personalInfoAgreed,
-                                onChanged: (value) {
-                                  setState(() {
-                                    formHandler.personalInfoAgreed = value!;
-                                    formHandler.updateAllAgreed();
-                                  });
-                                },
+                                value: formHandler.readValue('personalInfoAgreed', false),
+                                onChanged: formHandler.validateCheck('personalInfoAgreed', (fields) => 
+                                   formHandler.updateField('allAgreed',fields['personalInfoAgreed'] && fields['termsAgreed']
+                                  )
+                                ),
                                 text: '개인 정보 약관 동의',
                               ),
                               CheckboxTextRow(
-                                value: formHandler.termsAgreed,
-                                onChanged: (value) {
-                                  setState(() {
-                                    formHandler.termsAgreed = value!;
-                                    formHandler.updateAllAgreed();
-                                  });
-                                },
+                                value: formHandler.readValue('termsAgreed', false),
+                                onChanged: formHandler.validateCheck('termsAgreed', (fields) => 
+                                   formHandler.updateField('allAgreed',fields['personalInfoAgreed'] && fields['termsAgreed']
+                                  )
+                                ),
                                 text: '이용 약관 동의',
                               ),
                             ],
@@ -208,14 +125,8 @@ class _EmailSignInFormBuilderExampleScreenState extends State<EmailSignInFormBui
   }
 
   void onSignInPressed() {
-    if (formHandler.validate() && formHandler.allAgreed) {
-      formHandler.save();
-      print(formHandler.id);
-      print(formHandler.nickName);
-      print(formHandler.confirmPassword);
-      print(formHandler.password);
-      print(formHandler.name);
-      print(formHandler.phoneNumber);
+    if (formHandler.validateFieldForm() && formHandler.readValue('allAgreed', false)) {
+      formHandler.onSubmit();
     }
   }
 }
