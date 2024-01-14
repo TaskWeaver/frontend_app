@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front/main/widgetbook.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -56,12 +57,11 @@ class HintedTextField extends StatelessWidget {
   type: HintedTextField,
 )
 Widget loginScreenUseCase(BuildContext context) {
-  return Expanded(
-      child: Center(
-          child: HintedTextField(
-              hintText: context.knobs
-                  .string(label: 'hintText', initialValue: 'hintText'),
-              title: context.knobs.stringOrNull(label: 'title'),
-              onSaved: (_) {},
-              validator: (_) => null)));
+  return WidgetBookContainer(
+      child: HintedTextField(
+          hintText:
+              context.knobs.string(label: 'hintText', initialValue: 'hintText'),
+          title: context.knobs.stringOrNull(label: 'title'),
+          onSaved: (_) {},
+          validator: (_) => null));
 }

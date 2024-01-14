@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/domain/presentation/team/componet/team_member_clips.dart';
+import 'package:front/main/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class TeamTile extends StatelessWidget {
   const TeamTile({
@@ -39,4 +41,12 @@ class TeamTile extends StatelessWidget {
       ),
     );
   }
+}
+
+@widgetbook.UseCase(
+  name: '',
+  type: TeamTile
+)
+Widget loginScreenUseCase(BuildContext context) {
+  return const WidgetBookContainer(child: TeamTile());
 }

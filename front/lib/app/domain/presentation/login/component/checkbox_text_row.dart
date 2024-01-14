@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front/main/widgetbook.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -33,12 +34,11 @@ class CheckboxTextRow extends StatelessWidget {
   type: CheckboxTextRow,
 )
 Widget checkboxTextRowUseCase(BuildContext context) {
-  return Expanded(
-    child: Center(
-      child: CheckboxTextRow(
-          text: context.knobs.string(label: 'text', initialValue: 'CheckboxTextRow'),
-          value: context.knobs.boolean(label: 'value', initialValue: false),
-          onChanged: (_) {}),
-    ),
+  return WidgetBookContainer(
+    child: CheckboxTextRow(
+        text: context.knobs
+            .string(label: 'text', initialValue: 'CheckboxTextRow'),
+        value: context.knobs.boolean(label: 'value', initialValue: false),
+        onChanged: (_) {}),
   );
 }
