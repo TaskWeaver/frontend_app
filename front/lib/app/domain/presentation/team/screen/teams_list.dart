@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/domain/presentation/team/componet/team_tile.dart';
+import 'package:go_router/go_router.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class TeamsListScreen extends StatefulWidget {
@@ -73,7 +74,7 @@ class _TeamsListScreenState extends State<TeamsListScreen> {
           borderRadius: BorderRadius.circular(100),
         ),
         onPressed: () {
-          Navigator.pushNamed(context, '/teamsList');
+          context.push('/teamCreate');
         },
         child: const Icon(Icons.add),
       ),

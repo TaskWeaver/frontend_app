@@ -2,6 +2,7 @@ import 'package:front/app/domain/presentation/home/home.dart';
 import 'package:front/app/domain/presentation/login/email_singin.dart';
 import 'package:front/app/domain/presentation/login/login.dart';
 import 'package:front/app/domain/presentation/login/signin.dart';
+import 'package:front/app/domain/presentation/team/screen/team_create.dart';
 import 'package:front/app/domain/presentation/team/screen/teams_list.dart';
 import 'package:go_router/go_router.dart';
 
@@ -26,6 +27,10 @@ final router = GoRouter(initialLocation: '/', routes: [
       path: 'teamsList',
       name: 'teamsList',
       builder: (context, state) => const TeamsListScreen(),
+    ),GoRoute(
+      path: 'teamCreate',
+      name: 'teamCreate',
+      builder: (context, state) => const TeamCreateScreen(),
     ),
   ]),
 ]);
