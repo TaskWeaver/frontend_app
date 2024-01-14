@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:front/main/widgetbook.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class TeamMemberClips extends StatelessWidget {
   const TeamMemberClips({super.key, required this.teamMembersNumber});
@@ -30,4 +33,12 @@ class TeamMemberClips extends StatelessWidget {
       children: teamMemberClips(teamMembersNumber),
     );
   }
+}
+
+@widgetbook.UseCase(name: '', type: TeamMemberClips)
+Widget loginScreenUseCase(BuildContext context) {
+  return WidgetBookContainer(
+      child: TeamMemberClips(
+          teamMembersNumber: context.knobs.int
+              .slider(label: 'number of members', initialValue: 4)));
 }

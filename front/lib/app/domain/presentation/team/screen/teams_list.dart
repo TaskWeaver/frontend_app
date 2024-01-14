@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/domain/presentation/team/componet/team_tile.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class TeamsListScreen extends StatefulWidget {
   const TeamsListScreen({super.key});
@@ -78,4 +79,13 @@ class _TeamsListScreenState extends State<TeamsListScreen> {
       ),
     );
   }
+}
+
+
+@widgetbook.UseCase(
+  name: '',
+  type: TeamsListScreen,
+)
+Widget loginScreenUseCase(BuildContext context) {
+  return const TeamsListScreen();
 }

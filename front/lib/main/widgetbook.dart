@@ -36,27 +36,34 @@ class WidgetbookApp extends StatelessWidget {
           scales: [1.0, 2.0],
         ),
         LocalizationAddon(
-          locales: [
-            const Locale('en', 'US'),
-            const Locale('ko', 'KR')
-          ],
+          locales: [const Locale('en', 'US'), const Locale('ko', 'KR')],
           localizationsDelegates: [
             DefaultWidgetsLocalizations.delegate,
             DefaultMaterialLocalizations.delegate,
           ],
         ),
-        DeviceFrameAddon(
-          devices: [
-            Devices.ios.iPhoneSE,
-            Devices.ios.iPhone13,
-          ],
-          initialDevice: Devices.ios.iPhone13
-        ),
+        DeviceFrameAddon(devices: [
+          Devices.ios.iPhoneSE,
+          Devices.ios.iPhone13,
+        ], initialDevice: Devices.ios.iPhone13),
       ],
       integrations: [
         // To make addons & knobs work with Widgetbook Cloud
         WidgetbookCloudIntegration(),
       ],
     );
+  }
+}
+
+class WidgetBookContainer extends StatelessWidget {
+  const WidgetBookContainer({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        decoration: const BoxDecoration(color: Colors.white),
+        child: Expanded(child: Center(child: child)));
   }
 }
