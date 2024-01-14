@@ -34,6 +34,7 @@ class TeamTile extends StatelessWidget {
                   )),
             ],
           ),
+          const TeamMemberClips(teamMembersNumber: 4)
         ]),
       ),
     );
