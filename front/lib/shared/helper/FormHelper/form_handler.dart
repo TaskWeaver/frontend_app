@@ -1,69 +1,71 @@
-import 'package:flutter/material.dart';
 import 'package:front/shared/helper/FormHelper/interface/form_validate_function.dart';
+import 'package:front/shared/helper/FormHelper/interface/form_validate_returnType.dart';
+import 'package:front/shared/mixin/mixin.dart';
 
+
+
+// TODO: checkbox, radio, file upload 등에도 동일하게 적용 고민 필요
+// TODO: 최대한 widget마다 다르게 적용해야 하는 일을 줄이기
+// TODO: onSubmit에서 에러가 나면 해당 input으로 focus 보내기
 class FormHandler {
-  GlobalKey<FormState> formKey = GlobalKey();
+  late Map<String, dynamic> fields;
+  late void Function(SetStateFunc getNext) setStateHandler;
 
-  Map<String, dynamic> fields = {};
-  late void Function(VoidCallback callback) setStateHandler;
-
-  void init(void Function(VoidCallback callback) mixinStateHandler){
-   setStateHandler = mixinStateHandler;
+  void init(Map<String, dynamic> state, void Function(SetStateFunc getNext) setState){
+   fields = state;
+   setStateHandler = setState;
   }
 
   void updateField(String fieldName, value) {
-    fields[fieldName] = value;
+    setStateHandler((prev) => {
+      ...prev,
+      fieldName: value,
+    });
   }
 
   dynamic readValue(String name, defaultValue){
-    var value = fields[name];
-    if(value == null) {
-      fields[name] = defaultValue;
-      return defaultValue;
-    }
-    return fields[name];
+    return fields[name] ?? defaultValue;
   }
 
-  String? Function(String? value) validateField(String fieldName, List<ValidateFuncList> options) {
-    return (value){
-      fields[fieldName] = value;
-      if(options.isEmpty) return null;
-      var invalidValidation = options.firstWhere(
-          (option){
-            var isPass = option.validateFunc(value) ?? false;
-            return !isPass;
-          },
-          orElse: () => ValidateFuncList(
-            validateFunc: (val) { return false; },
-            validateMessage: '-1',
-          )
-      );
+  Map<ValidateReturnType, String? Function(String? value)> validateField(String fieldName, List<ValidateFuncList> options) {
+    String? onChange(String? value) {
+      updateField(fieldName, value);
+      return null;
+    }
 
-      if(invalidValidation.validateMessage == '-1') return null;
-      return invalidValidation.validateMessage;
+    String? onValidate(value) {
+      if(options.isEmpty) return null;
+        var invalidValidation = options.firstWhere(
+            (option){
+              var isPass = option.validateFunc(value) ?? false;
+              return !isPass;
+            },
+            orElse: () => ValidateFuncList(
+              validateFunc: (val) { return false; },
+              validateMessage: '-1',
+            )
+        );
+
+        if(invalidValidation.validateMessage == '-1') return null;
+        return invalidValidation.validateMessage;
+    }
+
+    return {
+      ValidateReturnType.onChange: onChange,
+      ValidateReturnType.onValidate: onValidate,
     };
   }
 
-  String? Function(bool? value) validateCheck(String fieldName, void Function(Map<String, dynamic> fields) afterOnChange) {
+  String? Function(bool? value) validateCheck(String fieldName, SetStateFunc afterOnChange) {
     return (value){
-      setStateHandler((){
-        fields[fieldName] = value;
-        afterOnChange(fields);
-      });
+      updateField(fieldName, value!);
+      setStateHandler(afterOnChange);
       return null;
     };
   }
 
-
-  void updateAllAgreed() {
-    fields['allAgreed'] = fields['personalInfoAgreed'] && fields['termsAgreed'];
-  }
-
-  bool validateFieldForm() {
-    return formKey.currentState?.validate() ?? false;
-  }
-
   Map<String, dynamic> onSubmit() {
+    // TODO: submit 조건을 관리하는 로직 추가 필요
     return fields;
   }
 }
