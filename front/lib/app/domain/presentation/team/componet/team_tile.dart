@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/domain/presentation/team/componet/team_member_clips.dart';
 import 'package:front/main/widgetbook.dart';
+import 'package:go_router/go_router.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class TeamTile extends StatelessWidget {
@@ -12,9 +13,9 @@ class TeamTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.grey[300],
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child:
+      child: ListTile(
+        onTap: () => context.push('/teamDetail'),
+        title:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Row(
             children: [
@@ -43,10 +44,7 @@ class TeamTile extends StatelessWidget {
   }
 }
 
-@widgetbook.UseCase(
-  name: '',
-  type: TeamTile
-)
+@widgetbook.UseCase(name: '', type: TeamTile)
 Widget loginScreenUseCase(BuildContext context) {
   return const WidgetBookContainer(child: TeamTile());
 }
