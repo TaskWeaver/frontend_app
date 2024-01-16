@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:front/app/domain/presentation/team/componet/dialog.dart';
 import 'package:go_router/go_router.dart';
 
 class TeamDetailScreen extends StatelessWidget {
@@ -123,15 +122,12 @@ class TeamDetailScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 16),
-                        child: Container(
-                          decoration:
-                              const BoxDecoration(color: Color(0xFFD9D9D9)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Text(
-                              '프로젝트 이름',
-                              style: textStyle.copyWith(fontSize: 15),
-                            ),
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: elevatedButtonStyle,
+                          child: Text(
+                            '프로젝트 이름',
+                            style: textStyle.copyWith(fontSize: 15),
                           ),
                         ),
                       );
