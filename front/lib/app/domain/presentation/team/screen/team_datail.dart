@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:front/app/domain/presentation/team/componet/dialog.dart';
+import 'package:front/app/domain/presentation/team/componet/selecting_sharing_method_dialog.dart';
 
 class TeamDetailScreen extends StatelessWidget {
   TeamDetailScreen({super.key});
 
   final elevatedButtonStyle = ElevatedButton.styleFrom(
-    padding: EdgeInsets.all(16.0),
+    padding: const EdgeInsets.all(16.0),
     alignment: Alignment.centerLeft,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.zero)),
-    backgroundColor: Color(0xFFD9D9D9),
+    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.zero)),
+    backgroundColor: const Color(0xFFD9D9D9),
     foregroundColor: Colors.transparent,
   );
 
@@ -63,6 +64,7 @@ class TeamDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            //TODO: extract these widgets and move to component
             Text(
               '팀이름 의 Board',
               style: textStyle.copyWith(fontSize: 20),
