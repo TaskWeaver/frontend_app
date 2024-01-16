@@ -22,6 +22,9 @@ jobs:
       - run: flutter pub get
         working-directory: ${{ env.working-directory }}
 
+      - run: dart run build_runner build
+        working-directory: ${{ env.working-directory }}
+
       - run: flutter build web -t lib/main/main_qa.dart
         working-directory: ${{ env.working-directory }}
 
