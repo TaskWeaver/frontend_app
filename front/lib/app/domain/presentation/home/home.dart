@@ -23,6 +23,12 @@ class HomeScreen extends StatelessWidget {
               },
               child: const Text('team'),
             ),
+            ElevatedButton(
+              onPressed: () {
+                context.push('/example'); // 로그인 화면으로 이동
+              },
+              child: const Text('formExample'),
+            ),
           ]
         )));
   }
