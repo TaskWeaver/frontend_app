@@ -77,7 +77,7 @@ class TeamDetailScreen extends StatelessWidget {
                   'Team Member (팀원 수)',
                   style: textStyle.copyWith(fontSize: 15),
                 ),
-                TextButton(onPressed: () {}, child: Text('share'))
+                TextButton(onPressed: () => context.dialog(child: SelectingSharingMethodDailog()), child: const Text('share'))
               ],
             ),
             const SizedBox(
