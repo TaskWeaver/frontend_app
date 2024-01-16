@@ -12,6 +12,7 @@ class TeamMemberClips extends StatelessWidget {
     var arr = <Widget>[];
     var radius = 16;
     for (var i = 0; i < N; i++) {
+      // TODO: change padding to positiond
       arr.add(Padding(
         padding: EdgeInsets.only(left: radius * 10 / 8 * i),
         child: Container(

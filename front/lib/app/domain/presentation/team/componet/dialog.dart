@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 extension BuildContextExtension on BuildContext {
+  //TODO: add padding and title content buttons paramaters
   Future<T?> dialog<T>({required Widget child}) {
     return showDialog<T>(
         context: this,
