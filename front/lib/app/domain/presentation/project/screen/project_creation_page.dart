@@ -125,6 +125,6 @@ class _Body extends StatelessWidget {
   name: '',
   type: ProjectCreationScreen,
 )
-Widget ProjectCreationScreenUseCase(BuildContext context) {
+Widget projectCreationScreenUseCase(BuildContext context) {
   return const ProjectCreationScreen();
 }

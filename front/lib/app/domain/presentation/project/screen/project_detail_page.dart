@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:front/app/domain/presentation/project/component/task_component.dart';
 import 'package:front/app/domain/presentation/project/entity/test_entity.dart';
 import 'package:front/app/domain/presentation/project/shared/atom/bottom_navigation_bar.dart';
-import 'package:intl/intl.dart';
+import 'package:front/app/domain/presentation/project/shared/utils/intlFormatDate.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class ProjectDetailScreen extends StatelessWidget {
@@ -41,7 +41,7 @@ class _Body extends StatelessWidget {
                 '$projectName의 TimeLine',
                 style: h1Textstyle,
               ),
-              Text('${DateFormat('yyyy.MM.dd').format(projectStartTime)}~'),
+              Text('${intlFormatDate(projectStartTime)}~'),
               const Text('프로젝트 설명'),
               for (int i = 0; i < projectTask.length; i++)
                 TaskComponent(task: projectTask[i])
