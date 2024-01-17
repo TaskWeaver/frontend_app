@@ -3,6 +3,8 @@ import 'package:front/app/domain/presentation/home/home.dart';
 import 'package:front/app/domain/presentation/login/email_singin.dart';
 import 'package:front/app/domain/presentation/login/login.dart';
 import 'package:front/app/domain/presentation/login/signin.dart';
+import 'package:front/app/domain/presentation/project/screen/project_creation_page.dart';
+import 'package:front/app/domain/presentation/project/screen/project_detail_page.dart';
 import 'package:front/app/domain/presentation/team/screen/team_create.dart';
 import 'package:front/app/domain/presentation/team/screen/team_datail.dart';
 import 'package:front/app/domain/presentation/team/screen/teams_list.dart';
@@ -21,9 +23,9 @@ final router = GoRouter(initialLocation: '/', routes: [
       builder: (context, state) => const LoginScreen(),
     ),
     GoRoute(
-        path: 'signup',
-        name: 'signup',
-        builder: (context, state) => const SignInScreen(),  
+      path: 'signup',
+      name: 'signup',
+      builder: (context, state) => const SignInScreen(),
     ),
     GoRoute(
       path: 'emailSignup',
@@ -34,7 +36,8 @@ final router = GoRouter(initialLocation: '/', routes: [
       path: 'teamsList',
       name: 'teamsList',
       builder: (context, state) => const TeamsListScreen(),
-    ),GoRoute(
+    ),
+    GoRoute(
       path: 'teamCreate',
       name: 'teamCreate',
       builder: (context, state) => const TeamCreateScreen(),
@@ -44,6 +47,15 @@ final router = GoRouter(initialLocation: '/', routes: [
       name: 'teamDetail',
       builder: (context, state) => TeamDetailScreen(),
     ),
+    GoRoute(
+      path: 'projectDetail',
+      name: 'projectDetail',
+      builder: (context, state) => const ProjectDetailScreen(),
+    ),
+    GoRoute(
+      path: 'projectCreation',
+      name: 'projectCreation',
+      builder: (context, state) => const ProjectCreationScreen(),
+    ),
   ]),
 ]);
-
