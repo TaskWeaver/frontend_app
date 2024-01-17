@@ -40,7 +40,7 @@ dependencies:
   # widgetbook
   widgetbook_annotation: ^3.1.0
   widgetbook: ^3.7.1
-  intl: ^0.19.0
+
   
   # router
   go_router: ^13.0.1

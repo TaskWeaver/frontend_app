@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/domain/presentation/project/entity/task.dart';
-import 'package:intl/intl.dart';
+import 'package:front/app/domain/presentation/project/shared/utils/intlFormatDate.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 //바꿔야함
@@ -145,7 +145,7 @@ class _TaskInfo extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(taskTitle),
-          Text(DateFormat('yyyy.MM.dd').format(endDate!)),
+          Text(intlFormatDate(endDate!)),
         ],
       ),
     );
@@ -200,7 +200,7 @@ class _AddTaskButton extends StatelessWidget {
   name: '',
   type: TaskComponent,
 )
-Widget TaskComponentUseCase(BuildContext context) {
+Widget taskComponentUseCase(BuildContext context) {
   var temptask = Task(
     taskTitle: '1차 제안서 완성하기',
     taskContent: 'ㅇㅇㅇ 제안서 시안 완성',
