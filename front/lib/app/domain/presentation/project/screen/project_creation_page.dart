@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/domain/presentation/project/component/custom_text_field.dart';
 import 'package:front/app/domain/presentation/project/component/project_administrator.dart';
-import 'package:front/app/domain/presentation/project/shared/atom/bottom_navigation_bar.dart';
+import 'package:front/shared/atom/bottom_navigation_bar.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class ProjectCreationScreen extends StatelessWidget {

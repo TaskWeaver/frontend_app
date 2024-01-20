@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:front/app/domain/presentation/project/shared/atom/dialog.dart';
+import 'package:front/app/domain/presentation/team/componet/dialog.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class ProjectAdministrator extends StatelessWidget {
