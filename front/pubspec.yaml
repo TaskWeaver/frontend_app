@@ -44,7 +44,10 @@ dependencies:
   
   # router
   go_router: ^13.0.1
+  dartz: ^0.10.1
   equatable: ^2.0.5
+  dio: ^5.4.0
+  mockito: ^5.4.4
 
 dev_dependencies:
   import_sorter: ^4.6.0
