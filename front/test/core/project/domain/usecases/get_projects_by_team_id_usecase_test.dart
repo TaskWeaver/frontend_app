@@ -24,15 +24,20 @@ void main() {
   var projectModelList = List.generate(
       3,
       (index) => ProjectModel(
-          id: 'id$index',
-          title: 'title$index',
-          content: 'content$index',
-          assignee: 'assignee$index',
-          startDate: DateTime(2020, 10, 10, 14, 58, 4)));
+            pro_id: 'pro_id$index',
+            team_id: 'team_id$index',
+            name: 'name$index',
+            discription: 'description$index',
+            created_at: DateTime(2020, 10, 10, 14, 58, 4),
+            finished_at: DateTime(2020, 10, 10, 14, 58, 4),
+            deleted_at: DateTime(2020, 10, 10, 14, 58, 4),
+          ));
   var projectsModel = ProjectsModel(values: projectModelList);
   var projectsEntity = projectsModel.toEntity();
 
-  test('should get projects of given team id from the repository when call is successful', () async {
+  test(
+      'should get projects of given team id from the repository when call is successful',
+      () async {
     when(mockProjectRepository.getProjectsByTeamId('teamId'))
         .thenAnswer((_) async => Right(projectsEntity));
 
@@ -41,21 +46,27 @@ void main() {
     expect(result, equals(Right(projectsEntity)));
   });
 
-  test('should get server failure from the repository when call is unsuccessful', () async {
-    when(mockProjectRepository.getProjectsByTeamId('teamId'))
-        .thenAnswer((_) async => const Left(ServerFailure('An error has occurred')));
+  test(
+      'should get server failure from the repository when call is unsuccessful',
+      () async {
+    when(mockProjectRepository.getProjectsByTeamId('teamId')).thenAnswer(
+        (_) async => const Left(ServerFailure('An error has occurred')));
 
     var result = await getProjectsByTeamIdUseCase.execute('teamId');
 
     expect(result, equals(const Left(ServerFailure('An error has occurred'))));
   });
 
-  test('should get socket failure from the repository when the device has no internet connection', () async {
-    when(mockProjectRepository.getProjectsByTeamId('teamId'))
-        .thenAnswer((_) async => const Left(ServerFailure('Failed to connect to the network')));
+  test(
+      'should get socket failure from the repository when the device has no internet connection',
+      () async {
+    when(mockProjectRepository.getProjectsByTeamId('teamId')).thenAnswer(
+        (_) async =>
+            const Left(ServerFailure('Failed to connect to the network')));
 
     var result = await getProjectsByTeamIdUseCase.execute('teamId');
 
-    expect(result, equals(const Left(ServerFailure('Failed to connect to the network'))));
+    expect(result,
+        equals(const Left(ServerFailure('Failed to connect to the network'))));
   });
 }

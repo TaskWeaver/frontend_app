@@ -18,22 +18,27 @@ void main() {
   var projectModelList = List.generate(
       3,
       (index) => ProjectModel(
-          id: 'id$index',
-          title: 'title$index',
-          content: 'content$index',
-          assignee: 'assignee$index',
-          startDate: DateTime(2020, 10, 10, 14, 58, 4)));
+            pro_id: 'pro_id$index',
+            team_id: 'team_id$index',
+            name: 'name$index',
+            discription: 'description$index',
+            created_at: DateTime(2020, 10, 10, 14, 58, 4),
+            finished_at: DateTime(2020, 10, 10, 14, 58, 4),
+            deleted_at: DateTime(2020, 10, 10, 14, 58, 4),
+          ));
   var projectsModel = ProjectsModel(values: projectModelList);
   var projectsEntity = projectsModel.toEntity();
 
   var projectModel = ProjectModel(
-      id: 'id',
-      title: 'title',
-      content: 'content',
-      assignee: 'assignee',
-      startDate: DateTime(2020, 10, 10, 14, 58, 4));
+    pro_id: 'pro_id1',
+    team_id: 'team_id1',
+    name: 'name1',
+    discription: 'description1',
+    created_at: DateTime(2020, 10, 10, 14, 58, 4),
+    finished_at: DateTime(2020, 10, 10, 14, 58, 4),
+    deleted_at: DateTime(2020, 10, 10, 14, 58, 4),
+  );
   var projectEntity = projectModel.toEntity();
-
 
   setUp(() {
     mockProjectRemoteDataSource = MockProjectRemoteDataSource();
@@ -79,7 +84,8 @@ void main() {
   });
 
   group('get project by id', () {
-    test('should return project of given id when a call to data source is successful',
+    test(
+        'should return project of given id when a call to data source is successful',
         () async {
       when(mockProjectRemoteDataSource.getProjectById('projectId'))
           .thenAnswer((_) async => projectModel);

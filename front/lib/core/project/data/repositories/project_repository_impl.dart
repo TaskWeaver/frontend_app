@@ -11,14 +11,13 @@ import 'package:front/core/utils/failure.dart';
 class ProjectRepositoryImpl extends ProjectRepository {
   ProjectRepositoryImpl({required this.projectRemoteDataSource});
   final ProjectRemoteDataSource projectRemoteDataSource;
-  ProjectsEntity projects = const ProjectsEntity(values: []);
+  Set<Project> projects = {};
 
   @override
-  Future<Either<Failure, ProjectsEntity>> getProjectsByTeamId(
-      String teamId) async {
+  Future<Either<Failure, Projects>> getProjectsByTeamId(String teamId) async {
     try {
       var result = await projectRemoteDataSource.getProjectsByTeamId(teamId);
-      projects = result.toEntity();
+      projects.addAll(result.toEntity().values);
       return Right(result.toEntity());
     } on ServerException {
       return const Left(ServerFailure('An error has occurred'));
@@ -28,8 +27,7 @@ class ProjectRepositoryImpl extends ProjectRepository {
   }
 
   @override
-  Future<Either<Failure, ProjectEntity>> getProjectById(
-      String projectId) async {
+  Future<Either<Failure, Project>> getProjectById(String projectId) async {
     try {
       var result = await projectRemoteDataSource.getProjectById(projectId);
       return Right(result.toEntity());

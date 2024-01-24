@@ -8,25 +8,27 @@ import '../../../../helpers/json_reader.dart';
 
 void main() {
   var testProjectModel = ProjectModel(
-      id: 'id1',
-      title: 'project1',
-      content: 'content1',
-      assignee: 'assignee1',
-      startDate: DateTime(2020, 10, 10, 14, 58, 4));
-  var testProjectEntity = ProjectEntity(
-      id: 'id1',
-      title: 'project1',
-      content: 'content1',
-      assignee: 'assignee1',
-      startDate: DateTime(2020, 10, 10, 14, 58, 4));
-
-  test('should be a subclass of project entity', () async {
-    expect(testProjectModel, isA<ProjectEntity>());
-  });
+    pro_id: 'pro_id1',
+    team_id: 'team_id1',
+    name: 'name1',
+    discription: 'description1',
+    created_at: DateTime(2020, 10, 10, 14, 58, 4),
+    finished_at: DateTime(2020, 10, 10, 14, 58, 4),
+    deleted_at: DateTime(2020, 10, 10, 14, 58, 4),
+  );
+  var testProject = Project(
+    pro_id: 'pro_id1',
+    team_id: 'team_id1',
+    name: 'name1',
+    discription: 'description1',
+    created_at: DateTime(2020, 10, 10, 14, 58, 4),
+    finished_at: DateTime(2020, 10, 10, 14, 58, 4),
+    deleted_at: DateTime(2020, 10, 10, 14, 58, 4),
+  );
 
   test('should return a valid model from json', () async {
-    Map<String, dynamic> jsonMap = json.decode(
-        readJson('helpers/dummy_data/project/project_dummy_data.json'));
+    Map<String, dynamic> jsonMap = json
+        .decode(readJson('helpers/dummy_data/project/project_dummy_data.json'));
 
     var result = ProjectModel.fromJson(jsonMap);
 
@@ -36,8 +38,8 @@ void main() {
   test('should return a json map containing proper data', () async {
     var result = testProjectModel.toJson();
 
-    var expectedJsonMap = json.decode(
-        readJson('helpers/dummy_data/project/project_dummy_data.json'));
+    var expectedJsonMap = json
+        .decode(readJson('helpers/dummy_data/project/project_dummy_data.json'));
 
     expect(result, equals(expectedJsonMap));
   });
@@ -45,6 +47,6 @@ void main() {
   test('should return a valid entity from model', () async {
     var result = testProjectModel.toEntity();
 
-    expect(result, equals(testProjectEntity));
+    expect(result, equals(testProject));
   });
 }

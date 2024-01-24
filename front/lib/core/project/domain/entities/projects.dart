@@ -2,10 +2,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:front/core/project/domain/entities/project.dart';
 
-class ProjectsEntity extends Equatable {
-  const ProjectsEntity({required this.values});
+class Projects extends Equatable {
+  const Projects({required this.values});
 
-  final List<ProjectEntity> values;
+  final List<Project> values;
 
   @override
   List<Object?> get props => [values];
