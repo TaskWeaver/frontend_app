@@ -1,39 +1,34 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:front/core/project/domain/entities/project.dart';
 
-class ProjectModel extends ProjectEntity {
-  const ProjectModel({
-    required super.id,
-    required super.title,
-    required super.content,
-    required super.assignee,
-    required super.startDate,
-  });
+part 'project.freezed.dart';
+part 'project.g.dart';
 
-  factory ProjectModel.fromJson(Map<String, dynamic> json) {
-    return ProjectModel(
-        id: json['id'],
-        title: json['title'],
-        content: json['content'],
-        assignee: json['assignee'],
-        startDate: DateTime.parse(json['startDate']));
-  }
+@freezed
+class ProjectModel with _$ProjectModel {
+  factory ProjectModel({
+    required String pro_id,
+    required String team_id,
+    required String name,
+    required String discription,
+    required DateTime created_at,
+    required DateTime finished_at,
+    required DateTime deleted_at,
+  }) = _ProjectModel;
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'title': title,
-      'content': content,
-      'assignee': assignee,
-      'startDate': startDate.toIso8601String(),
-    };
-  }
+  factory ProjectModel.fromJson(Map<String, dynamic> json) =>
+      _$ProjectModelFromJson(json);
 
-  ProjectEntity toEntity() {
-    return ProjectEntity(
-        id: id,
-        title: title,
-        content: content,
-        assignee: assignee,
-        startDate: startDate);
+  ProjectModel._();
+
+  Project toEntity() {
+    return Project(
+        pro_id: pro_id,
+        team_id: team_id,
+        name: name,
+        discription: discription,
+        created_at: created_at,
+        finished_at: finished_at,
+        deleted_at: deleted_at);
   }
 }

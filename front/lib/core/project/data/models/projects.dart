@@ -1,26 +1,18 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:front/core/project/data/models/project.dart';
-import 'package:front/core/project/domain/entities/project.dart';
 import 'package:front/core/project/domain/entities/projects.dart';
 
-class ProjectsModel {
-  factory ProjectsModel.fromJson(Map<String, dynamic> jsonData) {
-    return ProjectsModel(
-        values: jsonData['values']
-            .map<ProjectEntity>((e) => ProjectModel.fromJson(e))
-            .toList());
-  }
-  const ProjectsModel({required this.values});
+part 'projects.freezed.dart';
+part 'projects.g.dart';
 
-  final List<ProjectModel> values;
+@freezed
+class ProjectsModel with _$ProjectsModel {
+  factory ProjectsModel({required List<ProjectModel> values}) = _ProjectsModel;
+  
+  factory ProjectsModel.fromJson(Map<String, dynamic> json) => _$ProjectsModelFromJson(json);
 
-  static List<ProjectsModel> fromJsonList(List<dynamic> jsonList) {
-    return jsonList.map((e) => ProjectsModel.fromJson(e)).toList();
-  }
+  const ProjectsModel._();
 
-  Map<String, dynamic> toJson() {
-    return {'values': values.map((projectModel) => projectModel.toJson())};
-  }
-
-  ProjectsEntity toEntity() => ProjectsEntity(
+  Projects toEntity() => Projects(
       values: values.map((projectModel) => projectModel.toEntity()).toList());
 }
