@@ -97,6 +97,7 @@ class FormHandler {
   }
 
   Map<String, dynamic> onSubmit() {
+    print(fields);
     return fields;
   }
 }
