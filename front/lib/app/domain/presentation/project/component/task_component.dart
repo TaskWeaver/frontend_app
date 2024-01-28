@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:front/core/project/data/entities/task.dart';
+import 'package:front/core/task/domain/entities/task.dart';
 import 'package:front/shared/utils/intlFormatDate.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -9,7 +9,7 @@ class TaskComponent extends StatelessWidget {
     Key? key,
     required this.task,
   }) : super(key: key);
-  final Task task;
+  final TaskEntity task;
 
   @override
   Widget build(BuildContext context) {
@@ -201,7 +201,7 @@ class _AddTaskButton extends StatelessWidget {
   type: TaskComponent,
 )
 Widget taskComponentUseCase(BuildContext context) {
-  var temptask = Task(
+  var temptask = TaskEntity(
     title: '1차 제안서 완성하기',
     content: 'ㅇㅇㅇ 제안서 시안 완성',
     dueDate: DateTime.now(),
