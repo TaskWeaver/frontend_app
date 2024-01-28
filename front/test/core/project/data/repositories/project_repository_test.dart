@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:front/core/project/data/data_sources/temp_data_source.dart';
 import 'package:front/core/project/data/models/project.dart';
 import 'package:front/core/project/data/models/projects.dart';
 import 'package:front/core/project/data/repositories/project_repository_impl.dart';
@@ -43,7 +44,7 @@ void main() {
   setUp(() {
     mockProjectRemoteDataSource = MockProjectRemoteDataSource();
     projectRepository = ProjectRepositoryImpl(
-        projectRemoteDataSource: mockProjectRemoteDataSource);
+        projectRemoteDataSource: mockProjectRemoteDataSource, projectTempDataSource: ProjectTempDataSource());
   });
 
   group('get projects by team id', () {
