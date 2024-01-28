@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:front/core/project/data/models/project.dart';
@@ -41,7 +39,7 @@ void main() {
     when(mockProjectRepository.getProjectsByTeamId('teamId'))
         .thenAnswer((_) async => Right(projectsEntity));
 
-    var result = await getProjectsByTeamIdUseCase.execute('teamId');
+    var result = await getProjectsByTeamIdUseCase('teamId');
 
     expect(result, equals(Right(projectsEntity)));
   });
@@ -52,7 +50,7 @@ void main() {
     when(mockProjectRepository.getProjectsByTeamId('teamId')).thenAnswer(
         (_) async => const Left(ServerFailure('An error has occurred')));
 
-    var result = await getProjectsByTeamIdUseCase.execute('teamId');
+    var result = await getProjectsByTeamIdUseCase('teamId');
 
     expect(result, equals(const Left(ServerFailure('An error has occurred'))));
   });
@@ -64,7 +62,7 @@ void main() {
         (_) async =>
             const Left(ServerFailure('Failed to connect to the network')));
 
-    var result = await getProjectsByTeamIdUseCase.execute('teamId');
+    var result = await getProjectsByTeamIdUseCase('teamId');
 
     expect(result,
         equals(const Left(ServerFailure('Failed to connect to the network'))));
