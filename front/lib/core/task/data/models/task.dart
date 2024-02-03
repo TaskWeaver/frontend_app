@@ -1,11 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:front/core/task/domain/entities/task.dart';
 
-class Task {
-  Task(
-      {required this.taskTitle,
-      required this.taskContent,
+class TaskModel {
+  TaskModel(
+      {required this.title,
+      required this.content,
       this.dueDate,
       required this.participants,
       this.color,
@@ -14,10 +15,10 @@ class Task {
       this.numOfTotalTask,
       this.numOfComplateTask});
 
-  factory Task.fromJson(Map<String, dynamic> json) {
-    return Task(
-        taskTitle: json['taskTitle'],
-        taskContent: json['taskContent'],
+  factory TaskModel.fromJson(Map<String, dynamic> json) {
+    return TaskModel(
+        title: json['title'],
+        content: json['content'],
         dueDate:
             json['dueDate'] != null ? DateTime.parse(json['dueDate']) : null,
         participants: json['participants'] != null
@@ -29,8 +30,10 @@ class Task {
         numOfTotalTask: json['numOfTotalTask'],
         numOfComplateTask: json['numOfComplateTask']);
   }
-  final String taskTitle;
-  final String taskContent;
+
+
+  final String title;
+  final String content;
   final DateTime? dueDate;
   final List<String> participants;
   final Color? color;
@@ -38,15 +41,24 @@ class Task {
   final String iconPath;
   final int? numOfComplateTask;
   final int? numOfTotalTask;
+
   Map<String, dynamic> toJson() {
     return {
-      'taskTitle': taskTitle,
-      'taskContent': taskContent,
+      'title': title,
+      'content': content,
       'dueDate': dueDate?.toIso8601String(),
       'participants': participants,
       'color': color?.value,
       'file': file?.path,
       'iconPath': iconPath,
     };
+  }
+
+  TaskEntity toEntity() {
+    return TaskEntity(
+        title: title,
+        content: content,
+        participants: participants,
+        iconPath: iconPath);
   }
 }

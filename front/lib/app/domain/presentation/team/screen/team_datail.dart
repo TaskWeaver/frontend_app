@@ -1,20 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front/app/domain/presentation/team/componet/dialog.dart';
 import 'package:front/app/domain/presentation/team/componet/selecting_sharing_method_dialog.dart';
+import 'package:front/app/domain/presentation/team/state/projects_state.dart';
+import 'package:front/app/domain/presentation/team/viewmodel/team_detail.dart';
 
-class TeamDetailScreen extends StatelessWidget {
+class TeamDetailScreen extends ConsumerStatefulWidget {
   TeamDetailScreen({super.key});
 
   final elevatedButtonStyle = ElevatedButton.styleFrom(
     padding: const EdgeInsets.all(16.0),
     alignment: Alignment.centerLeft,
-    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.zero)),
+    shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.zero)),
     backgroundColor: const Color(0xFFD9D9D9),
     foregroundColor: Colors.transparent,
   );
 
   @override
+  ConsumerState<TeamDetailScreen> createState() => _TeamDetailScreenState();
+}
+
+class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
+  late TeamDetailViewmodel viewmodel;
+
+  @override
+  void initState() {
+    super.initState();
+    viewmodel = ref.read(teamDetailViewmodelProvider.notifier);
+    viewmodel.getProjectsByTeamId('teamId');
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var projectsState = ref.watch(teamDetailViewmodelProvider);
+
     var textStyle = const TextStyle(
       color: Colors.black,
       fontFamily: 'Inter',
@@ -79,7 +99,10 @@ class TeamDetailScreen extends StatelessWidget {
                   'Team Member (팀원 수)',
                   style: textStyle.copyWith(fontSize: 15),
                 ),
-                TextButton(onPressed: () => context.dialog(child: SelectingSharingMethodDailog()), child: const Text('share'))
+                TextButton(
+                    onPressed: () =>
+                        context.dialog(child: SelectingSharingMethodDailog()),
+                    child: const Text('share'))
               ],
             ),
             const SizedBox(
@@ -105,42 +128,66 @@ class TeamDetailScreen extends StatelessWidget {
                     );
                   }),
             ),
+            Padding(
+                padding: const EdgeInsets.only(bottom: 16.0, top: 16.0),
+                child: Text(
+                  'Team Project',
+                  style: textStyle.copyWith(fontSize: 15),
+                )),
             Expanded(
-              child: CustomScrollView(
-                slivers: <Widget>[
-                  SliverAppBar(
-                    scrolledUnderElevation: 0.0,
-                    automaticallyImplyLeading: false,
-                    pinned: true,
-                    titleSpacing: 0.0,
-                    title: Padding(
-                        padding: const EdgeInsets.only(bottom: 4.0, top: 8.0),
-                        child: Text(
-                          'Team Project',
-                          style: textStyle.copyWith(fontSize: 15),
-                        )),
-                  ),
-                  SliverList.builder(
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 16),
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: elevatedButtonStyle,
-                          child: Text(
-                            '프로젝트 이름',
-                            style: textStyle.copyWith(fontSize: 15),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
+              child: ProjectList(
+                  widget: widget,
+                  textStyle: textStyle,
+                  projectsState: projectsState),
             ),
           ],
         ),
       ),
     );
+  }
+}
+
+class ProjectList extends StatelessWidget {
+  const ProjectList({
+    super.key,
+    required this.widget,
+    required this.textStyle,
+    required this.projectsState,
+  });
+
+  final TeamDetailScreen widget;
+  final TextStyle textStyle;
+  final ProjectsState projectsState;
+
+  @override
+  Widget build(BuildContext context) {
+    return projectsState.when(
+        (data) {
+          var projects = data.values;
+          return CustomScrollView(
+            slivers: <Widget>[
+              SliverList.builder(
+                itemCount: projects.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: widget.elevatedButtonStyle,
+                      child: Text(
+                        projects[index].name,
+                        style: textStyle.copyWith(fontSize: 15),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          );
+        },
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (message) {
+          return Text(message ?? '');
+        });
   }
 }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/domain/presentation/project/component/task_component.dart';
-import 'package:front/app/domain/presentation/project/entity/test_entity.dart';
-import 'package:front/app/domain/presentation/project/shared/atom/bottom_navigation_bar.dart';
-import 'package:front/app/domain/presentation/project/shared/utils/intlFormatDate.dart';
+import 'package:front/shared/atom/bottom_navigation_bar.dart';
+import 'package:front/shared/utils/intlFormatDate.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class ProjectDetailScreen extends StatelessWidget {
@@ -25,9 +24,9 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var projectName = tempProject.projectTitle;
-    var projectStartTime = tempProject.startDate;
-    var projectTask = tempProject.tasks;
+    var projectName = 'title';
+    var projectStartTime = DateTime.now();
+    var projectTask = [];
     var h1Textstyle =
         const TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
     return SafeArea(

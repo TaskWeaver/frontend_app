@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:front/app/domain/presentation/project/entity/task.dart';
-import 'package:front/app/domain/presentation/project/shared/utils/intlFormatDate.dart';
+import 'package:front/core/task/domain/entities/task.dart';
+import 'package:front/shared/utils/intlFormatDate.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 //바꿔야함
@@ -9,7 +9,7 @@ class TaskComponent extends StatelessWidget {
     Key? key,
     required this.task,
   }) : super(key: key);
-  final Task task;
+  final TaskEntity task;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class TaskComponent extends StatelessWidget {
                 numOfSmallTask: task.numOfTotalTask!,
                 numOfCompletedTask: task.numOfComplateTask!),
             const SizedBox(height: 5),
-            _TaskInfo(taskTitle: task.taskTitle, endDate: task.dueDate),
+            _TaskInfo(title: task.title, endDate: task.dueDate),
             _Assigners(taskParticipants: task.participants),
           ],
         ),
@@ -131,10 +131,10 @@ class _ProgressBarItem extends StatelessWidget {
 class _TaskInfo extends StatelessWidget {
   const _TaskInfo({
     Key? key,
-    required this.taskTitle,
+    required this.title,
     required this.endDate,
   }) : super(key: key);
-  final String taskTitle;
+  final String title;
   final DateTime? endDate;
 
   @override
@@ -144,7 +144,7 @@ class _TaskInfo extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(taskTitle),
+          Text(title),
           Text(intlFormatDate(endDate!)),
         ],
       ),
@@ -201,9 +201,9 @@ class _AddTaskButton extends StatelessWidget {
   type: TaskComponent,
 )
 Widget taskComponentUseCase(BuildContext context) {
-  var temptask = Task(
-    taskTitle: '1차 제안서 완성하기',
-    taskContent: 'ㅇㅇㅇ 제안서 시안 완성',
+  var temptask = TaskEntity(
+    title: '1차 제안서 완성하기',
+    content: 'ㅇㅇㅇ 제안서 시안 완성',
     dueDate: DateTime.now(),
     participants: ['홍길동', '김철수', '이영희'],
     iconPath: 'assets/images/icon_check.png',
