@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:front/shared/atom/timer.dart';
-import 'package:front/shared/helper/FormHelper/form_helper.dart';
+import 'package:front/shared/helper/FormHelper/component/text_form_field.dart';
+import 'package:front/shared/helper/FormHelper/interface/form_validate_function.dart';
 
-class TimerTextField extends StatelessWidget {
-  const TimerTextField({
+class TimerTextFormField extends StatelessWidget {
+  const TimerTextFormField({
     super.key,
     this.title,
-    required this.value,
+    required this.fieldName,
     required this.hintText,
     required this.validator,
     required this.duration,
   });
+
+  final String fieldName;
   final String? title;
-  final String? value;
   final String hintText;
-  final Map<ValidateReturnType, String? Function(String? value)> validator;
+  final List<ValidateFuncList>? validator;
   final Duration duration;
   @override
   Widget build(BuildContext context) {
@@ -33,16 +35,14 @@ class TimerTextField extends StatelessWidget {
           children: [
             Expanded(
               flex: 9,
-              child: TextFormField(
-                initialValue: value,
-                validator: validator[ValidateReturnType.onValidate],
-                onChanged: validator[ValidateReturnType.onChange],
+              child: CustomTextFormField(
+                fieldName: fieldName,
+                validator: validator,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   contentPadding: const EdgeInsets.only(left: 10),
                   hintText: hintText,
                   hintStyle: textStyle,
-                  //errorText: errorText,
                 ),
               ),
             ),
