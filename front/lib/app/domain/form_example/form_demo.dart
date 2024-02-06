@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:front/app/domain/presentation/login/component/rounded_elvatedbutton.dart';
 import 'package:front/shared/atom/checkbox_formField.dart';
 import 'package:front/shared/atom/hinted_textfield.dart';
-import 'package:front/shared/atom/timer_textfield.dart';
+import 'package:front/shared/atom/timer_text_form_field.dart';
 import 'package:front/shared/helper/FormHelper/interface/form_validate_function.dart';
 import 'package:front/shared/helper/helper.dart';
 import 'package:front/shared/mixin/mixin.dart';
