@@ -9,13 +9,13 @@ class TimerTextField extends StatelessWidget {
     required this.value,
     required this.hintText,
     required this.validator,
-    required this.timeInSeconds,
+    required this.duration,
   });
   final String? title;
   final String? value;
   final String hintText;
   final Map<ValidateReturnType, String? Function(String? value)> validator;
-  final int timeInSeconds;
+  final Duration duration;
   @override
   Widget build(BuildContext context) {
     var textStyle = const TextStyle(
@@ -49,7 +49,7 @@ class TimerTextField extends StatelessWidget {
             Expanded(
               //Timer
               flex: 1,
-              child: TimerWidget(timeInSeconds: timeInSeconds),
+              child: TimerWidget(duration: duration),
             )
           ],
         ),
