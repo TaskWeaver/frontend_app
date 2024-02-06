@@ -15,6 +15,21 @@ class FormDemoScreen2 extends StatefulWidget {
 }
 
 class _FormDemoScreen2State extends State<FormDemoScreen2> {
+  final _formKey = GlobalKey<CustomFormState>();
+  final inputDecoration = InputDecoration(
+      border: InputBorder.none, filled: true, fillColor: Colors.grey[300]);
+  late CustomFormState? currentState;
+  @override
+  void initState() {
+    super.initState();
+    currentState = _formKey.currentState;
+  }
+
+  void onFormChanged() {
+    setState(() {
+      currentState = _formKey.currentState;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +51,52 @@ class _FormDemoScreen2State extends State<FormDemoScreen2> {
                   onChanged: onFormChanged,
                   child: Column(
                     children: [
+                      const Text('Form Demo'),
+                      Text('id is $id'),
+                      EmailVerifierFormField(),
+                      CustomTextFormField(
+                        fieldName: 'password',
+                        validator: FieldValidationBuilder.field('password')
+                            .required('비밀번호를 입력해주세요', ValidateOption.onUserInteraction)
+                            .pattern(
+                                passwordRegexPatternString,
+                                '영어 대소문자, 숫자가 2개 이상 사용되어야 합니다.',
+                                ValidateOption.onUserInteraction)
+                            .build(),
+                        decoration: inputDecoration.copyWith(
+                          hintText: '비밀번호',
+                        ),
+                      ),
+                      CustomTextFormField(
+                        fieldName: 'passwordCheck',
+                        validator:
+                            FieldValidationBuilder.field('passwaordCheck')
+                                .required('비밀번호를 확인해주세요', ValidateOption.onUserInteraction)
+                                .sameAs(
+                                    currentState?.fields['password']?.value ??
+                                        '',
+                                    '비밀번호와 일치하지 않습니다.',
+                                    ValidateOption.onUserInteraction)
+                                .build(),
+                        decoration: inputDecoration.copyWith(
+                          hintText: '비밀번호 확인',
+                        ),
+                      ),
+                      CustomTextFormField(
+                        fieldName: 'nickname',
+                        validator: FieldValidationBuilder.field('nickname')
+                            .required('닉네임을 입력해주세요', ValidateOption.onUserInteraction)
+                            .min(2, '2글자 이상 입력해주세요', ValidateOption.onUserInteraction)
+                            .build(),
+                        decoration: inputDecoration.copyWith(
+                          hintText: '닉네임',
+                        ),
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            _formKey.currentState?.validate(null);
+                          },
+                          child: Text('check'))
                     ],
                   ),
                 ),
