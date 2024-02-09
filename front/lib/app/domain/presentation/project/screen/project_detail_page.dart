@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/domain/presentation/project/component/task_component.dart';
 import 'package:front/shared/atom/bottom_navigation_bar.dart';
-import 'package:front/shared/utils/intlFormatDate.dart';
+import 'package:front/shared/utils/intl_format_date.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class ProjectDetailScreen extends StatelessWidget {

@@ -1,5 +1,6 @@
 import 'package:front/shared/helper/FormHelper/interface/form_validate_option.dart';
 
+// ignore: avoid_annotating_with_dynamic
 typedef ValidateFunc = bool? Function(dynamic val);
 
 class ValidateFuncList {

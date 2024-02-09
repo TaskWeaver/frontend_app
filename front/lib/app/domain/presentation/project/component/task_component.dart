@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front/core/task/domain/entities/task.dart';
-import 'package:front/shared/utils/intlFormatDate.dart';
+import 'package:front/shared/utils/intl_format_date.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 //바꿔야함

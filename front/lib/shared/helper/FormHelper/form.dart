@@ -131,7 +131,7 @@ class CustomFormState extends State<CustomForm> {
       if (defaultTargetPlatform == TargetPlatform.iOS) {
         unawaited(Future<void>(() async {
           await Future<void>.delayed(_kIOSAnnouncementDelayDuration);
-          SemanticsService.announce(errorMessage, directionality,
+          await SemanticsService.announce(errorMessage, directionality,
               assertiveness: Assertiveness.assertive);
         }));
       } else {
