@@ -62,7 +62,7 @@ class CustomFormState extends State<CustomForm> {
 
   void _fieldDidChange() {
     widget.onChanged?.call();
-    
+
     for (var feild in _fields.values) {
       _hasInteractedByUser =
           _hasInteractedByUser || feild._hasInteractedByUser.value;
@@ -87,7 +87,6 @@ class CustomFormState extends State<CustomForm> {
 
   @override
   Widget build(BuildContext context) {
-
     return PopScope(
       canPop: widget.canPop ?? true,
       onPopInvoked: widget.onPopInvoked,
@@ -113,17 +112,17 @@ class CustomFormState extends State<CustomForm> {
     _fieldDidChange();
   }
 
-  bool validate(ValidateOption? validateOption, {bool protect = false}) {
+  bool validate(ValidateOption? validateOption) {
     _hasInteractedByUser = true;
     _forceRebuild();
-    return _validate(validateOption, protect: protect);
+    return _validate(validateOption);
   }
 
-  bool _validate(ValidateOption? validateOption, {bool protect = false}) {
+  bool _validate(ValidateOption? validateOption) {
     var hasError = false;
     var errorMessage = '';
     _fields.forEach((key, field) {
-      hasError = !field.validate(validateOption, protect: protect) || hasError;
+      hasError = !field.validate(validateOption) || hasError;
       errorMessage += field.errorText ?? '';
     });
 
@@ -214,6 +213,8 @@ class CustomFormFieldState<T> extends State<CustomFormField<T>>
 
   bool get hasInteractedByUser => _hasInteractedByUser.value;
 
+  List<bool> validatorStatus = [];
+
   void save() {
     widget.onSaved?.call(value);
   }
@@ -227,21 +228,30 @@ class CustomFormFieldState<T> extends State<CustomFormField<T>>
     CustomForm.maybeOf(context)?._fieldDidChange();
   }
 
-  bool validate(ValidateOption? validateOption, {bool protect = false}) {
+  bool validate(ValidateOption? validateOption) {
     setState(() {
-      _validate(validateOption, protect: protect);
+      _validate(validateOption);
     });
     return !hasError;
   }
 
-  String? _validate(ValidateOption? validateOption, {bool protect = false}) {
+  String? _validate(ValidateOption? validateOption) {
     if (widget.validator?.isEmpty ?? false) return _errorText.value = null;
+    var index = -1;
     var invalidValidation = widget.validator?.firstWhere((option) {
-      if (validateOption != null && option.validateOption != validateOption) {
+      index++;
+      if (validatorStatus[index] != true &&
+          validateOption != null &&
+          option.validateOption != validateOption) {
         return false;
       }
-      var isPass = option.validateFunc(_value) ?? false; //value 는 해당 필드의 값
-      return !isPass;
+      if (option.validateFunc(_value) == true) {
+        validatorStatus[index] = false;
+        return false;
+      } else {
+        validatorStatus[index] = true;
+        return true;
+      }
     },
         orElse: () => ValidateFuncList(
               validateFunc: (val) {
@@ -252,7 +262,6 @@ class CustomFormFieldState<T> extends State<CustomFormField<T>>
             ));
 
     if (invalidValidation?.validateMessage == '-1') {
-      if (protect) return _errorText.value;
       return _errorText.value = null;
     }
     _errorText.value = invalidValidation?.validateMessage;
@@ -301,6 +310,11 @@ class CustomFormFieldState<T> extends State<CustomFormField<T>>
     Future.delayed(Duration.zero, () {
       CustomForm.maybeOf(context)?._register(this);
     });
+    if (widget.validator != null) {
+      for (var validator in widget.validator!) {
+        validatorStatus.add(validator.status);
+      }
+    }
   }
 
   @override
@@ -308,7 +322,7 @@ class CustomFormFieldState<T> extends State<CustomFormField<T>>
     if (widget.enabled) {
       _validate(ValidateOption.always);
       if (_hasInteractedByUser.value) {
-        _validate(ValidateOption.onUserInteraction, protect: true);
+        _validate(ValidateOption.onUserInteraction);
       }
     }
     return widget.builder(this);
