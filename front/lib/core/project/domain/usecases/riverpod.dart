@@ -1,5 +1,4 @@
 import 'package:front/core/project/data/repositories/riverpod.dart';
-import 'package:front/core/project/domain/repositories/project_repository.dart';
 import 'package:front/core/project/domain/usecases/get_projects_by_team_id_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

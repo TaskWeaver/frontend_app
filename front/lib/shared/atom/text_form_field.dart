@@ -97,11 +97,10 @@ class CustomTextFormField extends CustomFormField<String> {
             maxLength > 0),
         super(
           fieldName: fieldName,
-          initialValue: (initialValue ?? ''),
+          initialValue: initialValue ?? '',
           enabled: enabled ?? decoration?.enabled ?? true,
-          builder: (CustomFormFieldState<String> field) {
-            final _CustomTextFormFieldState state = field as _CustomTextFormFieldState;
-            final InputDecoration effectiveDecoration = (decoration ??
+          builder: (field) {
+            var effectiveDecoration = (decoration ??
                     const InputDecoration())
                 .applyDefaults(Theme.of(field.context).inputDecorationTheme);
             void onChangedHandler(String value) {
@@ -125,6 +124,7 @@ class CustomTextFormField extends CustomFormField<String> {
                 textDirection: textDirection,
                 textCapitalization: textCapitalization,
                 autofocus: autofocus,
+                // ignore: deprecated_member_use
                 toolbarOptions: toolbarOptions,
                 readOnly: readOnly,
                 showCursor: showCursor,

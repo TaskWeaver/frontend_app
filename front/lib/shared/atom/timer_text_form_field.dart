@@ -83,12 +83,10 @@ class TimerTextFormField extends CustomFormField<String> {
     bool scribbleEnabled = true,
     bool canRequestFocus = true,
   }) : super(
-            initialValue: (initialValue ?? ''),
+            initialValue: initialValue ?? '',
             enabled: enabled ?? decoration?.enabled ?? true,
             builder: (field) {
-              final _TimerTextFormFieldState state =
-                  field as _TimerTextFormFieldState;
-              final InputDecoration effectiveDecoration = (decoration ??
+              var effectiveDecoration = (decoration ??
                       const InputDecoration())
                   .applyDefaults(Theme.of(field.context).inputDecorationTheme);
               void onChangedHandler(String value) {
@@ -118,6 +116,7 @@ class TimerTextFormField extends CustomFormField<String> {
                               textDirection: textDirection,
                               textCapitalization: textCapitalization,
                               autofocus: autofocus,
+                              // ignore: deprecated_member_use
                               toolbarOptions: toolbarOptions,
                               readOnly: readOnly,
                               showCursor: showCursor,

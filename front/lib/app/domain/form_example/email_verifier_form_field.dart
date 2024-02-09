@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/domain/form_example/form_demo.dart';
+import 'package:front/shared/atom/text_form_field.dart';
 import 'package:front/shared/atom/timer_text_form_field.dart';
-import 'package:front/shared/helper/FormHelper/component/text_form_field.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';
 import 'package:front/shared/helper/FormHelper/form_validate_builder.dart';
 import 'package:front/shared/helper/FormHelper/interface/form_validate_option.dart';
@@ -24,8 +24,7 @@ class _EmailVerifierFormFieldState extends State<EmailVerifierFormField> {
   void checkAuthenticationCode() {
     //TODO: check authentication code
     var form = CustomForm.maybeOf(context);
-    debugPrint(
-        form?.fields['emailVerificationCode']?.validate(null).toString());
+    
     if (form?.fields['emailVerificationCode']?.validate(null) == true) {
       setState(() {
         _status = EmailAuthStatus.authenticated;
