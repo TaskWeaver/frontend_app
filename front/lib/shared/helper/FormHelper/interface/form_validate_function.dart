@@ -1,4 +1,4 @@
-import 'package:front/shared/helper/FormHelper/interface/form_validate_option.dart';
+import 'package:front/shared/helper/FormHelper/interface/form_auto_validation_mode.dart';
 
 // ignore: avoid_annotating_with_dynamic
 typedef ValidateFunc = bool? Function(dynamic val);

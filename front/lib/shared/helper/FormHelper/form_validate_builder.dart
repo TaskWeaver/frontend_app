@@ -1,5 +1,5 @@
 import 'package:front/shared/helper/FormHelper/interface/form_validate_function.dart';
-import 'package:front/shared/helper/FormHelper/interface/form_validate_option.dart';
+import 'package:front/shared/helper/FormHelper/interface/form_auto_validation_mode.dart';
 import 'package:front/shared/utils/validate.dart';
 
 class FieldValidationBuilder {
