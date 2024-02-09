@@ -2,7 +2,6 @@ import 'package:front/shared/helper/FormHelper/interface/form_validate_function.
 import 'package:front/shared/helper/FormHelper/interface/form_validate_option.dart';
 import 'package:front/shared/utils/validate.dart';
 
-
 class FieldValidationBuilder {
   FieldValidationBuilder._(this.fieldName);
   static FieldValidationBuilder? _instance;
@@ -15,39 +14,63 @@ class FieldValidationBuilder {
     return _instance!;
   }
 
-  FieldValidationBuilder required(String? message, ValidateOption validateOption) {
+  FieldValidationBuilder required(
+      String? message, AutoValidationMode autoValidationMode) {
     var errorMessage = message ?? 'Please enter a value for $fieldName';
-    validations.add(ValidateFuncList(validateFunc: checkIsNotEmpty, validateMessage: errorMessage, validateOption: validateOption));
+    validations.add(ValidateFuncList(
+        validateFunc: checkIsNotEmpty,
+        validateMessage: errorMessage,
+        autoValidationMode: autoValidationMode));
     return this;
   }
 
-  FieldValidationBuilder pattern(String pattern, String? message, ValidateOption validateOption) {
+  FieldValidationBuilder pattern(
+      String pattern, String? message, AutoValidationMode autoValidationMode) {
     var errorMessage = message ?? 'Please check a value for $fieldName';
-    validations.add(ValidateFuncList(validateFunc: (val) => checkStrValidatePattern(val, pattern), validateMessage: errorMessage, validateOption: validateOption));
+    validations.add(ValidateFuncList(
+        validateFunc: (val) => checkStrValidatePattern(val, pattern),
+        validateMessage: errorMessage,
+        autoValidationMode: autoValidationMode));
     return this;
   }
 
-  FieldValidationBuilder min(int size, String? message, ValidateOption validateOption) {
+  FieldValidationBuilder min(
+      int size, String? message, AutoValidationMode autoValidationMode) {
     var errorMessage = message ?? 'Please check a value length for $fieldName';
-    validations.add(ValidateFuncList(validateFunc: (val) => checkStrIsPassMinLength(val, size), validateMessage: errorMessage, validateOption: validateOption));
+    validations.add(ValidateFuncList(
+        validateFunc: (val) => checkStrIsPassMinLength(val, size),
+        validateMessage: errorMessage,
+        autoValidationMode: autoValidationMode));
     return this;
   }
 
-  FieldValidationBuilder max(int size, String? message, ValidateOption validateOption) {
+  FieldValidationBuilder max(
+      int size, String? message, AutoValidationMode autoValidationMode) {
     var errorMessage = message ?? 'Please check a value length for $fieldName';
-    validations.add(ValidateFuncList(validateFunc: (val) => checkStrIsPassMaxLength(val, size), validateMessage: errorMessage, validateOption: validateOption));
+    validations.add(ValidateFuncList(
+        validateFunc: (val) => checkStrIsPassMaxLength(val, size),
+        validateMessage: errorMessage,
+        autoValidationMode: autoValidationMode));
     return this;
   }
 
-  FieldValidationBuilder sameAs(String fieldToCompare, String? message, ValidateOption validateOption) {
+  FieldValidationBuilder sameAs(String fieldToCompare, String? message,
+      AutoValidationMode autoValidationMode) {
     var errorMessage = message ?? 'Please check a value for $fieldName';
-    validations.add(ValidateFuncList(validateFunc: (val) => checkStrIsSame(val, fieldToCompare), validateMessage: errorMessage, validateOption: validateOption));
+    validations.add(ValidateFuncList(
+        validateFunc: (val) => checkStrIsSame(val, fieldToCompare),
+        validateMessage: errorMessage,
+        autoValidationMode: autoValidationMode));
     return this;
   }
 
-  FieldValidationBuilder customCheck(ValidateFunc func, String? message, ValidateOption validateOption) {
+  FieldValidationBuilder customCheck(
+      ValidateFunc func, String? message, AutoValidationMode autoValidationMode) {
     var errorMessage = message ?? 'Please check a value for $fieldName';
-    validations.add(ValidateFuncList(validateFunc: func, validateMessage: errorMessage, validateOption: validateOption));
+    validations.add(ValidateFuncList(
+        validateFunc: func,
+        validateMessage: errorMessage,
+        autoValidationMode: autoValidationMode));
     return this;
   }
 
