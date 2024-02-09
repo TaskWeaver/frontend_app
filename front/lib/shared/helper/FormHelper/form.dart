@@ -8,6 +8,7 @@ import 'package:front/shared/helper/FormHelper/interface/form_validate_function.
 
 const Duration _kIOSAnnouncementDelayDuration = Duration(seconds: 1);
 
+// TODO: implement the case when [AutoValidationMode] is on onUnFocus
 class CustomForm extends StatefulWidget {
   const CustomForm({
     super.key,
@@ -213,8 +214,10 @@ class CustomFormFieldState<T> extends State<CustomFormField<T>>
 
   bool get hasError => _errorText.value != null;
 
+  /// Whether the field has been interacted with by the user. 
   bool get hasInteractedByUser => _hasInteractedByUser.value;
 
+  /// Whether the validation is not satisfied
   List<bool> validatorStatus = [];
 
   void save() {
@@ -238,6 +241,7 @@ class CustomFormFieldState<T> extends State<CustomFormField<T>>
   }
 
   String? _validate(AutoValidationMode? autoValidationMode) {
+    /// validate everything if [autoValidationMode] is null]
     if (widget.validator?.isEmpty ?? false) return _errorText.value = null;
     var index = -1;
     var invalidValidation = widget.validator?.firstWhere((option) {
@@ -247,6 +251,7 @@ class CustomFormFieldState<T> extends State<CustomFormField<T>>
           option.autoValidationMode != autoValidationMode) {
         return false;
       }
+      /// Validatate if [validatorStatus] is true
       if (option.validateFunc(_value) == true) {
         validatorStatus[index] = false;
         return false;
@@ -309,6 +314,7 @@ class CustomFormFieldState<T> extends State<CustomFormField<T>>
   @override
   void initState() {
     super.initState();
+    // register field to parent form
     Future.delayed(Duration.zero, () {
       CustomForm.maybeOf(context)?._register(this);
     });
@@ -321,6 +327,7 @@ class CustomFormFieldState<T> extends State<CustomFormField<T>>
 
   @override
   Widget build(BuildContext context) {
+    // validate field every time the field is built
     if (widget.enabled) {
       _validate(AutoValidationMode.always);
       if (_hasInteractedByUser.value) {
