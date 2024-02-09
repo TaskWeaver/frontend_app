@@ -1,6 +1,1 @@
-enum ValidateOption {
-  disabled,
-  always,
-  onUserInteraction,
-  onUnFocus
-}
+enum AutoValidationMode { disabled, always, onUserInteraction, onUnFocus }

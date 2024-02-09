@@ -60,11 +60,11 @@ class _FormDemoScreen2State extends State<FormDemoScreen2> {
                         fieldName: 'password',
                         validator: FieldValidationBuilder.field('password')
                             .required('비밀번호를 입력해주세요',
-                                ValidateOption.onUserInteraction)
+                                AutoValidationMode.onUserInteraction)
                             .pattern(
                                 passwordRegexPatternString,
                                 '영어 대소문자, 숫자가 2개 이상 사용되어야 합니다.',
-                                ValidateOption.onUserInteraction)
+                                AutoValidationMode.onUserInteraction)
                             .build(),
                         decoration: inputDecoration.copyWith(
                           hintText: '비밀번호',
@@ -75,12 +75,12 @@ class _FormDemoScreen2State extends State<FormDemoScreen2> {
                         validator:
                             FieldValidationBuilder.field('passwaordCheck')
                                 .required('비밀번호를 확인해주세요',
-                                    ValidateOption.onUserInteraction)
+                                    AutoValidationMode.onUserInteraction)
                                 .sameAs(
                                     currentState?.fields['password']?.value ??
                                         '',
                                     '비밀번호와 일치하지 않습니다.',
-                                    ValidateOption.onUserInteraction)
+                                    AutoValidationMode.onUserInteraction)
                                 .build(),
                         decoration: inputDecoration.copyWith(
                           hintText: '비밀번호 확인',
@@ -89,10 +89,10 @@ class _FormDemoScreen2State extends State<FormDemoScreen2> {
                       CustomTextFormField(
                         fieldName: 'nickname',
                         validator: FieldValidationBuilder.field('nickname')
-                            .required(
-                                '닉네임을 입력해주세요', ValidateOption.onUserInteraction)
+                            .required('닉네임을 입력해주세요',
+                                AutoValidationMode.onUserInteraction)
                             .min(2, '2글자 이상 입력해주세요',
-                                ValidateOption.onUserInteraction)
+                                AutoValidationMode.onUserInteraction)
                             .build(),
                         decoration: inputDecoration.copyWith(
                           hintText: '닉네임',
@@ -104,8 +104,8 @@ class _FormDemoScreen2State extends State<FormDemoScreen2> {
                           title: '모두 동의',
                           value: false,
                           validator: FieldValidationBuilder.field('agreeAll')
-                              .required(
-                                  '이용약관 동의가 필요합니다.', ValidateOption.disabled)
+                              .required('이용약관 동의가 필요합니다.',
+                                  AutoValidationMode.disabled)
                               .build(),
                         ),
                         checkBoxes: [

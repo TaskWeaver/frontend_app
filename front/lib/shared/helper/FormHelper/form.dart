@@ -112,17 +112,19 @@ class CustomFormState extends State<CustomForm> {
     _fieldDidChange();
   }
 
-  bool validate(ValidateOption? validateOption) {
+  bool validate(AutoValidationMode? autoValidationMode) {
     _hasInteractedByUser = true;
     _forceRebuild();
-    return _validate(validateOption);
+    return _validate(autoValidationMode);
   }
 
-  bool _validate(ValidateOption? validateOption) {
+  bool _validate(AutoValidationMode? autoValidationMode) {
     var hasError = false;
     var errorMessage = '';
+
+    //Call validate functions of every field
     _fields.forEach((key, field) {
-      hasError = !field.validate(validateOption) || hasError;
+      hasError = !field.validate(autoValidationMode) || hasError;
       errorMessage += field.errorText ?? '';
     });
 
@@ -228,21 +230,21 @@ class CustomFormFieldState<T> extends State<CustomFormField<T>>
     CustomForm.maybeOf(context)?._fieldDidChange();
   }
 
-  bool validate(ValidateOption? validateOption) {
+  bool validate(AutoValidationMode? autoValidationMode) {
     setState(() {
-      _validate(validateOption);
+      _validate(autoValidationMode);
     });
     return !hasError;
   }
 
-  String? _validate(ValidateOption? validateOption) {
+  String? _validate(AutoValidationMode? autoValidationMode) {
     if (widget.validator?.isEmpty ?? false) return _errorText.value = null;
     var index = -1;
     var invalidValidation = widget.validator?.firstWhere((option) {
       index++;
       if (validatorStatus[index] != true &&
-          validateOption != null &&
-          option.validateOption != validateOption) {
+          autoValidationMode != null &&
+          option.autoValidationMode != autoValidationMode) {
         return false;
       }
       if (option.validateFunc(_value) == true) {
@@ -258,7 +260,7 @@ class CustomFormFieldState<T> extends State<CustomFormField<T>>
                 return false;
               },
               validateMessage: '-1',
-              validateOption: ValidateOption.disabled,
+              autoValidationMode: AutoValidationMode.disabled,
             ));
 
     if (invalidValidation?.validateMessage == '-1') {
@@ -320,9 +322,9 @@ class CustomFormFieldState<T> extends State<CustomFormField<T>>
   @override
   Widget build(BuildContext context) {
     if (widget.enabled) {
-      _validate(ValidateOption.always);
+      _validate(AutoValidationMode.always);
       if (_hasInteractedByUser.value) {
-        _validate(ValidateOption.onUserInteraction);
+        _validate(AutoValidationMode.onUserInteraction);
       }
     }
     return widget.builder(this);

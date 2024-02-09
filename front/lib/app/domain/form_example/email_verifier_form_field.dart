@@ -24,7 +24,7 @@ class _EmailVerifierFormFieldState extends State<EmailVerifierFormField> {
   void checkAuthenticationCode() {
     //TODO: check authentication code
     var form = CustomForm.maybeOf(context);
-    
+
     if (form?.fields['emailVerificationCode']?.validate(null) == true) {
       setState(() {
         _status = EmailAuthStatus.authenticated;
@@ -64,7 +64,7 @@ class _EmailVerifierFormFieldState extends State<EmailVerifierFormField> {
         CustomTextFormField(
           fieldName: 'email',
           validator: FieldValidationBuilder.field('email')
-              .required('이메일을 입력해주세요', ValidateOption.always)
+              .required('이메일을 입력해주세요', AutoValidationMode.always)
               .build(),
           decoration: inputDecoration.copyWith(hintText: '이메일'),
         ),
@@ -73,11 +73,11 @@ class _EmailVerifierFormFieldState extends State<EmailVerifierFormField> {
           child: TimerTextFormField(
             fieldName: 'emailVerificationCode',
             validator: FieldValidationBuilder.field('emailVerificationCode')
-                .required('인증번호를 입력해주세요', ValidateOption.disabled)
+                .required('인증번호를 입력해주세요', AutoValidationMode.disabled)
                 .customCheck(
                     (val) => true, //TODO: check authentication code
                     '인증코드가 일치하지 않습니다.',
-                    ValidateOption.disabled)
+                    AutoValidationMode.disabled)
                 .build(),
             hintText: '인증번호 입력',
             duration: const Duration(minutes: 5),
