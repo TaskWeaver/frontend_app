@@ -5,7 +5,7 @@ import 'package:front/shared/atom/checkbox_group_form_field.dart';
 import 'package:front/shared/atom/text_form_field.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';
 import 'package:front/shared/helper/FormHelper/form_validate_builder.dart';
-import 'package:front/shared/helper/FormHelper/interface/form_validate_option.dart';
+import 'package:front/shared/helper/FormHelper/interface/form_auto_validation_mode.dart';
 
 String passwordRegexPatternString = r'^(?=.*[a-zA-Z].*[a-zA-Z])(?=.*\d).{3,}$';
 

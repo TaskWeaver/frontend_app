@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:front/shared/helper/FormHelper/interface/form_auto_validation_mode.dart';
 import 'package:front/shared/helper/FormHelper/interface/form_validate_function.dart';
-import 'package:front/shared/helper/FormHelper/interface/form_validate_option.dart';
 
 const Duration _kIOSAnnouncementDelayDuration = Duration(seconds: 1);
 
