@@ -19,11 +19,12 @@ class CheckboxGroupFormField extends StatefulWidget {
 
 class _CheckboxGroupFormFieldState extends State<CheckboxGroupFormField> {
   List<bool> values = [];
-  var allAgreeCheckboxValue = false;
+  late bool allAgreeCheckboxValue;
 
   @override
   void initState() {
     super.initState();
+    allAgreeCheckboxValue = widget.agreeAllCheckBox!.value;
     for (var i = 0; i < widget.checkBoxes.length; i++) {
       values.add(widget.checkBoxes[i].value);
     }
@@ -35,6 +36,7 @@ class _CheckboxGroupFormFieldState extends State<CheckboxGroupFormField> {
       children: [
         widget.agreeAllCheckBox != null
             ? CheckboxFormField(
+                key: widget.agreeAllCheckBox!.key,
                 value: allAgreeCheckboxValue,
                 onChanged: (value) {
                   setState(
