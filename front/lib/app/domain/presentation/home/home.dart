@@ -43,6 +43,11 @@ class HomeScreen extends StatelessWidget {
                 context.go('/projectUpdate');
               },
               child: const Text('프로젝트 수정')),
+          ElevatedButton(
+              onPressed: () {
+                context.go('/main');
+              },
+              child: const Text('메인 페이지'))
         ])));
   }
 }
