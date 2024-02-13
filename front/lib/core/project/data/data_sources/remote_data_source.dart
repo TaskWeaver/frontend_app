@@ -1,9 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:front/core/project/data/models/project.dart';
-import 'package:front/core/project/data/models/projects.dart';
 
 abstract class ProjectRemoteDataSource {
-  Future<ProjectsModel> getProjectsByTeamId(String teamId);
+  Future<List<ProjectModel>> getProjectsByTeamId(String teamId);
   Future<ProjectModel> getProjectById(String projectId);
   Future<ProjectModel> createProject(ProjectModel project);
   Future<ProjectModel> updateProject(ProjectModel project);
@@ -16,7 +15,7 @@ class ProjectRemoteDataSourceImpl extends ProjectRemoteDataSource {
     final Dio dio;
 
   @override
-  Future<ProjectsModel> getProjectsByTeamId(String teamId) async {
+  Future<List<ProjectModel>> getProjectsByTeamId(String teamId) async {
     // TODO: implement getProjectsByTeamId
     throw UnimplementedError();
   }

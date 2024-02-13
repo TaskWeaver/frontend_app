@@ -162,8 +162,7 @@ class ProjectList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return projectsState.when(
-        (data) {
-          var projects = data.values;
+        (projects) {
           return CustomScrollView(
             slivers: <Widget>[
               SliverList.builder(
