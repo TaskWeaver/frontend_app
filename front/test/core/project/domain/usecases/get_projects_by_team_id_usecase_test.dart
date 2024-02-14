@@ -29,8 +29,7 @@ void main() {
             finished_at: DateTime(2020, 10, 10, 14, 58, 4),
             deleted_at: DateTime(2020, 10, 10, 14, 58, 4),
           ));
-  var projectsModel = ProjectsModel(values: projectModelList);
-  var projectsEntity = projectsModel.toEntity();
+  var projectsEntity = projectModelList.map((e) => e.toEntity()).toList();
 
   test(
       'should get projects of given team id from the repository when call is successful',

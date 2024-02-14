@@ -4,7 +4,6 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:front/core/project/data/data_sources/temp_data_source.dart';
 import 'package:front/core/project/data/models/project.dart';
-import 'package:front/core/project/data/models/projects.dart';
 import 'package:front/core/project/data/repositories/project_repository_impl.dart';
 import 'package:front/core/utils/exception.dart';
 import 'package:front/core/utils/failure.dart';
@@ -27,8 +26,7 @@ void main() {
             finished_at: DateTime(2020, 10, 10, 14, 58, 4),
             deleted_at: DateTime(2020, 10, 10, 14, 58, 4),
           ));
-  var projectsModel = ProjectsModel(values: projectModelList);
-  var projectsEntity = projectsModel.toEntity();
+  var projectsEntity = projectModelList.map((e) => e.toEntity()).toList();
 
   var projectModel = ProjectModel(
     pro_id: 'pro_id1',
@@ -51,7 +49,7 @@ void main() {
     test('should return all projects when a call to data source is successful',
         () async {
       when(mockProjectRemoteDataSource.getProjectsByTeamId('teamId'))
-          .thenAnswer((_) async => projectsModel);
+          .thenAnswer((_) async => projectModelList);
 
       var result = await projectRepository.getProjectsByTeamId('teamId');
 
