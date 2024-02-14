@@ -3,11 +3,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class TimerWidget extends StatefulWidget {
-  const TimerWidget({Key? key, required this.timeInSeconds}) : super(key: key);
-  final int timeInSeconds;
+  const TimerWidget({Key? key, required this.duration, this.onFinished})
+      : assert(duration > Duration.zero, 'Duration must be greater than zero'),
+        assert(duration < const Duration(hours: 1),
+            'Duration must be less than an hour'),
+        super(key: key);
+
+  final Duration duration;
+  final void Function()? onFinished;
+
 
   @override
-  _TimerWidgetState createState() => _TimerWidgetState();
+  State<TimerWidget> createState() => _TimerWidgetState();
 }
 
 class _TimerWidgetState extends State<TimerWidget> {
@@ -17,8 +24,13 @@ class _TimerWidgetState extends State<TimerWidget> {
   @override
   void initState() {
     super.initState();
-    _start = widget.timeInSeconds;
+    _start = widget.duration.inSeconds;
     startTimer();
+  }
+
+  void finishTimer() {
+    _timer.cancel();
+    widget.onFinished?.call();
   }
 
   void startTimer() {
@@ -28,7 +40,7 @@ class _TimerWidgetState extends State<TimerWidget> {
       (timer) => setState(
         () {
           if (_start < 1) {
-            timer.cancel();
+            finishTimer();
           } else {
             _start = _start - 1;
           }
@@ -39,7 +51,7 @@ class _TimerWidgetState extends State<TimerWidget> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    finishTimer();
     super.dispose();
   }
 
