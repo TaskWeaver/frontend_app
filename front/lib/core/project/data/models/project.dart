@@ -12,12 +12,23 @@ class ProjectModel with _$ProjectModel {
     required String name,
     required String discription,
     required DateTime created_at,
-    required DateTime finished_at,
-    required DateTime deleted_at,
+    DateTime? finished_at,
+    DateTime? deleted_at,
   }) = _ProjectModel;
 
   factory ProjectModel.fromJson(Map<String, dynamic> json) =>
       _$ProjectModelFromJson(json);
+
+  factory ProjectModel.fromEntity(Project project) {
+    return ProjectModel(
+        pro_id: project.pro_id,
+        team_id: project.team_id,
+        name: project.name,
+        discription: project.discription,
+        created_at: project.created_at,
+        finished_at: project.finished_at,
+        deleted_at: project.deleted_at);
+  }
 
   ProjectModel._();
 
