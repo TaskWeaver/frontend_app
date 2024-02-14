@@ -6,7 +6,7 @@ abstract class ProjectRemoteDataSource {
   Future<ProjectModel> getProjectById(String projectId);
   Future<ProjectModel> createProject(ProjectModel project);
   Future<ProjectModel> updateProject(ProjectModel project);
-  Future<void> deleteProject(String projectId);
+  Future<String> deleteProjectById(String projectId);
 
 }
 
@@ -33,7 +33,7 @@ class ProjectRemoteDataSourceImpl extends ProjectRemoteDataSource {
   }
   
   @override
-  Future<void> deleteProject(String projectId) {
+  Future<String> deleteProjectById(String projectId) {
     // TODO: implement deleteProject
     throw UnimplementedError();
   }
