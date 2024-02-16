@@ -21,7 +21,7 @@ void main() {
             pro_id: 'pro_id$index',
             team_id: 'team_id$index',
             name: 'name$index',
-            discription: 'description$index',
+            description: 'description$index',
             created_at: DateTime(2020, 10, 10, 14, 58, 4),
             finished_at: DateTime(2020, 10, 10, 14, 58, 4),
             deleted_at: DateTime(2020, 10, 10, 14, 58, 4),
@@ -32,7 +32,7 @@ void main() {
     pro_id: 'pro_id1',
     team_id: 'team_id1',
     name: 'name1',
-    discription: 'description1',
+    description: 'description1',
     created_at: DateTime(2020, 10, 10, 14, 58, 4),
     finished_at: DateTime(2020, 10, 10, 14, 58, 4),
     deleted_at: DateTime(2020, 10, 10, 14, 58, 4),
@@ -42,7 +42,8 @@ void main() {
   setUp(() {
     mockProjectRemoteDataSource = MockProjectRemoteDataSource();
     projectRepository = ProjectRepositoryImpl(
-        projectRemoteDataSource: mockProjectRemoteDataSource, projectTempDataSource: ProjectTempDataSource());
+        projectRemoteDataSource: mockProjectRemoteDataSource,
+        projectTempDataSource: ProjectTempDataSource());
   });
 
   group('get projects by team id', () {

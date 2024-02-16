@@ -12,7 +12,7 @@ class ProjectModel with _$ProjectModel {
     required String pro_id,
     required String team_id,
     required String name,
-    required String discription,
+    required String description,
     required DateTime created_at,
     DateTime? finished_at,
     DateTime? deleted_at,
@@ -26,7 +26,7 @@ class ProjectModel with _$ProjectModel {
         pro_id: project.pro_id,
         team_id: project.team_id,
         name: project.name,
-        discription: project.discription,
+        description: project.description,
         created_at: project.created_at,
         finished_at: project.finished_at,
         deleted_at: project.deleted_at);
@@ -39,7 +39,7 @@ class ProjectModel with _$ProjectModel {
         pro_id: pro_id,
         team_id: team_id,
         name: name,
-        discription: discription,
+        description: description,
         created_at: created_at,
         finished_at: finished_at,
         deleted_at: deleted_at);
