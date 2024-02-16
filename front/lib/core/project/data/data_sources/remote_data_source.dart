@@ -1,16 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:front/core/project/data/models/project.dart';
+import 'package:front/core/project/data/models/project_create.dart';
 
 abstract class ProjectRemoteDataSource {
   Future<List<ProjectModel>> getProjectsByTeamId(String teamId);
   Future<ProjectModel> getProjectById(String projectId);
-  Future<ProjectModel> createProject(ProjectModel project);
+  Future<ProjectModel> createProject(ProjectCreateModel project);
   Future<ProjectModel> updateProject(ProjectModel project);
   Future<String> deleteProjectById(String projectId);
 
 }
 
-class ProjectRemoteDataSourceImpl extends ProjectRemoteDataSource {
+class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
     ProjectRemoteDataSourceImpl({required this.dio});
     final Dio dio;
 
@@ -27,7 +28,7 @@ class ProjectRemoteDataSourceImpl extends ProjectRemoteDataSource {
   }
   
   @override
-  Future<ProjectModel> createProject(ProjectModel project) {
+  Future<ProjectModel> createProject(ProjectCreateModel project) {
     // TODO: implement createProject
     throw UnimplementedError();
   }
