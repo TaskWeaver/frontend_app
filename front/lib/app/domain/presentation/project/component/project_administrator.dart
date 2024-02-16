@@ -92,7 +92,10 @@ class ProjectAdministrator extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               ElevatedButton(
-                onPressed: () => _showConfirmationDialog(assignerName, context),
+                onPressed: () {
+                  Navigator.pop(context);
+                  _showConfirmationDialog(assignerName, context);
+                },
                 child: const Text('확인'),
               ),
               ElevatedButton(
@@ -121,7 +124,6 @@ class ProjectAdministrator extends StatelessWidget {
         const SizedBox(height: 16),
         ElevatedButton(
           onPressed: () {
-            Navigator.pop(context);
             Navigator.pop(context);
             Navigator.pop(context);
           },

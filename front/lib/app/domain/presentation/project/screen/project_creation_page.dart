@@ -1,14 +1,22 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:front/app/domain/presentation/project/component/custom_text_field.dart';
-import 'package:front/app/domain/presentation/project/component/project_administrator.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:front/app/domain/presentation/project/component/project_from.dart';
+import 'package:front/app/domain/presentation/project/viewmodel/project.dart';
+import 'package:front/core/project/data/models/project_create.dart';
 import 'package:front/shared/atom/bottom_navigation_bar.dart';
+import 'package:front/shared/helper/FormHelper/form.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class ProjectCreationScreen extends StatelessWidget {
-  const ProjectCreationScreen({
+  ProjectCreationScreen({
     Key? key,
   }) : super(key: key);
+
+  final team = {
+    'id': '1',
+    'name': '팀이름',
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -16,47 +24,64 @@ class ProjectCreationScreen extends StatelessWidget {
       appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: _Body(teamName: '팀이름'),
+        child: _Body(team: team),
       ),
       bottomNavigationBar: const ProjectBottomNavigationBar(),
     );
   }
 }
-
-String? projectValidator(String? val) {
-  return null;
-}
-
 //view
 
-class _Body extends StatelessWidget {
+class _Body extends ConsumerStatefulWidget {
   _Body({
     Key? key,
-    required this.teamName,
+    required this.team,
   }) : super(key: key);
-  final String teamName;
+
+  final Map<String, dynamic> team;
 
   final TextStyle h1TextStyle = const TextStyle(
       fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black);
 
   @override
-  String? projectTitle;
-  String? projectContent;
+  ConsumerState<_Body> createState() => _BodyState();
+}
+
+class _BodyState extends ConsumerState<_Body> {
+  late ProjectViewmodel viewmodel;
+  final _formKey = GlobalKey<CustomFormState>();
+  late CustomFormState? currentState;
+
+  @override
+  void initState() {
+    super.initState();
+    currentState = _formKey.currentState;
+    viewmodel = ref.read(projectViewmodelProvider.notifier);
+  }
+
+  void onFormChanged() {
+    setState(() {
+      currentState = _formKey.currentState;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildHeader(),
             const SizedBox(height: 10),
-            const ProjectAdministrator(),
-            buildProjectTitleField(),
-            buildProjectContentField(),
-            const SizedBox(height: 20),
-            buildCreateButton(),
+            Expanded(
+              child: ProjectFrom(
+                formKey: _formKey,
+                onFormChanged: onFormChanged,
+              ),
+            ),
+          const SizedBox(height: 20),
+          buildCreateButton(),
           ],
         ),
       ),
@@ -68,38 +93,15 @@ class _Body extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          teamName,
-          style: h1TextStyle,
+          widget.team['name'],
+          style: widget.h1TextStyle,
         ),
         Text(
           'Project 추가하기',
-          style: h1TextStyle,
+          style: widget.h1TextStyle,
         ),
         const Text('새로운 프로젝트를 추가해보세요'),
       ],
-    );
-  }
-
-  Widget buildProjectTitleField() {
-    return Expanded(
-      flex: 0,
-      child: CustomTextField(
-        title: '프로젝트 제목',
-        onSaved: (val) => projectTitle = val,
-        validator: projectValidator,
-      ),
-    );
-  }
-
-  Widget buildProjectContentField() {
-    return Expanded(
-      flex: 1,
-      child: CustomTextField(
-        title: '프로젝트 내용',
-        expanded: true,
-        onSaved: (val) => projectContent = val,
-        validator: projectValidator,
-      ),
     );
   }
 
@@ -108,10 +110,20 @@ class _Body extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         TextButton(
-          onPressed: () {},
+          onPressed: () async {
+            if (_formKey.currentState?.validate(null) ?? false) {
+              var result = await viewmodel.createProject(ProjectCreateModel(
+                  team_id: widget.team['id'],
+                  name: currentState!.fields['name']!.value,
+                  description: currentState!.fields['description']!.value,
+                  ));
+              result.fold((l) => debugPrint(l.toString()),
+                  (r) => debugPrint(r.toString()));
+            }
+          },
           child: Text(
             '생성',
-            style: h1TextStyle.copyWith(fontSize: 15),
+            style: widget.h1TextStyle.copyWith(fontSize: 15),
           ),
         ),
       ],
@@ -126,5 +138,5 @@ class _Body extends StatelessWidget {
   type: ProjectCreationScreen,
 )
 Widget projectCreationScreenUseCase(BuildContext context) {
-  return const ProjectCreationScreen();
+  return ProjectCreationScreen();
 }

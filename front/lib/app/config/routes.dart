@@ -55,7 +55,7 @@ final router = GoRouter(initialLocation: '/', routes: [
     GoRoute(
       path: 'projectCreation',
       name: 'projectCreation',
-      builder: (context, state) => const ProjectCreationScreen(),
+      builder: (context, state) => ProjectCreationScreen(),
     ),
   ]),
 ]);
