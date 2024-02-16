@@ -6,7 +6,7 @@ part 'projects_state.freezed.dart';
 
 @freezed
 class ProjectsState with _$ProjectsState {
-  const factory ProjectsState.loading() = _ProjectStateLoading;
-  const factory ProjectsState.error({String? message}) = _ProjectStateError;
-  const factory ProjectsState(List<Project> projects) = _ProjectStateData;
+  const factory ProjectsState.loading() = _ProjectsStateLoading;
+  const factory ProjectsState.error({String? message}) = _ProjectsStateError;
+  const factory ProjectsState(List<Project> projects) = _ProjectsStateData;
 }
