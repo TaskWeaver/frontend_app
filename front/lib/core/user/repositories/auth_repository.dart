@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:front/core/Auth/data_sources/remote_data_source.dart';
-import 'package:front/core/Auth/models/user.dart';
+import 'package:front/core/user/data_sources/remote_data_source.dart';
+import 'package:front/core/user/models/user.dart';
 import 'package:front/core/utils/exception.dart';
 import 'package:front/core/utils/failure.dart';
 
