@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front/app/domain/presentation/main/viewModel/mainScreenViewModel.dart';
-import 'package:front/core/Auth/user_login_state_notifier.dart';
+import 'package:front/core/user/user_login_state_notifier.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({super.key});

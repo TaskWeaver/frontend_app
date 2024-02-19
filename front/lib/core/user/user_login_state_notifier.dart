@@ -1,8 +1,8 @@
-import 'package:front/core/Auth/models/auth_state.dart';
-import 'package:front/core/Auth/models/user.dart';
-import 'package:front/core/Auth/repositories/auth_rivorpod.dart';
 import 'package:front/core/config/providers/secureStorage.dart';
 import 'package:front/core/const/const.dart';
+import 'package:front/core/user/models/auth_state.dart';
+import 'package:front/core/user/models/user.dart';
+import 'package:front/core/user/repositories/auth_rivorpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'user_login_state_notifier.g.dart';

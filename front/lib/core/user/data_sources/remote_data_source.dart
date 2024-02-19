@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:front/core/Auth/models/user.dart';
+import 'package:front/core/user/models/user.dart';
 
 ///서버와 통신하는 함수를 모아놓은 클래스
 ///서버와의 통신에 실패하면 Exception을 던집니다.
