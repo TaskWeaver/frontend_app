@@ -1,5 +1,5 @@
-import 'package:front/core/Auth/models/user.dart';
-import 'package:front/core/Auth/user_login_state_notifier.dart';
+import 'package:front/core/user/models/user.dart';
+import 'package:front/core/user/user_login_state_notifier.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'loginViewModel.g.dart';
