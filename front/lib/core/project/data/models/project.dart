@@ -14,8 +14,8 @@ class ProjectModel with _$ProjectModel {
     required String name,
     required String description,
     required DateTime created_at,
-    DateTime? finished_at,
-    DateTime? deleted_at,
+    required DateTime finished_at,
+    required DateTime deleted_at,
   }) = _ProjectModel;
 
   factory ProjectModel.fromJson(Map<String, dynamic> json) =>

@@ -24,4 +24,8 @@ class ProjectViewmodel extends _$ProjectViewmodel {
   Future<Either<Failure, Project>> createProject(ProjectCreateModel project) async {
     return await ref.read(createProjectUseCaseProvider)(project);
   }
+
+  Future<Either<Failure, Project>> updateProject(Project project) async {
+    return await ref.read(updateProjectUseCaseProvider)(project);
+  }
 }

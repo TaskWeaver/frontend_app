@@ -10,6 +10,7 @@ class CustomTextFormFieldWithLabel extends StatelessWidget {
     required this.fieldName,
     this.label,
     this.hintText,
+    this.initialValue, 
     this.expanded,
     this.onSaved,
     required this.validator,
@@ -20,6 +21,7 @@ class CustomTextFormFieldWithLabel extends StatelessWidget {
   final String fieldName;
   final String? label;
   final String? hintText;
+  final String? initialValue;
   final FormFieldSetter<String?>? onSaved;
   final List<ValidateFuncList>? validator;
   final void Function(String?)? onChanged;
@@ -44,6 +46,7 @@ class CustomTextFormFieldWithLabel extends StatelessWidget {
             expands: (expanded == true) ? true : false,
             maxLines: (expanded == true) ? null : 1,
             onChanged: onChanged,
+            initialValue: initialValue,
             onSaved: onSaved,
             validator: validator,
             decoration: InputDecoration(

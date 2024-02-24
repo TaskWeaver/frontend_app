@@ -9,6 +9,7 @@ class CustomTextFormField extends CustomFormField<String> {
   CustomTextFormField({
     super.key,
     required String fieldName,
+    this.controller,
     String? initialValue,
     FocusNode? focusNode,
     InputDecoration? decoration = const InputDecoration(),
@@ -78,7 +79,7 @@ class CustomTextFormField extends CustomFormField<String> {
     Clip clipBehavior = Clip.hardEdge,
     bool scribbleEnabled = true,
     bool canRequestFocus = true,
-  })  : assert(initialValue == null),
+  })  : assert(initialValue == null || controller == null),
         assert(obscuringCharacter.length == 1),
         assert(maxLines == null || maxLines > 0),
         assert(minLines == null || minLines > 0),
@@ -97,11 +98,12 @@ class CustomTextFormField extends CustomFormField<String> {
             maxLength > 0),
         super(
           fieldName: fieldName,
-          initialValue: initialValue ?? '',
+          initialValue:
+              controller != null ? controller.text : (initialValue ?? ''),
           enabled: enabled ?? decoration?.enabled ?? true,
           builder: (field) {
-            var effectiveDecoration = (decoration ??
-                    const InputDecoration())
+            var state = field as _CustomTextFormFieldState;
+            var effectiveDecoration = (decoration ?? const InputDecoration())
                 .applyDefaults(Theme.of(field.context).inputDecorationTheme);
             void onChangedHandler(String value) {
               field.didChange(value);
@@ -112,6 +114,7 @@ class CustomTextFormField extends CustomFormField<String> {
               bucket: field.bucket,
               child: TextField(
                 restorationId: restorationId,
+                controller: state._effectiveController,
                 focusNode: focusNode,
                 decoration:
                     effectiveDecoration.copyWith(errorText: field.errorText),
@@ -185,6 +188,12 @@ class CustomTextFormField extends CustomFormField<String> {
           },
         );
 
+  /// Controls the text being edited.
+  ///
+  /// If null, this widget will create its own [TextEditingController] and
+  /// initialize its [TextEditingController.text] with [initialValue].
+  final TextEditingController? controller;
+
   final ValueChanged<String>? onChanged;
   static Widget _defaultContextMenuBuilder(
       BuildContext context, EditableTextState editableTextState) {
@@ -198,5 +207,108 @@ class CustomTextFormField extends CustomFormField<String> {
 }
 
 class _CustomTextFormFieldState extends CustomFormFieldState<String> {
+  RestorableTextEditingController? _controller;
 
+  TextEditingController get _effectiveController =>
+      _textFormField.controller ?? _controller!.value;
+
+  CustomTextFormField get _textFormField => super.widget as CustomTextFormField;
+
+  @override
+  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
+    super.restoreState(oldBucket, initialRestore);
+    if (_controller != null) {
+      _registerController();
+    }
+    // Make sure to update the internal [FormFieldState] value to sync up with
+    // text editing controller value.
+    setValue(_effectiveController.text);
+  }
+
+  void _registerController() {
+    assert(_controller != null);
+    registerForRestoration(_controller!, 'controller');
+  }
+
+  void _createLocalController([TextEditingValue? value]) {
+    assert(_controller == null);
+    _controller = value == null
+        ? RestorableTextEditingController()
+        : RestorableTextEditingController.fromValue(value);
+    if (!restorePending) {
+      _registerController();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (_textFormField.controller == null) {
+      _createLocalController(widget.initialValue != null
+          ? TextEditingValue(text: widget.initialValue!)
+          : null);
+    } else {
+      _textFormField.controller!.addListener(_handleControllerChanged);
+    }
+  }
+
+  @override
+  void didUpdateWidget(CustomTextFormField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (_textFormField.controller != oldWidget.controller) {
+      oldWidget.controller?.removeListener(_handleControllerChanged);
+      _textFormField.controller?.addListener(_handleControllerChanged);
+
+      if (oldWidget.controller != null && _textFormField.controller == null) {
+        _createLocalController(oldWidget.controller!.value);
+      }
+
+      if (_textFormField.controller != null) {
+        setValue(_textFormField.controller!.text);
+        if (oldWidget.controller == null) {
+          unregisterFromRestoration(_controller!);
+          _controller!.dispose();
+          _controller = null;
+        }
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _textFormField.controller?.removeListener(_handleControllerChanged);
+    _controller?.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChange(String? value) {
+    super.didChange(value);
+
+    if (_effectiveController.text != value) {
+      _effectiveController.text = value ?? '';
+    }
+  }
+
+  @override
+  void reset() {
+    // Set the controller value before calling super.reset() to let
+    // _handleControllerChanged suppress the change.
+    _effectiveController.text = widget.initialValue ?? '';
+    super.reset();
+    _textFormField.onChanged?.call(_effectiveController.text);
+  }
+
+  void _handleControllerChanged() {
+    // Suppress changes that originated from within this class.
+    //
+    // In the case where a controller has been passed in to this widget, we
+    // register this change listener. In these cases, we'll also receive change
+    // notifications for changes originating from within this class -- for
+    // example, the reset() method. In such cases, the FormField value will
+    // already have been set.
+    if (_effectiveController.text != value) {
+      didChange(_effectiveController.text);
+    }
+  }
 }

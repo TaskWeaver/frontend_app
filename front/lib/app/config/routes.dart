@@ -5,6 +5,7 @@ import 'package:front/app/domain/presentation/login/login.dart';
 import 'package:front/app/domain/presentation/login/signin.dart';
 import 'package:front/app/domain/presentation/project/screen/project_creation.dart';
 import 'package:front/app/domain/presentation/project/screen/project_detail.dart';
+import 'package:front/app/domain/presentation/project/screen/project_update.dart';
 import 'package:front/app/domain/presentation/team/screen/team_create.dart';
 import 'package:front/app/domain/presentation/team/screen/team_datail.dart';
 import 'package:front/app/domain/presentation/team/screen/teams_list.dart';
@@ -56,6 +57,11 @@ final router = GoRouter(initialLocation: '/', routes: [
       path: 'projectCreation',
       name: 'projectCreation',
       builder: (context, state) => ProjectCreationScreen(),
+    ),
+    GoRoute(
+      path: 'projectUpdate',
+      name: 'projectUpdate',
+      builder: (context, state) => ProjectUpdateScreen(),
     ),
   ]),
 ]);

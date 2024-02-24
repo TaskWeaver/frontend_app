@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front/app/domain/presentation/project/component/project_from.dart';
 import 'package:front/app/domain/presentation/project/viewmodel/project.dart';
-import 'package:front/core/project/data/models/project_create.dart';
+import 'package:front/core/project/domain/entities/project.dart';
 import 'package:front/shared/atom/bottom_navigation_bar.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-class ProjectCreationScreen extends StatelessWidget {
-  ProjectCreationScreen({
+class ProjectUpdateScreen extends StatelessWidget {
+  ProjectUpdateScreen({
     Key? key,
   }) : super(key: key);
 
@@ -42,6 +42,16 @@ class _Body extends ConsumerStatefulWidget {
 
   final TextStyle h1TextStyle = const TextStyle(
       fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black);
+
+  final project = Project(
+    pro_id: 'pro_id',
+    team_id: 'team_id',
+    name: 'name',
+    description: 'description',
+    created_at: DateTime(2020, 10, 10, 14, 58, 4),
+    finished_at: DateTime(2020, 10, 10, 14, 58, 4),
+    deleted_at: DateTime(2020, 10, 10, 14, 58, 4),
+  );
 
   @override
   ConsumerState<_Body> createState() => _BodyState();
@@ -78,10 +88,18 @@ class _BodyState extends ConsumerState<_Body> {
               child: ProjectFrom(
                 formKey: _formKey,
                 onFormChanged: onFormChanged,
+                initialValue: {
+                  'name': widget.project.name,
+                  'description': widget.project.description,
+                },
               ),
             ),
             const SizedBox(height: 20),
-            buildCreateButton(),
+            Row(
+              children: [
+                buildUpdateButton(),
+              ],
+            )
           ],
         ),
       ),
@@ -105,28 +123,22 @@ class _BodyState extends ConsumerState<_Body> {
     );
   }
 
-  Row buildCreateButton() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        TextButton(
-          onPressed: () async {
-            if (_formKey.currentState?.validate(null) ?? false) {
-              var result = await viewmodel.createProject(ProjectCreateModel(
-                team_id: widget.team['id'],
-                name: currentState!.fields['name']!.value,
-                description: currentState!.fields['description']!.value,
-              ));
-              result.fold((l) => debugPrint(l.toString()),
-                  (r) => debugPrint(r.toString()));
-            }
-          },
-          child: Text(
-            '생성',
-            style: widget.h1TextStyle.copyWith(fontSize: 15),
-          ),
-        ),
-      ],
+  Widget buildUpdateButton() {
+    return TextButton(
+      onPressed: () async {
+        if (_formKey.currentState?.validate(null) ?? false) {
+          var result = await viewmodel.updateProject(widget.project.copyWith(
+            name: _formKey.currentState!.fields['name']!.value,
+            description: _formKey.currentState!.fields['description']!.value,
+          ));
+          result.fold(
+              (l) => debugPrint(l.toString()), (r) => debugPrint(r.toString()));
+        }
+      },
+      child: Text(
+        '수정',
+        style: widget.h1TextStyle.copyWith(fontSize: 15),
+      ),
     );
   }
 }
@@ -135,8 +147,8 @@ class _BodyState extends ConsumerState<_Body> {
 
 @widgetbook.UseCase(
   name: '',
-  type: ProjectCreationScreen,
+  type: ProjectUpdateScreen,
 )
 Widget projectCreationScreenUseCase(BuildContext context) {
-  return ProjectCreationScreen();
+  return ProjectUpdateScreen();
 }
