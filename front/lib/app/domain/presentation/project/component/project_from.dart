@@ -32,7 +32,6 @@ class _ProjectFromState extends State<ProjectFrom> {
           const ProjectAdministrator(),
           buildProjectNameField(),
           buildProjectContentField(),
-          TextFormField()
         ],
       ),
     );
