@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/domain/presentation/project/component/custom_text_field.dart';
 import 'package:front/app/domain/presentation/project/component/project_administrator.dart';
+import 'package:front/core/user/models/user.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';
 import 'package:front/shared/helper/FormHelper/form_validate_builder.dart';
 import 'package:front/shared/helper/FormHelper/interface/form_auto_validation_mode.dart';
@@ -9,7 +10,10 @@ typedef VoidCallback = void Function();
 
 class ProjectFrom extends StatefulWidget {
   const ProjectFrom(
-      {super.key, required this.formKey, required this.onFormChanged, this.initialValue});
+      {super.key,
+      required this.formKey,
+      required this.onFormChanged,
+      this.initialValue});
   final GlobalKey<CustomFormState> formKey;
   final VoidCallback onFormChanged;
   final TextStyle h1TextStyle = const TextStyle(
@@ -29,7 +33,6 @@ class _ProjectFromState extends State<ProjectFrom> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const ProjectAdministrator(),
           buildProjectNameField(),
           buildProjectContentField(),
         ],

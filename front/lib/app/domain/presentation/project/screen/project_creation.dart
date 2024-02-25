@@ -1,9 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:front/app/domain/presentation/project/component/project_administrator.dart';
 import 'package:front/app/domain/presentation/project/component/project_from.dart';
 import 'package:front/app/domain/presentation/project/viewmodel/project.dart';
 import 'package:front/core/project/data/models/project_create.dart';
+import 'package:front/core/user/models/user.dart';
 import 'package:front/shared/atom/bottom_navigation_bar.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -51,6 +53,15 @@ class _BodyState extends ConsumerState<_Body> {
   late ProjectViewmodel viewmodel;
   final _formKey = GlobalKey<CustomFormState>();
   late CustomFormState? currentState;
+  var administrator =
+      const UserModel(id: 1, nickname: 'user1', email: 'email', type: 'type');
+  final List<UserModel> teamMembers = [
+    const UserModel(id: 1, email: 'email', nickname: 'user1', type: 'MEMBER'),
+    const UserModel(id: 1, email: 'email', nickname: 'user2', type: 'MEMBER'),
+    const UserModel(id: 1, email: 'email', nickname: 'user3', type: 'MEMBER'),
+    const UserModel(id: 1, email: 'email', nickname: 'user4', type: 'MEMBER'),
+    const UserModel(id: 1, email: 'email', nickname: 'user5', type: 'MEMBER'),
+  ];
 
   @override
   void initState() {
@@ -65,6 +76,12 @@ class _BodyState extends ConsumerState<_Body> {
     });
   }
 
+  void onAdministratorChanged(UserModel user) {
+    setState(() {
+      administrator = user;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -74,6 +91,7 @@ class _BodyState extends ConsumerState<_Body> {
           children: [
             buildHeader(),
             const SizedBox(height: 10),
+            ProjectAdministrator(teamMembers: teamMembers, administrator: administrator, onChanged: onAdministratorChanged),
             Expanded(
               child: ProjectFrom(
                 formKey: _formKey,
