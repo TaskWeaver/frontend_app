@@ -1,17 +1,11 @@
-import 'dart:convert';
-
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:front/core/config/providers/dio.dart';
 import 'package:front/core/project/data/data_sources/remote_data_source.dart';
 import 'package:front/core/project/data/models/project.dart';
+import 'package:front/core/utils/exception.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
-import 'package:mockito/mockito.dart';
-
 import '../../../../helpers/dummy_data/project/api_response.dart';
-import '../../../../helpers/json_reader.dart';
 import '../../../../helpers/provider_container.dart';
 
 void main() {
@@ -69,43 +63,47 @@ void main() {
     });
   });
 
+  group('get a project by id', () {
+    test('should return all a project when a http call is successful', () async {
+      var projectId = projectModel.projectId;
+      dioAdapter.onGet('/v1/project/$projectId',
+          (server) => server.reply(200, getProjectByIdDummyData));
+
+      var result = await projectRemoteDataSource.getProjectById(projectId);
+
+      expect(result, equals(projectModel));
+    });
+
+    test('should return server failure when a call to api is unsuccessful',
+        () async {
+      var projectId = projectModel.projectId;
+      dioAdapter.onGet('/v1/project/$projectId',
+          (server) => server.reply(500, null));
+
+      expect(projectRemoteDataSource.getProjectsByTeamId(projectId),
+          throwsA(isA<ServerException>()));
+    });
   });
 
-//   group('get project by id', () {
-//     test(
-//         'should return project of given id when a call to data source is successful',
-//         () async {
-//       when(mockProjectRemoteDataSource.getProjectById(1))
-//           .thenAnswer((_) async => projectModel);
+  group('update a project', () {
+    test('should return updated project when a http call is successful', () async {
+      var projectId = projectModel.projectId;
+      dioAdapter.onPatch('/v1/project/$projectId',
+          (server) => server.reply(200, getProjectByIdDummyData));
 
-//       var result = await projectRepository.getProjectById(1);
+      var result = await projectRemoteDataSource.updateProject(projectModel);
 
-//       expect(result, equals(Right(projectEntityList)));
-//     });
+      expect(result, equals(projectModel));
+    });
 
-//     test(
-//         'should return server failure when a call to data source is unsuccessful',
-//         () async {
-//       when(mockProjectRemoteDataSource.getProjectById(1))
-//           .thenThrow(ServerException());
+    test('should return server failure when a call to api is unsuccessful',
+        () async {
+      var projectId = projectModel.projectId;
+      dioAdapter.onGet('/v1/project/$projectId',
+          (server) => server.reply(500, null));
 
-//       var result = await projectRepository.getProjectById(1);
-
-//       expect(
-//           result, equals(const Left(ServerFailure('An error has occurred'))));
-//     });
-
-//     test(
-//         'should return connection failure when the device has no internet connection',
-//         () async {
-//       when(mockProjectRemoteDataSource.getProjectById(1))
-//           .thenThrow(const SocketException('Failed to conect to the network'));
-
-//       var result = await projectRepository.getProjectById(1);
-//       expect(
-//           result,
-//           equals(
-//               const Left(ServerFailure('Failed to connect to the network'))));
-//     });
-//   });
+      expect(projectRemoteDataSource.getProjectsByTeamId(projectId),
+          throwsA(isA<ServerException>()));
+    });
+  });
 }
