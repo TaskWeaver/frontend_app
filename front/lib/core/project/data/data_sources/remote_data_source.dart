@@ -17,13 +17,19 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
 
   @override
   Future<List<ProjectModel>> getProjectsByTeamId(int teamId) async {
-    var response = await dio.post(
+    try {
+      var response = await dio.get(
       '/v1/projects/$teamId',
     );
 
-    if (response.statusCode == 200) {
-      return response.data['result'].map<ProjectModel>((data) => ProjectModel.fromJson(data)).toList();
+      if (response.statusCode == 200 && response.data?['resultCode'] == 200) {
+        return response.data['result']
+            .map<ProjectModel>((data) => ProjectModel.fromJson(data))
+            .toList();
     } else {
+        throw ServerException();
+      }
+    } on DioException {
       throw ServerException();
     }
   }
