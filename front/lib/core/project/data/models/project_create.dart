@@ -1,16 +1,16 @@
 import 'package:equatable/equatable.dart';
 
-class ProjectCreateModel extends Equatable {
-  const ProjectCreateModel({
-    required this.team_id,
+class ProjectRequestModel extends Equatable {
+  const ProjectRequestModel({
+    required this.managerId,
     required this.name,
     required this.description,
   });
-  
-  final String team_id;
+
+  final int managerId;
   final String name;
   final String description;
 
   @override
-  List<Object?> get props => [ team_id, name, description ];
+  List<Object?> get props => [managerId, name, description];
 }
