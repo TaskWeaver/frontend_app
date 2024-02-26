@@ -17,7 +17,7 @@ class ProjectTempDataSource {
         const Duration(seconds: 3), () => Future.value(projectModelList));
   }
 
-  Future<ProjectModel> createProject(ProjectCreateModel project) async {
+  Future<ProjectModel> createProject(ProjectRequestModel project) async {
     var projectModel = ProjectModel(
       projectId: 1,
       name: 'name1',

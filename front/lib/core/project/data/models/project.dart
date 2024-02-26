@@ -1,7 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:front/app/domain/presentation/project/state/project_state.dart';
 import 'package:front/core/const/enum.dart';
 import 'package:front/core/project/domain/entities/project.dart';
 

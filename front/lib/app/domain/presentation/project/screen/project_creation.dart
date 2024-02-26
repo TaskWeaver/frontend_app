@@ -91,7 +91,10 @@ class _BodyState extends ConsumerState<_Body> {
           children: [
             buildHeader(),
             const SizedBox(height: 10),
-            ProjectAdministrator(teamMembers: teamMembers, administrator: administrator, onChanged: onAdministratorChanged),
+            ProjectAdministrator(
+                teamMembers: teamMembers,
+                administrator: administrator,
+                onChanged: onAdministratorChanged),
             Expanded(
               child: ProjectFrom(
                 formKey: _formKey,
@@ -130,11 +133,11 @@ class _BodyState extends ConsumerState<_Body> {
         TextButton(
           onPressed: () async {
             if (_formKey.currentState?.validate(null) ?? false) {
-              var result = await viewmodel.createProject(ProjectCreateModel(
-                team_id: widget.team['id'],
+              var result = await viewmodel.createProject(ProjectRequestModel(
+                managerId: administrator.id,
                 name: currentState!.fields['name']!.value,
                 description: currentState!.fields['description']!.value,
-              ));
+              ), widget.team['id'],);
               result.fold((l) => debugPrint(l.toString()),
                   (r) => debugPrint(r.toString()));
             }

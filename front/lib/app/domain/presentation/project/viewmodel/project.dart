@@ -21,11 +21,13 @@ class ProjectViewmodel extends _$ProjectViewmodel {
     );
   }
 
-  Future<Either<Failure, Project>> createProject(ProjectCreateModel project) async {
-    return await ref.read(createProjectUseCaseProvider)(project);
+  Future<Either<Failure, Project>> createProject(
+      ProjectRequestModel project, int teamId) async {
+    return await ref.read(createProjectUseCaseProvider)(project, teamId);
   }
 
-  Future<Either<Failure, Project>> updateProject(Project project) async {
-    return await ref.read(updateProjectUseCaseProvider)(project);
+  Future<Either<Failure, Project>> updateProject(
+      ProjectRequestModel project, int projectId) async {
+    return await ref.read(updateProjectUseCaseProvider)(project, projectId);
   }
 }

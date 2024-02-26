@@ -8,7 +8,7 @@ class CreateProjectUseCase {
   const CreateProjectUseCase(this.projectRepository);
   final ProjectRepository projectRepository;
 
-  Future<Either<Failure, Project>> call(ProjectCreateModel project) {
-    return projectRepository.createProject(project);
+  Future<Either<Failure, Project>> call(ProjectRequestModel project, int teamId) {
+    return projectRepository.createProject(project, teamId);
   }
 }

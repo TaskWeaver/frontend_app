@@ -6,8 +6,8 @@ import 'package:front/core/utils/exception.dart';
 abstract class ProjectRemoteDataSource {
   Future<List<ProjectModel>> getProjectsByTeamId(int teamId);
   Future<ProjectModel> getProjectById(int projectId);
-  Future<ProjectModel> createProject(ProjectCreateModel project);
-  Future<ProjectModel> updateProject(ProjectModel project);
+  Future<ProjectModel> createProject(ProjectRequestModel project, int teamId);
+  Future<ProjectModel> updateProject(ProjectRequestModel project, int projectId);
   Future<String> deleteProjectById(String projectId);
 }
 
@@ -50,7 +50,7 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   }
 
   @override
-  Future<ProjectModel> createProject(ProjectCreateModel project) {
+  Future<ProjectModel> createProject(ProjectRequestModel project, int teamId) {
     // TODO: implement createProject
     throw UnimplementedError();
   }
@@ -62,7 +62,7 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   }
 
   @override
-  Future<ProjectModel> updateProject(ProjectModel project) {
+  Future<ProjectModel> updateProject(ProjectRequestModel project, int projectId) {
     // TODO: implement updateProject
     throw UnimplementedError();
   }

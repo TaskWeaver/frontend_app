@@ -20,8 +20,7 @@ class ProjectRepositoryImpl implements ProjectRepository {
   Map<int, Project> projects = {};
 
   @override
-  Future<Either<Failure, List<Project>>> getProjectsByTeamId(
-      int teamId) async {
+  Future<Either<Failure, List<Project>>> getProjectsByTeamId(int teamId) async {
     try {
       var result = await projectRemoteDataSource.getProjectsByTeamId(teamId);
       for (var element in result) {
@@ -65,10 +64,10 @@ class ProjectRepositoryImpl implements ProjectRepository {
   }
 
   @override
-  Future<Either<Failure, Project>> updateProject(Project project) async {
+  Future<Either<Failure, Project>> updateProject(ProjectRequestModel project, int projectId) async {
     try {
       var result = await projectRemoteDataSource
-          .updateProject(ProjectModel.fromEntity(project));
+          .updateProject(project, projectId);
       projects.addAll({result.projectId: result.toEntity()});
       return Right(result.toEntity());
     } on ServerException {
@@ -80,9 +79,9 @@ class ProjectRepositoryImpl implements ProjectRepository {
 
   @override
   Future<Either<Failure, Project>> createProject(
-      ProjectCreateModel project) async {
+      ProjectRequestModel project, int teamId) async {
     try {
-      var result = await projectRemoteDataSource.createProject(project);
+      var result = await projectRemoteDataSource.createProject(project, teamId);
       projects.addAll({result.projectId: result.toEntity()});
       return Right(result.toEntity());
     } on ServerException {

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front/app/domain/presentation/project/component/project_from.dart';
 import 'package:front/app/domain/presentation/project/viewmodel/project.dart';
 import 'package:front/core/const/enum.dart';
+import 'package:front/core/project/data/models/project_create.dart';
 import 'package:front/core/project/domain/entities/project.dart';
 import 'package:front/shared/atom/bottom_navigation_bar.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';
@@ -126,10 +127,13 @@ class _BodyState extends ConsumerState<_Body> {
     return TextButton(
       onPressed: () async {
         if (_formKey.currentState?.validate(null) ?? false) {
-          var result = await viewmodel.updateProject(widget.project.copyWith(
-            name: _formKey.currentState!.fields['name']!.value,
-            description: _formKey.currentState!.fields['description']!.value,
-          ));
+          var result = await viewmodel.updateProject(
+              ProjectRequestModel(
+                  managerId: 1,
+                  name: _formKey.currentState!.fields['name']!.value,
+                  description:
+                      _formKey.currentState!.fields['description']!.value),
+              widget.project.projectId);
           result.fold(
               (l) => debugPrint(l.toString()), (r) => debugPrint(r.toString()));
         }
