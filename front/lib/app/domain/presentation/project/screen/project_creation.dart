@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:front/app/domain/presentation/project/component/project_administrator.dart';
+import 'package:front/app/domain/presentation/project/component/project_manager_selector.dart';
 import 'package:front/app/domain/presentation/project/component/project_from.dart';
 import 'package:front/app/domain/presentation/project/viewmodel/project.dart';
 import 'package:front/core/project/data/models/project_create.dart';
@@ -53,7 +53,7 @@ class _BodyState extends ConsumerState<_Body> {
   late ProjectViewmodel viewmodel;
   final _formKey = GlobalKey<CustomFormState>();
   late CustomFormState? currentState;
-  var administrator =
+  var manager =
       const UserModel(id: 1, nickname: 'user1', email: 'email', type: 'type');
   final List<UserModel> teamMembers = [
     const UserModel(id: 1, email: 'email', nickname: 'user1', type: 'MEMBER'),
@@ -76,9 +76,9 @@ class _BodyState extends ConsumerState<_Body> {
     });
   }
 
-  void onAdministratorChanged(UserModel user) {
+  void onManagerChanged(UserModel user) {
     setState(() {
-      administrator = user;
+      manager = user;
     });
   }
 
@@ -91,10 +91,10 @@ class _BodyState extends ConsumerState<_Body> {
           children: [
             buildHeader(),
             const SizedBox(height: 10),
-            ProjectAdministrator(
+            ProjectManagerSelector(
                 teamMembers: teamMembers,
-                administrator: administrator,
-                onChanged: onAdministratorChanged),
+                manager: manager,
+                onChanged: onManagerChanged),
             Expanded(
               child: ProjectFrom(
                 formKey: _formKey,
@@ -133,11 +133,14 @@ class _BodyState extends ConsumerState<_Body> {
         TextButton(
           onPressed: () async {
             if (_formKey.currentState?.validate(null) ?? false) {
-              var result = await viewmodel.createProject(ProjectRequestModel(
-                managerId: administrator.id,
-                name: currentState!.fields['name']!.value,
-                description: currentState!.fields['description']!.value,
-              ), widget.team['id'],);
+              var result = await viewmodel.createProject(
+                ProjectRequestModel(
+                  managerId: manager.id,
+                  name: currentState!.fields['name']!.value,
+                  description: currentState!.fields['description']!.value,
+                ),
+                widget.team['id'],
+              );
               result.fold((l) => debugPrint(l.toString()),
                   (r) => debugPrint(r.toString()));
             }

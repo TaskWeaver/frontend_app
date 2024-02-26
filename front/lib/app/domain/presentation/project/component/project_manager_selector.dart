@@ -5,16 +5,16 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 typedef VoidCallback = void Function(UserModel user);
 
-class ProjectAdministrator extends StatelessWidget {
-  const ProjectAdministrator(
+class ProjectManagerSelector extends StatelessWidget {
+  const ProjectManagerSelector(
       {Key? key,
       required this.teamMembers,
-      required this.administrator,
+      required this.manager,
       required this.onChanged})
       : super(key: key);
 
   final List<UserModel> teamMembers;
-  final UserModel administrator;
+  final UserModel manager;
   final VoidCallback onChanged;
 
   @override
@@ -25,7 +25,7 @@ class ProjectAdministrator extends StatelessWidget {
         const Text('프로젝트 담당자'),
         GestureDetector(
           onTap: () => _setAdministrator(context, teamMembers),
-          child: _buildAdministratorRow(administrator),
+          child: _buildAdministratorRow(manager),
         ),
       ],
     );
