@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:front/core/project/data/models/project.dart';
-import 'package:front/core/project/data/models/project_create.dart';
+import 'package:front/core/project/data/models/project_request.dart';
 import 'package:front/core/utils/exception.dart';
 
 abstract class ProjectRemoteDataSource {

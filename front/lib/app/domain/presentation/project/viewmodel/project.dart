@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:front/app/domain/presentation/project/state/project_state.dart';
-import 'package:front/core/project/data/models/project_create.dart';
+import 'package:front/core/project/data/models/project_request.dart';
 import 'package:front/core/project/domain/entities/project.dart';
 import 'package:front/core/project/domain/usecases/riverpod.dart';
 import 'package:front/core/utils/failure.dart';
