@@ -62,8 +62,17 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   }
 
   @override
-  Future<ProjectModel> updateProject(ProjectRequestModel project, int projectId) {
-    // TODO: implement updateProject
-    throw UnimplementedError();
+  Future<ProjectModel> updateProject(ProjectRequestModel project, int projectId) async {
+    try {
+      var response = await dio.patch('/v1/project/$projectId', data: project.toJson());
+
+      if (response.statusCode == 200 && response.data?['resultCode'] == 204) {
+        return ProjectModel.fromJson(response.data['result']);
+      } else {
+        throw ServerException();
+      }
+    } on DioException {
+      throw ServerException();
+    }
   }
 }
