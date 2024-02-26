@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:front/app/domain/presentation/team/componet/dialog.dart';
 import 'package:front/core/user/models/user.dart';

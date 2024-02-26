@@ -3,12 +3,11 @@ import 'package:front/core/project/data/models/project.dart';
 import 'package:front/core/project/data/models/project_create.dart';
 
 abstract class ProjectRemoteDataSource {
-  Future<List<ProjectModel>> getProjectsByTeamId(String teamId);
-  Future<ProjectModel> getProjectById(String projectId);
+  Future<List<ProjectModel>> getProjectsByTeamId(int teamId);
+  Future<ProjectModel> getProjectById(int projectId);
   Future<ProjectModel> createProject(ProjectCreateModel project);
   Future<ProjectModel> updateProject(ProjectModel project);
   Future<String> deleteProjectById(String projectId);
-
 }
 
 class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
@@ -16,13 +15,11 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
     final Dio dio;
 
   @override
-  Future<List<ProjectModel>> getProjectsByTeamId(String teamId) async {
-    // TODO: implement getProjectsByTeamId
-    throw UnimplementedError();
+  Future<List<ProjectModel>> getProjectsByTeamId(int teamId) async {
   }
   
   @override
-  Future<ProjectModel> getProjectById(String projectId) {
+  Future<ProjectModel> getProjectById(int projectId) {
     // TODO: implement getProjectById
     throw UnimplementedError();
   }

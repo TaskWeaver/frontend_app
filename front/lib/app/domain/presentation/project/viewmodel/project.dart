@@ -13,7 +13,7 @@ class ProjectViewmodel extends _$ProjectViewmodel {
   @override
   ProjectState build() => const ProjectState.loading();
 
-  Future<void> getProjectById(String projectId) async {
+  Future<void> getProjectById(int projectId) async {
     var result = await ref.read(getProjectByIdUseCaseProvider)(projectId);
     result.fold(
       (l) => state = ProjectState.error(message: l.message),

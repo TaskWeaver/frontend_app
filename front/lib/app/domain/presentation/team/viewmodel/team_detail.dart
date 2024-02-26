@@ -9,7 +9,7 @@ class TeamDetailViewmodel extends _$TeamDetailViewmodel {
   @override
   ProjectsState build() => const ProjectsState.loading();
 
-  Future<void> getProjectsByTeamId(String teamId) async {
+  Future<void> getProjectsByTeamId(int teamId) async {
     var result = await ref.read(getProjectsByTeamIdUseCaseProvider)(teamId);
     result.fold(
       (l) => state = ProjectsState.error(message: l.message),

@@ -1,0 +1,30 @@
+[
+  {
+    "projectId": 0,
+    "name": "name0",
+    "description": "description0",
+    "managerId": 1,
+    "projectState": "BEFORE"
+  },
+  {
+    "projectId": 1,
+    "name": "name1",
+    "description": "description1",
+    "managerId": 2,
+    "projectState": "BEFORE"
+  },
+  {
+    "projectId": 2,
+    "name": "name2",
+    "description": "description2",
+    "managerId": 3,
+    "projectState": "BEFORE"
+  },
+  {
+    "projectId": 3,
+    "name": "name3",
+    "description": "description3",
+    "managerId": 4,
+    "projectState": "BEFORE"
+  }
+]

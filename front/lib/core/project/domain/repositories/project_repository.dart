@@ -4,8 +4,8 @@ import 'package:front/core/project/domain/entities/project.dart';
 import 'package:front/core/utils/failure.dart';
 
 abstract class ProjectRepository {
-  Future<Either<Failure, List<Project>>> getProjectsByTeamId(String teamId);
-  Future<Either<Failure, Project>> getProjectById(String projectId);
+  Future<Either<Failure, List<Project>>> getProjectsByTeamId(int teamId);
+  Future<Either<Failure, Project>> getProjectById(int projectId);
   Future<Either<Failure, Project>> updateProject(Project project);
   Future<Either<Failure, String>> deleteProjectById(String projectId);
   Future<Either<Failure, Project>> createProject(ProjectCreateModel project);

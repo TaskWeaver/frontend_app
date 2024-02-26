@@ -7,7 +7,7 @@ class GetProjectByIdUseCase {
   const GetProjectByIdUseCase(this.projectRepository);
   final ProjectRepository projectRepository;
 
-  Future<Either<Failure, Project>> call(String teamId) {
+  Future<Either<Failure, Project>> call(int teamId) {
     return projectRepository.getProjectById(teamId);
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:front/core/const/enum.dart';
 import 'package:front/core/project/data/models/project.dart';
 import 'package:front/core/project/domain/entities/project.dart';
 
@@ -8,22 +9,18 @@ import '../../../../helpers/json_reader.dart';
 
 void main() {
   var testProjectModel = ProjectModel(
-    pro_id: 'pro_id1',
-    team_id: 'team_id1',
+    projectId: 1,
     name: 'name1',
     description: 'description1',
-    created_at: DateTime(2020, 10, 10, 14, 58, 4),
-    finished_at: DateTime(2020, 10, 10, 14, 58, 4),
-    deleted_at: DateTime(2020, 10, 10, 14, 58, 4),
+    managerId: 2,
+    projectState: 'BEFORE',
   );
   var testProject = Project(
-    pro_id: 'pro_id1',
-    team_id: 'team_id1',
+    projectId: 1,
     name: 'name1',
     description: 'description1',
-    created_at: DateTime(2020, 10, 10, 14, 58, 4),
-    finished_at: DateTime(2020, 10, 10, 14, 58, 4),
-    deleted_at: DateTime(2020, 10, 10, 14, 58, 4),
+    managerId: 2,
+    projectState: ProjectStateEnum.before,
   );
 
   test('should return a valid model from json', () async {

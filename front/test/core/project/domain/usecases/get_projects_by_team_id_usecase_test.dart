@@ -21,23 +21,21 @@ void main() {
   var projectModelList = List.generate(
       3,
       (index) => ProjectModel(
-            pro_id: 'pro_id$index',
-            team_id: 'team_id$index',
+            projectId: index,
             name: 'name$index',
             description: 'description$index',
-            created_at: DateTime(2020, 10, 10, 14, 58, 4),
-            finished_at: DateTime(2020, 10, 10, 14, 58, 4),
-            deleted_at: DateTime(2020, 10, 10, 14, 58, 4),
+            managerId: 2,
+            projectState: 'BEFORE',
           ));
   var projectsEntity = projectModelList.map((e) => e.toEntity()).toList();
 
   test(
       'should get projects of given team id from the repository when call is successful',
       () async {
-    when(mockProjectRepository.getProjectsByTeamId('teamId'))
+    when(mockProjectRepository.getProjectsByTeamId(1))
         .thenAnswer((_) async => Right(projectsEntity));
 
-    var result = await getProjectsByTeamIdUseCase('teamId');
+    var result = await getProjectsByTeamIdUseCase(1);
 
     expect(result, equals(Right(projectsEntity)));
   });
@@ -45,10 +43,10 @@ void main() {
   test(
       'should get server failure from the repository when call is unsuccessful',
       () async {
-    when(mockProjectRepository.getProjectsByTeamId('teamId')).thenAnswer(
+    when(mockProjectRepository.getProjectsByTeamId(1)).thenAnswer(
         (_) async => const Left(ServerFailure('An error has occurred')));
 
-    var result = await getProjectsByTeamIdUseCase('teamId');
+    var result = await getProjectsByTeamIdUseCase(1);
 
     expect(result, equals(const Left(ServerFailure('An error has occurred'))));
   });
@@ -56,11 +54,10 @@ void main() {
   test(
       'should get socket failure from the repository when the device has no internet connection',
       () async {
-    when(mockProjectRepository.getProjectsByTeamId('teamId')).thenAnswer(
-        (_) async =>
-            const Left(ServerFailure('Failed to connect to the network')));
+    when(mockProjectRepository.getProjectsByTeamId(1)).thenAnswer((_) async =>
+        const Left(ServerFailure('Failed to connect to the network')));
 
-    var result = await getProjectsByTeamIdUseCase('teamId');
+    var result = await getProjectsByTeamIdUseCase(1);
 
     expect(result,
         equals(const Left(ServerFailure('Failed to connect to the network'))));

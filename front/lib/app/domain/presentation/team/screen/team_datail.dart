@@ -28,7 +28,7 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
   void initState() {
     super.initState();
     viewmodel = ref.read(teamDetailViewmodelProvider.notifier);
-    viewmodel.getProjectsByTeamId('teamId');
+    viewmodel.getProjectsByTeamId(1);
   }
 
   @override

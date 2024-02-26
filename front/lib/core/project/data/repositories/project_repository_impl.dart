@@ -17,15 +17,15 @@ class ProjectRepositoryImpl implements ProjectRepository {
   final ProjectRemoteDataSource projectRemoteDataSource;
   final ProjectTempDataSource projectTempDataSource;
 
-  Map<String, Project> projects = {};
+  Map<int, Project> projects = {};
 
   @override
   Future<Either<Failure, List<Project>>> getProjectsByTeamId(
-      String teamId) async {
+      int teamId) async {
     try {
       var result = await projectRemoteDataSource.getProjectsByTeamId(teamId);
       for (var element in result) {
-        projects.addAll({element.pro_id: element.toEntity()});
+        projects.addAll({element.projectId: element.toEntity()});
       }
       return Right(result.map((e) => e.toEntity()).toList());
     } on ServerException {
@@ -39,7 +39,7 @@ class ProjectRepositoryImpl implements ProjectRepository {
   }
 
   @override
-  Future<Either<Failure, Project>> getProjectById(String projectId) async {
+  Future<Either<Failure, Project>> getProjectById(int projectId) async {
     try {
       var result = await projectRemoteDataSource.getProjectById(projectId);
       projects.addAll({projectId: result.toEntity()});
@@ -69,7 +69,7 @@ class ProjectRepositoryImpl implements ProjectRepository {
     try {
       var result = await projectRemoteDataSource
           .updateProject(ProjectModel.fromEntity(project));
-      projects.addAll({result.pro_id: result.toEntity()});
+      projects.addAll({result.projectId: result.toEntity()});
       return Right(result.toEntity());
     } on ServerException {
       return const Left(ServerFailure('An error has occurred'));
@@ -77,13 +77,13 @@ class ProjectRepositoryImpl implements ProjectRepository {
       return const Left(ServerFailure('Failed to connect to the network'));
     }
   }
-  
+
   @override
-  Future<Either<Failure, Project>> createProject(ProjectCreateModel project) async {
+  Future<Either<Failure, Project>> createProject(
+      ProjectCreateModel project) async {
     try {
-      var result = await projectRemoteDataSource
-          .createProject(project);
-      projects.addAll({result.pro_id: result.toEntity()});
+      var result = await projectRemoteDataSource.createProject(project);
+      projects.addAll({result.projectId: result.toEntity()});
       return Right(result.toEntity());
     } on ServerException {
       return const Left(ServerFailure('An error has occurred'));

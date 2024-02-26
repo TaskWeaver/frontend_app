@@ -18,24 +18,20 @@ void main() {
   var projectModelList = List.generate(
       3,
       (index) => ProjectModel(
-            pro_id: 'pro_id$index',
-            team_id: 'team_id$index',
-            name: 'name$index',
-            description: 'description$index',
-            created_at: DateTime(2020, 10, 10, 14, 58, 4),
-            finished_at: DateTime(2020, 10, 10, 14, 58, 4),
-            deleted_at: DateTime(2020, 10, 10, 14, 58, 4),
+            projectId: 1,
+            name: 'name1',
+            description: 'description1',
+            managerId: 2,
+            projectState: 'BEFORE',
           ));
   var projectsEntity = projectModelList.map((e) => e.toEntity()).toList();
 
   var projectModel = ProjectModel(
-    pro_id: 'pro_id1',
-    team_id: 'team_id1',
+    projectId: 1,
     name: 'name1',
     description: 'description1',
-    created_at: DateTime(2020, 10, 10, 14, 58, 4),
-    finished_at: DateTime(2020, 10, 10, 14, 58, 4),
-    deleted_at: DateTime(2020, 10, 10, 14, 58, 4),
+    managerId: 2,
+    projectState: 'BEFORE',
   );
   var projectEntity = projectModel.toEntity();
 
@@ -49,21 +45,21 @@ void main() {
   group('get projects by team id', () {
     test('should return all projects when a call to data source is successful',
         () async {
-      when(mockProjectRemoteDataSource.getProjectsByTeamId('teamId'))
+      when(mockProjectRemoteDataSource.getProjectsByTeamId(1))
           .thenAnswer((_) async => projectModelList);
 
-      var result = await projectRepository.getProjectsByTeamId('teamId');
+      var result = await projectRepository.getProjectsByTeamId(1);
 
-      expect(result, equals(Right(projectsEntity)));
+      expect(result.fold((l) => l, (r) => r), equals(Right(projectsEntity).fold((l) => l, (r) => r)));
     });
 
     test(
         'should return server failure when a call to data source is unsuccessful',
         () async {
-      when(mockProjectRemoteDataSource.getProjectsByTeamId('teamId'))
+      when(mockProjectRemoteDataSource.getProjectsByTeamId(1))
           .thenThrow(ServerException());
 
-      var result = await projectRepository.getProjectsByTeamId('teamId');
+      var result = await projectRepository.getProjectsByTeamId(1);
 
       expect(
           result, equals(const Left(ServerFailure('An error has occurred'))));
@@ -72,10 +68,10 @@ void main() {
     test(
         'should return connection failure when the device has no internet connection',
         () async {
-      when(mockProjectRemoteDataSource.getProjectsByTeamId('teamId'))
+      when(mockProjectRemoteDataSource.getProjectsByTeamId(1))
           .thenThrow(const SocketException('Failed to conect to the network'));
 
-      var result = await projectRepository.getProjectsByTeamId('teamId');
+      var result = await projectRepository.getProjectsByTeamId(1);
       expect(
           result,
           equals(
@@ -87,10 +83,10 @@ void main() {
     test(
         'should return project of given id when a call to data source is successful',
         () async {
-      when(mockProjectRemoteDataSource.getProjectById('projectId'))
+      when(mockProjectRemoteDataSource.getProjectById(1))
           .thenAnswer((_) async => projectModel);
 
-      var result = await projectRepository.getProjectById('projectId');
+      var result = await projectRepository.getProjectById(1);
 
       expect(result, equals(Right(projectEntity)));
     });
@@ -98,10 +94,10 @@ void main() {
     test(
         'should return server failure when a call to data source is unsuccessful',
         () async {
-      when(mockProjectRemoteDataSource.getProjectById('projectId'))
+      when(mockProjectRemoteDataSource.getProjectById(1))
           .thenThrow(ServerException());
 
-      var result = await projectRepository.getProjectById('projectId');
+      var result = await projectRepository.getProjectById(1);
 
       expect(
           result, equals(const Left(ServerFailure('An error has occurred'))));
@@ -110,10 +106,10 @@ void main() {
     test(
         'should return connection failure when the device has no internet connection',
         () async {
-      when(mockProjectRemoteDataSource.getProjectById('projectId'))
+      when(mockProjectRemoteDataSource.getProjectById(1))
           .thenThrow(const SocketException('Failed to conect to the network'));
 
-      var result = await projectRepository.getProjectById('projectId');
+      var result = await projectRepository.getProjectById(1);
       expect(
           result,
           equals(

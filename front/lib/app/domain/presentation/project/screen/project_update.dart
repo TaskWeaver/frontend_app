@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front/app/domain/presentation/project/component/project_from.dart';
 import 'package:front/app/domain/presentation/project/viewmodel/project.dart';
+import 'package:front/core/const/enum.dart';
 import 'package:front/core/project/domain/entities/project.dart';
 import 'package:front/shared/atom/bottom_navigation_bar.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';
@@ -44,13 +45,11 @@ class _Body extends ConsumerStatefulWidget {
       fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black);
 
   final project = Project(
-    pro_id: 'pro_id',
-    team_id: 'team_id',
+    projectId: 1,
     name: 'name',
     description: 'description',
-    created_at: DateTime(2020, 10, 10, 14, 58, 4),
-    finished_at: DateTime(2020, 10, 10, 14, 58, 4),
-    deleted_at: DateTime(2020, 10, 10, 14, 58, 4),
+    managerId: 2,
+    projectState: ProjectStateEnum.before,
   );
 
   @override
