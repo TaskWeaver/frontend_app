@@ -19,14 +19,14 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   Future<List<ProjectModel>> getProjectsByTeamId(int teamId) async {
     try {
       var response = await dio.get(
-      '/v1/projects/$teamId',
-    );
+        '/v1/projects/$teamId',
+      );
 
       if (response.statusCode == 200 && response.data?['resultCode'] == 200) {
         return response.data['result']
             .map<ProjectModel>((data) => ProjectModel.fromJson(data))
             .toList();
-    } else {
+      } else {
         throw ServerException();
       }
     } on DioException {
@@ -35,9 +35,18 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   }
 
   @override
-  Future<ProjectModel> getProjectById(int projectId) {
-    // TODO: implement getProjectById
-    throw UnimplementedError();
+  Future<ProjectModel> getProjectById(int projectId) async {
+    try {
+      var response = await dio.get('/v1/project/$projectId');
+
+      if (response.statusCode == 200 && response.data?['resultCode'] == 200) {
+        return ProjectModel.fromJson(response.data['result']);
+      } else {
+        throw ServerException();
+      }
+    } on DioException {
+      throw ServerException();
+    }
   }
 
   @override
