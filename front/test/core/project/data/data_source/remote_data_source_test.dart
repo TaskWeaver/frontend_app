@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:front/core/config/providers/dio.dart';
 import 'package:front/core/project/data/data_sources/remote_data_source.dart';
 import 'package:front/core/project/data/models/project.dart';
+import 'package:front/core/project/data/models/project_request.dart';
 import 'package:front/core/utils/exception.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 import '../../../../helpers/dummy_data/project/api_response.dart';
@@ -24,7 +25,6 @@ void main() {
             managerId: index + 1,
             projectState: 'BEFORE',
           ));
-  var projectEntityList = projectModelList.map((e) => e.toEntity()).toList();
 
   var projectModel = ProjectModel(
     projectId: 1,
@@ -33,7 +33,11 @@ void main() {
     managerId: 2,
     projectState: 'BEFORE',
   );
-  var projectEntity = projectModel.toEntity();
+
+  var projectRequestModel = ProjectRequestModel(
+      managerId: projectModel.managerId,
+      name: projectModel.name,
+      description: projectModel.description);
 
   setUp(() {
     dio = container.read(dioProvider);
@@ -55,8 +59,8 @@ void main() {
     test('should return server failure when a call to api is unsuccessful',
         () async {
       var teamId = 1;
-      dioAdapter.onGet('/v1/projects/$teamId',
-          (server) => server.reply(500, null));
+      dioAdapter.onGet(
+          '/v1/projects/$teamId', (server) => server.reply(500, null));
 
       expect(projectRemoteDataSource.getProjectsByTeamId(teamId),
           throwsA(isA<ServerException>()));
@@ -64,7 +68,8 @@ void main() {
   });
 
   group('get a project by id', () {
-    test('should return all a project when a http call is successful', () async {
+    test('should return all a project when a http call is successful',
+        () async {
       var projectId = projectModel.projectId;
       dioAdapter.onGet('/v1/project/$projectId',
           (server) => server.reply(200, getProjectByIdDummyData));
@@ -77,8 +82,8 @@ void main() {
     test('should return server failure when a call to api is unsuccessful',
         () async {
       var projectId = projectModel.projectId;
-      dioAdapter.onGet('/v1/project/$projectId',
-          (server) => server.reply(500, null));
+      dioAdapter.onGet(
+          '/v1/project/$projectId', (server) => server.reply(500, null));
 
       expect(projectRemoteDataSource.getProjectsByTeamId(projectId),
           throwsA(isA<ServerException>()));
@@ -86,12 +91,16 @@ void main() {
   });
 
   group('update a project', () {
-    test('should return updated project when a http call is successful', () async {
+    test('should return updated project when a http call is successful',
+        () async {
       var projectId = projectModel.projectId;
-      dioAdapter.onPatch('/v1/project/$projectId',
-          (server) => server.reply(200, getProjectByIdDummyData));
 
-      var result = await projectRemoteDataSource.updateProject(projectModel);
+      dioAdapter.onPatch('/v1/project/$projectId',
+        data: projectRequestModel.toJson(),
+          (server) => server.reply(200, updateProjectDummyData));
+
+      var result = await projectRemoteDataSource.updateProject(
+          projectRequestModel, projectId);
 
       expect(result, equals(projectModel));
     });
@@ -99,10 +108,10 @@ void main() {
     test('should return server failure when a call to api is unsuccessful',
         () async {
       var projectId = projectModel.projectId;
-      dioAdapter.onGet('/v1/project/$projectId',
-          (server) => server.reply(500, null));
+      dioAdapter.onGet(
+          '/v1/project/$projectId', (server) => server.reply(500, null));
 
-      expect(projectRemoteDataSource.getProjectsByTeamId(projectId),
+      expect(projectRemoteDataSource.updateProject(projectRequestModel, projectId),
           throwsA(isA<ServerException>()));
     });
   });
