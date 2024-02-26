@@ -49,39 +49,26 @@ void main() {
 
   group('get projects by team id', () {
     test('should return all projects when a http call is successful', () async {
-      dioAdapter.onPost(
-          '/v1/projects/1',
+      var teamId = 1;
+      dioAdapter.onGet('/v1/projects/$teamId',
           (server) => server.reply(200, getProjectsByTeamIdDummyData));
 
-      var result = await projectRemoteDataSource.getProjectsByTeamId(1);
+      var result = await projectRemoteDataSource.getProjectsByTeamId(teamId);
 
-      expect( result, equals(projectModelList));
+      expect(result, equals(projectModelList));
     });
 
-    // test(
-    //     'should return server failure when a call to data source is unsuccessful',
-    //     () async {
-    //   when(mockProjectRemoteDataSource.getProjectsByTeamId(1))
-    //       .thenThrow(ServerException());
+    test('should return server failure when a call to api is unsuccessful',
+        () async {
+      var teamId = 1;
+      dioAdapter.onGet('/v1/projects/$teamId',
+          (server) => server.reply(500, null));
 
-    //   var result = await projectRepository.getProjectsByTeamId(1);
+      expect(projectRemoteDataSource.getProjectsByTeamId(teamId),
+          throwsA(isA<ServerException>()));
+    });
+  });
 
-    //   expect(
-    //       result, equals(const Left(ServerFailure('An error has occurred'))));
-    // });
-
-    // test(
-    //     'should return connection failure when the device has no internet connection',
-    //     () async {
-    //   when(mockProjectRemoteDataSource.getProjectsByTeamId(1))
-    //       .thenThrow(const SocketException('Failed to conect to the network'));
-
-    //   var result = await projectRepository.getProjectsByTeamId(1);
-    //   expect(
-    //       result,
-    //       equals(
-    //           const Left(ServerFailure('Failed to connect to the network'))));
-    // });
   });
 
 //   group('get project by id', () {
