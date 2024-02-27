@@ -1,4 +1,5 @@
 import 'package:front/app/domain/form_example/form_demo2.dart';
+import 'package:front/app/domain/form_example/form_demo2.dart';
 import 'package:front/app/domain/presentation/home/home.dart';
 import 'package:front/app/domain/presentation/login/email_singin.dart';
 import 'package:front/app/domain/presentation/login/login.dart';
@@ -17,6 +18,7 @@ final router = GoRouter(initialLocation: '/', routes: [
     GoRoute(
       path: 'example',
       name: 'example',
+      builder: (context, state) => const FormDemoScreen2(),
       builder: (context, state) => const FormDemoScreen2(),
     ),
     GoRoute(
