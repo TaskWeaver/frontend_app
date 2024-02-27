@@ -7,7 +7,8 @@ abstract class ProjectRemoteDataSource {
   Future<List<ProjectModel>> getProjectsByTeamId(int teamId);
   Future<ProjectModel> getProjectById(int projectId);
   Future<ProjectModel> createProject(ProjectRequestModel project, int teamId);
-  Future<ProjectModel> updateProject(ProjectRequestModel project, int projectId);
+  Future<ProjectModel> updateProjectById(
+      ProjectRequestModel project, int projectId);
   Future<String> deleteProjectById(String projectId);
 }
 
@@ -62,9 +63,11 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   }
 
   @override
-  Future<ProjectModel> updateProject(ProjectRequestModel project, int projectId) async {
+  Future<ProjectModel> updateProjectById(
+      ProjectRequestModel project, int projectId) async {
     try {
-      var response = await dio.patch('/v1/project/$projectId', data: project.toJson());
+      var response =
+          await dio.patch('/v1/project/$projectId', data: project.toJson());
 
       if (response.statusCode == 200 && response.data?['resultCode'] == 204) {
         return ProjectModel.fromJson(response.data['result']);

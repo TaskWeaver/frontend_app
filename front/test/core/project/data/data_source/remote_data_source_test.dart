@@ -95,11 +95,12 @@ void main() {
         () async {
       var projectId = projectModel.projectId;
 
-      dioAdapter.onPatch('/v1/project/$projectId',
-        data: projectRequestModel.toJson(),
+      dioAdapter.onPatch(
+          '/v1/project/$projectId',
+          data: projectRequestModel.toJson(),
           (server) => server.reply(200, updateProjectDummyData));
 
-      var result = await projectRemoteDataSource.updateProject(
+      var result = await projectRemoteDataSource.updateProjectById(
           projectRequestModel, projectId);
 
       expect(result, equals(projectModel));
@@ -111,7 +112,9 @@ void main() {
       dioAdapter.onGet(
           '/v1/project/$projectId', (server) => server.reply(500, null));
 
-      expect(projectRemoteDataSource.updateProject(projectRequestModel, projectId),
+      expect(
+          projectRemoteDataSource.updateProjectById(
+              projectRequestModel, projectId),
           throwsA(isA<ServerException>()));
     });
   });

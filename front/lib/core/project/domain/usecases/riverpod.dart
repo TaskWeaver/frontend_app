@@ -2,7 +2,7 @@ import 'package:front/core/project/data/repositories/riverpod.dart';
 import 'package:front/core/project/domain/usecases/create_project_usecase.dart';
 import 'package:front/core/project/domain/usecases/get_project_by_id_usecase.dart';
 import 'package:front/core/project/domain/usecases/get_projects_by_team_id_usecase.dart';
-import 'package:front/core/project/domain/usecases/update_project_usecase.dart';
+import 'package:front/core/project/domain/usecases/update_project_by_id_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'riverpod.g.dart';

@@ -63,10 +63,11 @@ class ProjectRepositoryImpl implements ProjectRepository {
   }
 
   @override
-  Future<Either<Failure, Project>> updateProject(ProjectRequestModel project, int projectId) async {
+  Future<Either<Failure, Project>> updateProjectById(
+      ProjectRequestModel project, int projectId) async {
     try {
-      var result = await projectRemoteDataSource
-          .updateProject(project, projectId);
+      var result =
+          await projectRemoteDataSource.updateProjectById(project, projectId);
       projects.addAll({result.projectId: result.toEntity()});
       return Right(result.toEntity());
     } on ServerException {
