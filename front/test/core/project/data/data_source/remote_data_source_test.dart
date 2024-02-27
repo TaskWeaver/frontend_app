@@ -129,7 +129,7 @@ void main() {
           data: projectRequestModel.toJson(),
           (server) => server.reply(200, deleteProjectDummyData));
 
-      expect(projectRemoteDataSource.deleteProjectById(projectId), isA<Future<void>>());
+      expect(()async=> await projectRemoteDataSource.deleteProjectById(projectId), isA<void>());
     });
 
     test('should return server exception when a call to api is unsuccessful',
