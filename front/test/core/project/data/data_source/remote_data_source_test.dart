@@ -56,7 +56,7 @@ void main() {
       expect(result, equals(projectModelList));
     });
 
-    test('should return server failure when a call to api is unsuccessful',
+    test('should return server exception when a call to api is unsuccessful',
         () async {
       var teamId = 1;
       dioAdapter.onGet(
@@ -79,7 +79,7 @@ void main() {
       expect(result, equals(projectModel));
     });
 
-    test('should return server failure when a call to api is unsuccessful',
+    test('should return server exception when a call to api is unsuccessful',
         () async {
       var projectId = projectModel.projectId;
       dioAdapter.onGet(
@@ -106,7 +106,7 @@ void main() {
       expect(result, equals(projectModel));
     });
 
-    test('should return server failure when a call to api is unsuccessful',
+    test('should return server exception when a call to api is unsuccessful',
         () async {
       var projectId = projectModel.projectId;
       dioAdapter.onGet(
@@ -115,6 +115,30 @@ void main() {
       expect(
           projectRemoteDataSource.updateProjectById(
               projectRequestModel, projectId),
+          throwsA(isA<ServerException>()));
+    });
+  });
+
+  group('delete a project', () {
+    test('should return whithout exception when a http call is successful',
+        () async {
+      var projectId = projectModel.projectId;
+
+      dioAdapter.onDelete(
+          '/v1/project/$projectId',
+          data: projectRequestModel.toJson(),
+          (server) => server.reply(200, deleteProjectDummyData));
+
+      expect(projectRemoteDataSource.deleteProjectById(projectId), isA<Future<void>>());
+    });
+
+    test('should return server exception when a call to api is unsuccessful',
+        () async {
+      var projectId = projectModel.projectId;
+      dioAdapter.onDelete(
+          '/v1/project/$projectId', (server) => server.reply(500, null));
+
+      expect(projectRemoteDataSource.deleteProjectById(projectId),
           throwsA(isA<ServerException>()));
     });
   });

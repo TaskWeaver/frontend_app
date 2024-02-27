@@ -6,7 +6,7 @@ class DeleteProjectByIdUseCase {
   const DeleteProjectByIdUseCase(this.projectRepository);
   final ProjectRepository projectRepository;
 
-  Future<Either<Failure, String>> call(String teamId) {
+  Future<Either<Failure, void>> call(int teamId) {
     return projectRepository.deleteProjectById(teamId);
   }
 }

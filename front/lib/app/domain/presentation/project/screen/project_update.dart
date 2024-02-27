@@ -165,6 +165,20 @@ class _BodyState extends ConsumerState<_Body> {
       ),
     );
   }
+
+  Widget buildDeleteButton() {
+    return TextButton(
+      onPressed: () async {
+        var result = await viewmodel.deleteProject(widget.project.projectId);
+        result.fold(
+            (l) => debugPrint(l.toString()), (r) => null);
+      },
+      child: Text(
+        '삭제',
+        style: widget.h1TextStyle.copyWith(fontSize: 15),
+      ),
+    );
+  }
 }
 
 //component

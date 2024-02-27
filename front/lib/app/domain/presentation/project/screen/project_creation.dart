@@ -16,7 +16,7 @@ class ProjectCreationScreen extends StatelessWidget {
   }) : super(key: key);
 
   final team = {
-    'id': '1',
+    'id': 1,
     'name': '팀이름',
   };
 

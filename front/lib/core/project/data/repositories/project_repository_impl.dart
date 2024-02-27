@@ -50,11 +50,11 @@ class ProjectRepositoryImpl implements ProjectRepository {
   }
 
   @override
-  Future<Either<Failure, String>> deleteProjectById(String projectId) async {
+  Future<Either<Failure, void>> deleteProjectById(int projectId) async {
     try {
-      var result = await projectRemoteDataSource.deleteProjectById(projectId);
-      projects.remove(result);
-      return Right(result);
+      await projectRemoteDataSource.deleteProjectById(projectId);
+      projects.remove(projectId);
+      return const Right(null);
     } on ServerException {
       return const Left(ServerFailure('An error has occurred'));
     } on SocketException {

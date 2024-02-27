@@ -1,5 +1,6 @@
 import 'package:front/core/project/data/repositories/riverpod.dart';
 import 'package:front/core/project/domain/usecases/create_project_usecase.dart';
+import 'package:front/core/project/domain/usecases/delete_project_by_id_usecase.dart';
 import 'package:front/core/project/domain/usecases/get_project_by_id_usecase.dart';
 import 'package:front/core/project/domain/usecases/get_projects_by_team_id_usecase.dart';
 import 'package:front/core/project/domain/usecases/update_project_by_id_usecase.dart';
@@ -30,4 +31,10 @@ UpdateProjectUseCase updateProjectUseCase(UpdateProjectUseCaseRef ref) {
 CreateProjectUseCase createProjectUseCase(CreateProjectUseCaseRef ref) {
   var projectRepository = ref.read(projectRepositoryProvider);
   return CreateProjectUseCase(projectRepository);
+}
+
+@riverpod
+DeleteProjectByIdUseCase deleteProjectUseCase(DeleteProjectUseCaseRef ref) {
+  var projectRepository = ref.read(projectRepositoryProvider);
+  return DeleteProjectByIdUseCase(projectRepository);
 }

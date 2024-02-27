@@ -9,7 +9,7 @@ abstract class ProjectRemoteDataSource {
   Future<ProjectModel> createProject(ProjectRequestModel project, int teamId);
   Future<ProjectModel> updateProjectById(
       ProjectRequestModel project, int projectId);
-  Future<String> deleteProjectById(String projectId);
+  Future<void> deleteProjectById(int projectId);
 }
 
 class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
@@ -51,15 +51,34 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   }
 
   @override
-  Future<ProjectModel> createProject(ProjectRequestModel project, int teamId) {
-    // TODO: implement createProject
-    throw UnimplementedError();
+  Future<ProjectModel> createProject(
+      ProjectRequestModel project, int teamId) async {
+    try {
+      var response =
+          await dio.put('/v1/project/$teamId', data: project.toJson());
+      if (response.statusCode == 200 && response.data?['resultCode'] == 201) {
+        return ProjectModel.fromJson(response.data['result']);
+      } else {
+        throw ServerException();
+      }
+    } on DioException {
+      throw ServerException();
+    }
   }
 
   @override
-  Future<String> deleteProjectById(String projectId) {
-    // TODO: implement deleteProject
-    throw UnimplementedError();
+  Future<void> deleteProjectById(int projectId) async {
+    try {
+      var response = await dio.delete('/v1/project/$projectId');
+
+      if (response.statusCode == 200 && response.data?['resultCode'] == 200) {
+        return;
+      } else {
+        throw ServerException();
+      }
+    } on DioException {
+      throw ServerException();
+    }
   }
 
   @override
@@ -74,7 +93,7 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
       } else {
         throw ServerException();
       }
-    } on DioException {
+    }  on DioException {
       throw ServerException();
     }
   }

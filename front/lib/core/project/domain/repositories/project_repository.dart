@@ -8,7 +8,7 @@ abstract class ProjectRepository {
   Future<Either<Failure, Project>> getProjectById(int projectId);
   Future<Either<Failure, Project>> updateProjectById(
       ProjectRequestModel project, int projectId);
-  Future<Either<Failure, String>> deleteProjectById(String projectId);
   Future<Either<Failure, Project>> createProject(
       ProjectRequestModel project, int teamId);
+  Future<Either<Failure, void>> deleteProjectById(int projectId);
 }
