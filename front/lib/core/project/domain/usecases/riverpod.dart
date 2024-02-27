@@ -22,7 +22,7 @@ GetProjectByIdUseCase getProjectByIdUseCase(GetProjectByIdUseCaseRef ref) {
 }
 
 @riverpod
-UpdateProjectUseCase updateProjectUseCase(UpdateProjectUseCaseRef ref) {
+UpdateProjectUseCase updateProjectByIdUseCase(UpdateProjectByIdUseCaseRef ref) {
   var projectRepository = ref.read(projectRepositoryProvider);
   return UpdateProjectUseCase(projectRepository);
 }
@@ -34,7 +34,7 @@ CreateProjectUseCase createProjectUseCase(CreateProjectUseCaseRef ref) {
 }
 
 @riverpod
-DeleteProjectByIdUseCase deleteProjectUseCase(DeleteProjectUseCaseRef ref) {
+DeleteProjectByIdUseCase deleteProjectByIdUseCase(DeleteProjectByIdUseCaseRef ref) {
   var projectRepository = ref.read(projectRepositoryProvider);
   return DeleteProjectByIdUseCase(projectRepository);
 }

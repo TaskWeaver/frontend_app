@@ -28,10 +28,10 @@ class ProjectViewmodel extends _$ProjectViewmodel {
 
   Future<Either<Failure, Project>> updateProject(
       ProjectRequestModel project, int projectId) async {
-    return await ref.read(updateProjectUseCaseProvider)(project, projectId);
+    return await ref.read(updateProjectByIdUseCaseProvider)(project, projectId);
   }
 
   Future<Either<Failure, void>> deleteProject(int projectId) async {
-    return await ref.read(deleteProjectUseCaseProvider)(projectId);
+    return await ref.read(deleteProjectByIdUseCaseProvider)(projectId);
   }
 }
