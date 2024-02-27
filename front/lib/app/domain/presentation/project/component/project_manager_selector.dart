@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/domain/presentation/team/componet/dialog.dart';
 import 'package:front/core/user/models/user.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 typedef VoidCallback = void Function(UserModel user);
 
