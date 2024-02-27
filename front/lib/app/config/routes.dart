@@ -19,7 +19,6 @@ final router = GoRouter(initialLocation: '/', routes: [
       path: 'example',
       name: 'example',
       builder: (context, state) => const FormDemoScreen2(),
-      builder: (context, state) => const FormDemoScreen2(),
     ),
     GoRoute(
       path: 'login',
