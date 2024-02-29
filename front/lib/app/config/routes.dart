@@ -3,7 +3,7 @@ import 'package:front/app/domain/presentation/home/home.dart';
 import 'package:front/app/domain/presentation/login/email_singin.dart';
 import 'package:front/app/domain/presentation/login/login.dart';
 import 'package:front/app/domain/presentation/login/signin.dart';
-import 'package:front/app/domain/presentation/main/screen/mainScreen.dart';
+import 'package:front/app/domain/presentation/main/screen/main_screen.dart';
 import 'package:front/app/domain/presentation/project/screen/project_creation_page.dart';
 import 'package:front/app/domain/presentation/project/screen/project_detail_page.dart';
 import 'package:front/app/domain/presentation/team/screen/team_create.dart';

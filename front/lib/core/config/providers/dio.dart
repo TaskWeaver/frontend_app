@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:front/core/config/custom_Interceptor.dart';
+import 'package:front/core/config/custom_interceptor.dart';
 import 'package:front/core/config/providers/secure_storage.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
