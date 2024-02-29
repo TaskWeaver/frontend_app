@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:front/core/user/data_sources/local_data_source.dart';
 import 'package:front/core/user/data_sources/remote_data_source.dart';
 import 'package:front/core/user/models/user.dart';
 import 'package:front/core/utils/exception.dart';
@@ -11,22 +12,24 @@ abstract class AuthRepository {
   ///RemoteDataSource에서 받아온 데이터를 Either로 감싸서 반환
   Future<Either<Failure, UserRegistrationResponse>> signUp(
       UserRegistrationRequest userRegistrationRequest);
-  Future<Either<Failure, UserModel>> signIn(
+  Future<Either<Failure, LoginResponse>> signIn(
       {required String email, required String password});
-  Future<Either<Failure, UserModel>> getMe();
+  Future<Either<Failure, bool>> isAuthenticated();
+  Future<Either<Failure, bool>> setAuthenticated(bool value);
   //TODO : 토큰 재발급 로직 추가
   //Future<Either<Failure, TokenResponse>> token();
 }
 
 class AuthRepositoryImpl extends AuthRepository {
-  AuthRepositoryImpl({required this.authRemoteDataSource});
-  final AuthRemoteDataSource authRemoteDataSource;
-
+  AuthRepositoryImpl(
+      {required this.userLocalDataSource, required this.userRemoteDataSource});
+  final UserRemoteDataSource userRemoteDataSource;
+  final UserLocalDataSource userLocalDataSource;
   @override
   Future<Either<Failure, UserRegistrationResponse>> signUp(
       UserRegistrationRequest userRegistrationRequest) async {
     try {
-      var result = await authRemoteDataSource.signUp(userRegistrationRequest);
+      var result = await userRemoteDataSource.signUp(userRegistrationRequest);
       return Right(result);
     } on ServerException {
       return const Left(ServerFailure('An error has occurred'));
@@ -38,10 +41,11 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Either<Failure, UserModel>> signIn(
+  Future<Either<Failure, LoginResponse>> signIn(
       {required String email, required String password}) async {
     try {
-      var responseResult = await authRemoteDataSource.signIn(email, password);
+      var responseResult = await userRemoteDataSource.signIn(email, password);
+
       return Right(responseResult);
     } on ServerException {
       return const Left(ServerFailure('An error has occurred'));
@@ -67,16 +71,26 @@ class AuthRepositoryImpl extends AuthRepository {
   //  }
 
   @override
-  Future<Either<Failure, UserModel>> getMe() async {
+  Future<Either<Failure, bool>> setAuthenticated(bool value) async {
     try {
-      var responseResult = await authRemoteDataSource.getMe();
-      return Right(responseResult);
-    } on ServerException {
-      return const Left(ServerFailure('An error has occurred'));
-    } on SocketException {
-      return const Left(ServerFailure('Failed to connect to the network'));
+      var result = await userLocalDataSource.setAuthenticated(value);
+      return Right(result);
+    } on DatabaseFailure {
+      return const Left(DatabaseFailure('An error has occurred'));
     } on UnimplementedError {
-      return const Left(ServerFailure('An error has occurred'));
+      return const Left(DatabaseFailure('An error has occurred'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> isAuthenticated() async {
+    try {
+      var result = await userLocalDataSource.isAuthenticated();
+      return Right(result);
+    } on DatabaseFailure {
+      return const Left(DatabaseFailure('An error has occurred'));
+    } on UnimplementedError {
+      return const Left(DatabaseFailure('An error has occurred'));
     }
   }
 }
