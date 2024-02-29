@@ -1,4 +1,3 @@
-// ignore: file_names
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart'
@@ -24,7 +23,6 @@ class CustomInterceptor extends Interceptor {
       options.headers.remove('accessToken');
 
       var token = await storage.read(key: accessTokenKey);
-      print(token);
       // 실제 토큰으로 대체
       options.headers.addAll({
         'authorization': 'Bearer $token',
