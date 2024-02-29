@@ -8,15 +8,17 @@ class LoginScreenViewModel extends _$LoginScreenViewModel {
   @override
   AsyncValue<dynamic> build() => const AsyncValue.loading();
 
-  Future<void> signInByEmail(String email, String password) async {
+  Future<bool?> signInByEmail(String email, String password) async {
     var result =
         await ref.read(signInByEmailUseCaseProvider).call(email, password);
 
-    result.fold(
-      (l) {
-        state = AsyncValue.error(l, StackTrace.current);
-      },
-      (r) => state = AsyncValue.data(r),
-    );
+    result.fold((l) {
+      state = AsyncValue.error(l, StackTrace.current);
+      return false;
+    }, (r) {
+      state = AsyncValue.data(r);
+      return true;
+    });
+    return null;
   }
 }
