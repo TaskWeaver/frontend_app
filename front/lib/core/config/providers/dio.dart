@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:front/core/config/customInterceptor.dart';
-import 'package:front/core/config/providers/secureStorage.dart';
+import 'package:front/core/config/custom_Interceptor.dart';
+import 'package:front/core/config/providers/secure_storage.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'dio.g.dart';
