@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front/app/domain/presentation/login/component/checkbox_text_row.dart';
 import 'package:front/app/domain/presentation/login/component/rounded_elvatedbutton.dart';
-import 'package:front/core/user/models/auth_state.dart';
-import 'package:front/core/user/user_login_state_notifier.dart';
+import 'package:front/app/domain/presentation/login/viewmodel/login_view_model.dart';
 import 'package:front/shared/atom/text_form_field.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';
 import 'package:front/shared/helper/FormHelper/form_validate_builder.dart';
@@ -33,11 +32,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   String? password;
   bool? rememberMe = false;
   late CustomFormState? currentState;
-  late UserLoginState loginViewModel;
-  late AuthState loginState;
+  late AsyncValue<dynamic> state;
+  late LoginScreenViewModel loginScreenViewModel;
+
   @override
   void initState() {
     super.initState();
+
     currentState = _formKey.currentState;
   }
 
@@ -49,8 +50,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    loginViewModel = ref.read(userLoginStateProvider.notifier);
-    loginState = ref.watch(userLoginStateProvider);
+    state = ref.watch(loginScreenViewModelProvider);
+    loginScreenViewModel = ref.read(loginScreenViewModelProvider.notifier);
     return CustomForm(
       key: _formKey,
       child: SafeArea(
@@ -169,37 +170,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   void _onLoginButtonPressed() async {
     var email = _formKey.currentState?.fields['email']?.value;
     var password = _formKey.currentState?.fields['password']?.value;
-    print(email);
-    print(password);
-    if (_formKey.currentState?.validate(null) == true) {
-      print('로그인 버튼 클릭됨');
-      try {
-        await loginViewModel.signIn(email: email, password: password);
-        // 로그인 성공 후의 로직
 
-        loginState.maybeWhen(
-          orElse: () {
-            // 기본적으로 처리되지 않은 상태들
-            print('로그인 상태를 처리할 수 없습니다.');
-          },
-          (userLoginResponse) {
-            // 사용자가 로그인되었을 때
-            print('로그인 성공');
-            context.go('/main');
-          },
-          error: (e) {
-            // 로그인 에러 처리
-            print('로그인 실패: $e');
-          },
-          loading: () {
-            // 로딩 상태 처리
-            print('로딩중');
-          },
-          loggedOut: () {
-            // 로그아웃 상태 처리
-            print('로그아웃 상태');
-          },
-        );
+    if (_formKey.currentState?.validate(null) == true) {
+      try {
+        await loginScreenViewModel.signInByEmail(email!, password!);
+        context.go('/main');
+        // 로그인 성공 후의 로직
       } catch (e) {
         print('로그인 프로세스 중 에러 발생: $e');
         // 에러 처리 로직 (예: Snackbar 띄우기)
