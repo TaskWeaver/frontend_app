@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:front/shared/atom/text_form_field.dart';
+import 'package:front/shared/helper/FormHelper/interface/form_validate_function.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-class CustomTextField extends StatelessWidget {
-  const CustomTextField({
+class CustomTextFormFieldWithLabel extends StatelessWidget {
+  const CustomTextFormFieldWithLabel({
     Key? key,
-    this.title,
+    required this.fieldName,
+    this.label,
     this.hintText,
+    this.initialValue, 
     this.expanded,
-    required this.onSaved,
+    this.onSaved,
     required this.validator,
     this.onChanged,
   }) : super(key: key);
 
   final bool? expanded;
-  final String? title;
+  final String fieldName;
+  final String? label;
   final String? hintText;
-  final FormFieldSetter<String?> onSaved;
-  final FormFieldValidator<String?> validator;
+  final String? initialValue;
+  final FormFieldSetter<String?>? onSaved;
+  final List<ValidateFuncList>? validator;
   final void Function(String?)? onChanged;
   @override
   Widget build(BuildContext context) {
@@ -28,17 +34,19 @@ class CustomTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (title != null)
+        if (label != null)
           Text(
-            title!,
+            label!,
             style: textStyle,
           ),
         Expanded(
           flex: (expanded == true) ? 1 : 0,
-          child: TextFormField(
+          child: CustomTextFormField(
+            fieldName: fieldName,
             expands: (expanded == true) ? true : false,
             maxLines: (expanded == true) ? null : 1,
             onChanged: onChanged,
+            initialValue: initialValue,
             onSaved: onSaved,
             validator: validator,
             decoration: InputDecoration(
@@ -57,7 +65,7 @@ class CustomTextField extends StatelessWidget {
 
 @widgetbook.UseCase(
   name: '',
-  type: CustomTextField,
+  type: CustomTextFormFieldWithLabel,
 )
 Widget CustomTextFielddUseCase(BuildContext context) {
   return SafeArea(
@@ -67,14 +75,16 @@ Widget CustomTextFielddUseCase(BuildContext context) {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CustomTextField(
-              hintText: context.knobs
-                  .string(label: 'hintText', initialValue: 'hintText'),
-              title: context.knobs.stringOrNull(label: 'title'),
-              expanded:
-                  context.knobs.boolean(label: 'hintText', initialValue: false),
-              onSaved: (_) {},
-              validator: (_) => null),
+          CustomTextFormFieldWithLabel(
+            hintText: context.knobs
+                .string(label: 'hintText', initialValue: 'hintText'),
+            label: context.knobs.stringOrNull(label: 'title'),
+            expanded:
+                context.knobs.boolean(label: 'hintText', initialValue: false),
+            onSaved: (_) {},
+            validator: null,
+            fieldName: 'customTextFormFieldWithLabel',
+          ),
         ],
       )),
     ),

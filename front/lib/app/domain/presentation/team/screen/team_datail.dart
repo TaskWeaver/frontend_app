@@ -28,7 +28,7 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
   void initState() {
     super.initState();
     viewmodel = ref.read(teamDetailViewmodelProvider.notifier);
-    viewmodel.getProjectsByTeamId('teamId');
+    viewmodel.getProjectsByTeamId(1);
   }
 
   @override
@@ -162,8 +162,7 @@ class ProjectList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return projectsState.when(
-        (data) {
-          var projects = data.values;
+        (projects) {
           return CustomScrollView(
             slivers: <Widget>[
               SliverList.builder(

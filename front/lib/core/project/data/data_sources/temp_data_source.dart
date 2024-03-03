@@ -1,21 +1,32 @@
 import 'package:front/core/project/data/models/project.dart';
-import 'package:front/core/project/data/models/projects.dart';
+import 'package:front/core/project/data/models/project_request.dart';
 
 class ProjectTempDataSource {
-  Future<ProjectsModel> getProjectsByTeamId(String teamId) async {
+  Future<List<ProjectModel>> getProjectsByTeamId(int teamId) async {
     var projectModelList = List.generate(
         3,
         (index) => ProjectModel(
-              pro_id: 'pro_id$index',
-              team_id: 'team_id$index',
+              projectId: index,
               name: 'name$index',
-              discription: 'description$index',
-              created_at: DateTime(2020, 10, 10, 14, 58, 4),
-              finished_at: DateTime(2020, 10, 10, 14, 58, 4),
-              deleted_at: DateTime(2020, 10, 10, 14, 58, 4),
+              description: 'description$index',
+              managerId: index + 1,
+              projectState: 'BEFORE',
             ));
-    var projectsModel = ProjectsModel(values: projectModelList);
+    // var projectsModel = ProjectsModel(values: projectModelList);
     return Future.delayed(
-        const Duration(seconds: 3), () => Future.value(projectsModel));
+        const Duration(seconds: 3), () => Future.value(projectModelList));
+  }
+
+  Future<ProjectModel> createProject(ProjectRequestModel project) async {
+    var projectModel = ProjectModel(
+      projectId: 1,
+      name: 'name1',
+      description: 'description1',
+      managerId: 2,
+      projectState: 'BEFORE',
+    );
+    // var projectsModel = ProjectsModel(values: projectModelList);
+    return Future.delayed(
+        const Duration(seconds: 2), () => Future.value(projectModel));
   }
 }
