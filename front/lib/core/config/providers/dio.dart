@@ -19,7 +19,7 @@ Dio dio(DioRef ref) {
   var storage = ref.watch(secureStorageProvider);
 
   dio.interceptors.add(
-    CustomInterceptor(storage: storage, ref: ref),
+    CustomInterceptor(storage: storage),
   );
 
   return dio;

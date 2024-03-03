@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart'
     hide Options;
 import 'package:front/core/const/const.dart';
@@ -7,10 +6,9 @@ import 'package:front/core/const/const.dart';
 ///토큰을 헤더에 추가, 에러를 다루기 위한 인터셉터
 class CustomInterceptor extends Interceptor {
   CustomInterceptor({
-    required this.ref,
     required this.storage,
   });
-  final Ref ref;
+
   final FlutterSecureStorage storage;
 
   @override
