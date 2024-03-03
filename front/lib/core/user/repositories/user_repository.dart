@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:front/core/user/data_sources/local_data_source.dart';
 import 'package:front/core/user/data_sources/remote_data_source.dart';
+import 'package:front/core/user/entity/token.dart';
 import 'package:front/core/user/models/user.dart';
 import 'package:front/core/utils/exception.dart';
 import 'package:front/core/utils/failure.dart';
@@ -14,6 +15,9 @@ abstract class UserRepository {
   Future<Either<Failure, UserModel>> saveUserInfo(UserModel userModel);
   Future<Either<Failure, UserModel?>> getLocalUserInfo();
   Future<Either<Failure, bool>> clearUserInfo();
+  Future<Either<Failure, Token>> saveToken(Token token);
+  Future<Either<Failure, Token>> getToken();
+  Future<Either<Failure, bool>> clearToken();
 }
 
 class UserRepositoryImpl extends UserRepository {
@@ -23,6 +27,7 @@ class UserRepositoryImpl extends UserRepository {
   });
   final UserRemoteDataSource userRemoteDataSource;
   final UserLocalDataSource userLocalDataSource;
+
   @override
   Future<Either<Failure, UserModel>> getRemoteUserInfo() async {
     try {
@@ -50,6 +55,34 @@ class UserRepositoryImpl extends UserRepository {
   }
 
   @override
+  Future<Either<Failure, Token>> saveToken(Token token) async {
+    try {
+      await userLocalDataSource.saveToken(token);
+      return Right(token);
+    } on DatabaseFailure {
+      return const Left(DatabaseFailure('An error has occurred'));
+    } on UnimplementedError {
+      return const Left(DatabaseFailure('An error has occurred'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Token>> getToken() async {
+    try {
+      var result = await userLocalDataSource.getToken();
+      if (result != null) {
+        return Right(result);
+      } else {
+        return const Left(DatabaseFailure('An error has occurred'));
+      }
+    } on DatabaseFailure {
+      return const Left(DatabaseFailure('An error has occurred'));
+    } on UnimplementedError {
+      return const Left(DatabaseFailure('An error has occurred'));
+    }
+  }
+
+  @override
   Future<Either<Failure, UserModel>> saveUserInfo(UserModel userModel) async {
     try {
       var result = await userLocalDataSource.saveUserInfo(userModel);
@@ -65,6 +98,18 @@ class UserRepositoryImpl extends UserRepository {
   Future<Either<Failure, bool>> clearUserInfo() async {
     try {
       var result = await userLocalDataSource.clearUserInfo();
+      return Right(result);
+    } on DatabaseFailure {
+      return const Left(DatabaseFailure('An error has occurred'));
+    } on UnimplementedError {
+      return const Left(DatabaseFailure('An error has occurred'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> clearToken() async {
+    try {
+      var result = await userLocalDataSource.clearToken();
       return Right(result);
     } on DatabaseFailure {
       return const Left(DatabaseFailure('An error has occurred'));

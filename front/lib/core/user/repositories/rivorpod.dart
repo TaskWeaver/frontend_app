@@ -1,3 +1,4 @@
+import 'package:front/core/config/providers/secure_storage.dart';
 import 'package:front/core/user/data_sources/rivorpod.dart';
 import 'package:front/core/user/repositories/auth_repository.dart';
 import 'package:front/core/user/repositories/user_repository.dart';
@@ -22,7 +23,9 @@ UserRepository userRepository(
 ) {
   var userRemoteDataSource = ref.watch(userRemoteDataSourceProvider);
   var userLocalDataSource = ref.watch(userLocalDataSourceProvider);
+  var secureStorage = ref.watch(secureStorageProvider);
   return UserRepositoryImpl(
-      userRemoteDataSource: userRemoteDataSource,
-      userLocalDataSource: userLocalDataSource);
+    userRemoteDataSource: userRemoteDataSource,
+    userLocalDataSource: userLocalDataSource,
+  );
 }
