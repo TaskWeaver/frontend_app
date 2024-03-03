@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:front/core/const/const.dart';
-import 'package:front/core/user/models/token.dart';
+import 'package:front/core/user/entity/token.dart';
 import 'package:front/core/user/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
