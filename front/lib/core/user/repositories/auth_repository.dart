@@ -14,7 +14,7 @@ abstract class AuthRepository {
       UserRegistrationRequest userRegistrationRequest);
   Future<Either<Failure, LoginResponse>> signIn(
       {required String email, required String password});
-  Future<Either<Failure, bool>> isAuthenticated();
+  Future<Either<Failure, bool>> getAuthenticated();
   Future<Either<Failure, bool>> setAuthenticated(bool value);
   //TODO : 토큰 재발급 로직 추가
   //Future<Either<Failure, TokenResponse>> token();
@@ -83,9 +83,9 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> isAuthenticated() async {
+  Future<Either<Failure, bool>> getAuthenticated() async {
     try {
-      var result = await userLocalDataSource.isAuthenticated();
+      var result = await userLocalDataSource.getAuthenticated();
       return Right(result);
     } on DatabaseFailure {
       return const Left(DatabaseFailure('An error has occurred'));
