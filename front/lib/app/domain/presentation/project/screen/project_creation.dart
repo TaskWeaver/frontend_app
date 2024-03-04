@@ -35,7 +35,7 @@ class ProjectCreationScreen extends StatelessWidget {
 //view
 
 class _Body extends ConsumerStatefulWidget {
-  const _Body({
+  _Body({
     Key? key,
     required this.team,
   }) : super(key: key);
@@ -54,13 +54,13 @@ class _BodyState extends ConsumerState<_Body> {
   final _formKey = GlobalKey<CustomFormState>();
   late CustomFormState? currentState;
   var manager =
-      UserModel(id: 1, nickname: 'user1', email: 'email', type: 'type');
+      const UserModel(id: 1, nickname: 'user1', email: 'email', type: 'type');
   final List<UserModel> teamMembers = [
-    UserModel(id: 1, email: 'email', nickname: 'user1', type: 'MEMBER'),
-    UserModel(id: 1, email: 'email', nickname: 'user2', type: 'MEMBER'),
-    UserModel(id: 1, email: 'email', nickname: 'user3', type: 'MEMBER'),
-    UserModel(id: 1, email: 'email', nickname: 'user4', type: 'MEMBER'),
-    UserModel(id: 1, email: 'email', nickname: 'user5', type: 'MEMBER'),
+    const UserModel(id: 1, email: 'email', nickname: 'user1', type: 'MEMBER'),
+    const UserModel(id: 1, email: 'email', nickname: 'user2', type: 'MEMBER'),
+    const UserModel(id: 1, email: 'email', nickname: 'user3', type: 'MEMBER'),
+    const UserModel(id: 1, email: 'email', nickname: 'user4', type: 'MEMBER'),
+    const UserModel(id: 1, email: 'email', nickname: 'user5', type: 'MEMBER'),
   ];
 
   @override

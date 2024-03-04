@@ -64,13 +64,13 @@ class _BodyState extends ConsumerState<_Body> {
   final _formKey = GlobalKey<CustomFormState>();
   late CustomFormState? currentState;
   var manager =
-      UserModel(id: 1, nickname: 'user1', email: 'email', type: 'type');
+      const UserModel(id: 1, nickname: 'user1', email: 'email', type: 'type');
   final List<UserModel> teamMembers = [
-    UserModel(id: 1, email: 'email', nickname: 'user1', type: 'MEMBER'),
-    UserModel(id: 1, email: 'email', nickname: 'user2', type: 'MEMBER'),
-    UserModel(id: 1, email: 'email', nickname: 'user3', type: 'MEMBER'),
-    UserModel(id: 1, email: 'email', nickname: 'user4', type: 'MEMBER'),
-    UserModel(id: 1, email: 'email', nickname: 'user5', type: 'MEMBER'),
+    const UserModel(id: 1, email: 'email', nickname: 'user1', type: 'MEMBER'),
+    const UserModel(id: 1, email: 'email', nickname: 'user2', type: 'MEMBER'),
+    const UserModel(id: 1, email: 'email', nickname: 'user3', type: 'MEMBER'),
+    const UserModel(id: 1, email: 'email', nickname: 'user4', type: 'MEMBER'),
+    const UserModel(id: 1, email: 'email', nickname: 'user5', type: 'MEMBER'),
   ];
 
   @override
@@ -170,7 +170,8 @@ class _BodyState extends ConsumerState<_Body> {
     return TextButton(
       onPressed: () async {
         var result = await viewmodel.deleteProject(widget.project.projectId);
-        result.fold((l) => debugPrint(l.toString()), (r) => null);
+        result.fold(
+            (l) => debugPrint(l.toString()), (r) => null);
       },
       child: Text(
         '삭제',
