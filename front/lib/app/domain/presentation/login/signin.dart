@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front/i18n/strings.g.dart';
 import 'package:go_router/go_router.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -7,6 +8,7 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = Translations.of(context).signInScreen;
     var textStyle = const TextStyle(
       fontSize: 12,
       color: Colors.black,
@@ -18,24 +20,24 @@ class SignInScreen extends StatelessWidget {
           child: Center(
             child: Column(children: [
               Text(
-                '회원가입',
+                t.title,
                 style: textStyle,
               ),
               const SizedBox(
                 height: 10,
               ),
               Text(
-                '회원가입 방식을 선택해주세요',
+                t.prompt,
                 style: textStyle,
               ),
               const SizedBox(
                 height: 10,
               ),
-              CustomButton('이메일로 회원가입', () {
+              CustomButton(t.emailSignUpButton, () {
                 context.go('/emailSignup'); // 로그인 화면으로 이동
               }),
-              CustomButton('카카오로 회원가입', () {}),
-              CustomButton('네이버로 회원가입', () {}),
+              CustomButton(t.kakaoSignUpButton, () {}),
+              CustomButton(t.naverSignUpButton, () {}),
             ]),
           ),
         ),

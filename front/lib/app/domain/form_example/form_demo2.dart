@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/domain/form_example/email_verifier_form_field.dart';
+import 'package:front/i18n/strings.g.dart';
 import 'package:front/shared/atom/checkbox_form_field.dart';
 import 'package:front/shared/atom/checkbox_group_form_field.dart';
 import 'package:front/shared/atom/text_form_field.dart';
@@ -35,6 +36,8 @@ class _FormDemoScreen2State extends State<FormDemoScreen2> {
 
   @override
   Widget build(BuildContext context) {
+    var translations = Translations.of(context);
+    var t = translations.formDemoScreen2;
     var id = _formKey.currentState?.fields['id']?.value;
 
     return SafeArea(
@@ -53,58 +56,63 @@ class _FormDemoScreen2State extends State<FormDemoScreen2> {
                   onChanged: onFormChanged,
                   child: Column(
                     children: [
-                      const Text('Form Demo'),
+                      Text(t.formDemo),
                       Text('id is $id'),
-                      const EmailVerifierFormField(),
+                      EmailVerifierFormField(strings: translations),
                       CustomTextFormField(
                         fieldName: 'password',
                         validator: FieldValidationBuilder.field('password')
-                            .required('비밀번호를 입력해주세요',
+                            .required(t.passwordField.validation.required,
                                 AutoValidationMode.onUserInteraction)
                             .pattern(
                                 passwordRegexPatternString,
-                                '영어 대소문자, 숫자가 2개 이상 사용되어야 합니다.',
+                                t.passwordField.validation
+                                    .pattern(minLength: 2),
                                 AutoValidationMode.onUserInteraction)
                             .build(),
                         decoration: inputDecoration.copyWith(
-                          hintText: '비밀번호',
+                          hintText: t.passwordField.hintText,
                         ),
                       ),
                       CustomTextFormField(
                         fieldName: 'passwordCheck',
                         validator:
                             FieldValidationBuilder.field('passwaordCheck')
-                                .required('비밀번호를 확인해주세요',
+                                .required(
+                                    t.passwordCheckField.validation.required,
                                     AutoValidationMode.onUserInteraction)
                                 .sameAs(
                                     currentState?.fields['password']?.value ??
                                         '',
-                                    '비밀번호와 일치하지 않습니다.',
+                                    t.passwordCheckField.validation.sameAs,
                                     AutoValidationMode.onUserInteraction)
                                 .build(),
                         decoration: inputDecoration.copyWith(
-                          hintText: '비밀번호 확인',
+                          hintText: t.passwordCheckField.hintText,
                         ),
                       ),
                       CustomTextFormField(
                         fieldName: 'nickname',
                         validator: FieldValidationBuilder.field('nickname')
-                            .required('닉네임을 입력해주세요',
+                            .required(t.nicknameField.validation.required,
                                 AutoValidationMode.onUserInteraction)
-                            .min(2, '2글자 이상 입력해주세요',
+                            .min(
+                                2,
+                                t.nicknameField.validation
+                                    .minLength(minLength: 2),
                                 AutoValidationMode.onUserInteraction)
                             .build(),
                         decoration: inputDecoration.copyWith(
-                          hintText: '닉네임',
+                          hintText: t.nicknameField.hintText,
                         ),
                       ),
                       CheckboxGroupFormField(
                         agreeAllCheckBox: CheckboxFormField(
                           fieldName: 'agreeAll',
-                          title: '모두 동의',
+                          title: t.checkBoxField.agreeAll.title,
                           value: false,
                           validator: FieldValidationBuilder.field('agreeAll')
-                              .required('이용약관 동의가 필요합니다.',
+                              .required(t.checkBoxField.agreeAll.validation,
                                   AutoValidationMode.disabled)
                               .build(),
                         ),
@@ -112,14 +120,14 @@ class _FormDemoScreen2State extends State<FormDemoScreen2> {
                           CheckboxFormField(
                             value: false,
                             fieldName: 'term1',
-                            title: '서비스 이용약관 동의 (필수)',
+                            title: t.checkBoxField.serviceTermsTitle,
                             validator:
                                 FieldValidationBuilder.field('term1').build(),
                           ),
                           CheckboxFormField(
                             value: false,
                             fieldName: 'term2',
-                            title: '개인정보 수집, 이용 동의 (필수)',
+                            title: t.checkBoxField.privacyPolicyTitle,
                             validator:
                                 FieldValidationBuilder.field('term2').build(),
                           ),
@@ -129,7 +137,7 @@ class _FormDemoScreen2State extends State<FormDemoScreen2> {
                           onPressed: () {
                             _formKey.currentState?.validate(null);
                           },
-                          child: const Text('check')),
+                          child: Text(t.submitButton)),
                     ],
                   ),
                 ),

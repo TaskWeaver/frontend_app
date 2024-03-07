@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/domain/presentation/login/component/hinted_textfield.dart';
 import 'package:front/app/domain/presentation/team/componet/dialog.dart';
+import 'package:front/i18n/strings.g.dart';
 import 'package:go_router/go_router.dart';
 
 class TeamCreateScreen extends StatelessWidget {
@@ -8,15 +9,16 @@ class TeamCreateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = Translations.of(context).teamCreateScreen;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              'TeamW2aver',
-              style: TextStyle(
+            Text(
+              t.appbar.appBarTitle,
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
                 fontFamily: 'Inter',
@@ -34,10 +36,10 @@ class TeamCreateScreen extends StatelessWidget {
                     shape: OvalBorder(),
                   ),
                 ),
-                const Text(
-                  '알림',
+                Text(
+                  t.appbar.notification,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 15,
                     fontFamily: 'Inter',
@@ -57,9 +59,9 @@ class TeamCreateScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Team 만들기',
-              style: TextStyle(
+            Text(
+              t.screen.createTeamTitle,
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 30,
                 fontFamily: 'Inter',
@@ -71,9 +73,9 @@ class TeamCreateScreen extends StatelessWidget {
               height: 16,
               width: double.infinity,
             ),
-            const Text(
-              '새로운 팀을 만들어보세요',
-              style: TextStyle(
+            Text(
+              t.screen.createTeamSubtitle,
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 15,
                 fontFamily: 'Inter',
@@ -85,9 +87,10 @@ class TeamCreateScreen extends StatelessWidget {
               height: 16,
               width: double.infinity,
             ),
+            //Todo: HintedTextField 폼 교체하기
             HintedTextField(
                 hintText: '',
-                title: '팀 이름',
+                title: t.screen.teamNameHint,
                 onSaved: (_) {},
                 validator: (_) => null),
             const SizedBox(
@@ -105,19 +108,19 @@ class TeamCreateScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text('팀 생성이 완료되었습니다. 팀을 초대하여 보세요'),
+                          Text(t.dialog.teamCreationComplete),
                           TextButton(
                               onPressed: () {
                                 context.pop();
                               },
-                              child: const Text('닫기'))
+                              child: Text(t.dialog.closeButton))
                         ]),
                   ));
                 },
-                child: const Text(
-                  '생성',
+                child: Text(
+                  t.screen.createButton,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 20,
                     fontFamily: 'Inter',

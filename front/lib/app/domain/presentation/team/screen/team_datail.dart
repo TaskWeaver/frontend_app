@@ -4,6 +4,7 @@ import 'package:front/app/domain/presentation/team/componet/dialog.dart';
 import 'package:front/app/domain/presentation/team/componet/selecting_sharing_method_dialog.dart';
 import 'package:front/app/domain/presentation/team/state/projects_state.dart';
 import 'package:front/app/domain/presentation/team/viewmodel/team_detail.dart';
+import 'package:front/i18n/strings.g.dart';
 
 class TeamDetailScreen extends ConsumerStatefulWidget {
   TeamDetailScreen({super.key});
@@ -34,7 +35,7 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
   @override
   Widget build(BuildContext context) {
     var projectsState = ref.watch(teamDetailViewmodelProvider);
-
+    var t = Translations.of(context).teamDetailScreen;
     var textStyle = const TextStyle(
       color: Colors.black,
       fontFamily: 'Inter',
@@ -49,9 +50,9 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              'TeamW2aver',
-              style: TextStyle(
+            Text(
+              t.appbar.appBarTitle,
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
                 fontFamily: 'Inter',
@@ -70,7 +71,7 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
                   ),
                 ),
                 Text(
-                  '알림',
+                  t.appbar.notification,
                   textAlign: TextAlign.center,
                   style: textStyle.copyWith(fontSize: 15),
                 ),
@@ -86,7 +87,7 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
           children: [
             //TODO: extract these widgets and move to component
             Text(
-              '팀이름 의 Board',
+              t.screen.teamBoardTitle(teamName: 'Team Name'),
               style: textStyle.copyWith(fontSize: 20),
             ),
             const SizedBox(
@@ -96,13 +97,13 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Team Member (팀원 수)',
+                  t.screen.teamMemberCount(count: 8),
                   style: textStyle.copyWith(fontSize: 15),
                 ),
                 TextButton(
                     onPressed: () =>
                         context.dialog(child: SelectingSharingMethodDailog()),
-                    child: const Text('share'))
+                    child: Text(t.screen.shareButton))
               ],
             ),
             const SizedBox(
@@ -131,7 +132,7 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
             Padding(
                 padding: const EdgeInsets.only(bottom: 16.0, top: 16.0),
                 child: Text(
-                  'Team Project',
+                  t.screen.teamProjectTitle,
                   style: textStyle.copyWith(fontSize: 15),
                 )),
             Expanded(
