@@ -117,7 +117,7 @@
     "projectStartDate": "${projectStartDate}~"
   },
   "projectUpdateScreen": {
-    "teamName": "$teamName",
+    "teamName": "${teamName} ",
     "editProjectTitle": "Project 수정하기",
     "editProjectDescription": "프로젝트의 내용을 수정해보세요",
     "editButtonText": "수정",
