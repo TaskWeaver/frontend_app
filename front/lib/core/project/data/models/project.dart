@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:front/core/const/enum.dart';
 import 'package:front/core/project/domain/entities/project.dart';
 
 part 'project.freezed.dart';
@@ -9,28 +10,34 @@ part 'project.g.dart';
 @freezed
 class ProjectModel with _$ProjectModel {
   factory ProjectModel({
-    required String pro_id,
-    required String team_id,
+    required int projectId,
     required String name,
-    required String discription,
-    required DateTime created_at,
-    required DateTime finished_at,
-    required DateTime deleted_at,
+    required String description,
+    required int managerId,
+    required String projectState,
   }) = _ProjectModel;
 
   factory ProjectModel.fromJson(Map<String, dynamic> json) =>
       _$ProjectModelFromJson(json);
 
+  factory ProjectModel.fromEntity(Project project) {
+    return ProjectModel(
+      projectId: project.projectId,
+      managerId: project.managerId,
+      name: project.name,
+      description: project.description,
+      projectState: project.projectState.code,
+    );
+  }
+
   ProjectModel._();
 
   Project toEntity() {
     return Project(
-        pro_id: pro_id,
-        team_id: team_id,
-        name: name,
-        discription: discription,
-        created_at: created_at,
-        finished_at: finished_at,
-        deleted_at: deleted_at);
+      projectId: projectId,
+      managerId: managerId,
+      name: name,
+      description: description,
+      projectState: ProjectStateEnum.getByCode(projectState),);
   }
 }

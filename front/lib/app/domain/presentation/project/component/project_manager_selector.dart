@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/domain/presentation/team/componet/dialog.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+import 'package:front/core/user/models/user.dart';
 
-class ProjectAdministrator extends StatelessWidget {
-  const ProjectAdministrator({Key? key}) : super(key: key);
+typedef VoidCallback = void Function(UserModel user);
+
+class ProjectManagerSelector extends StatelessWidget {
+  const ProjectManagerSelector(
+      {Key? key,
+      required this.teamMembers,
+      required this.manager,
+      required this.onChanged})
+      : super(key: key);
+
+  final List<UserModel> teamMembers;
+  final UserModel manager;
+  final VoidCallback onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -12,38 +23,36 @@ class ProjectAdministrator extends StatelessWidget {
       children: [
         const Text('프로젝트 담당자'),
         GestureDetector(
-          onTap: () => _setAdministrator(context),
-          child: _buildAdministratorRow(),
+          onTap: () => _setAdministrator(context, teamMembers),
+          child: _buildAdministratorRow(manager),
         ),
       ],
     );
   }
 
-  Row _buildAdministratorRow() {
+  Row _buildAdministratorRow(UserModel administrator) {
     return Row(
       children: [
         CircleAvatar(
           backgroundColor: Colors.grey[300],
           child: const Text('⭐'),
         ),
-        const Text('김ㅇㅇ'),
+        Text(administrator.nickname ?? ''),
       ],
     );
   }
 
-  void _setAdministrator(BuildContext context) {
-    context.dialog(child: _buildDialog(context));
+  void _setAdministrator(BuildContext context, List<UserModel> teamMembers) {
+    context.dialog(child: _buildDialog(context, teamMembers));
   }
 
-  Widget _buildDialog(BuildContext context) {
+  Widget _buildDialog(BuildContext context, List<UserModel> teamMembers) {
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           const Text('프로젝트 담당자를 변경하시겠습니까?'),
-          _buildAssignerComponent('김ㅇㅇ', context),
-          _buildAssignerComponent('이ㅇㅇ', context),
-          _buildAssignerComponent('최ㅇㅇ', context),
+          ..._buildAssignerComponets(context, teamMembers),
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () => Navigator.pop(context),
@@ -54,10 +63,20 @@ class ProjectAdministrator extends StatelessWidget {
     );
   }
 
+  List<Widget> _buildAssignerComponets(
+      BuildContext context, List<UserModel> teamMembers) {
+    // ignore: omit_local_variable_types
+    List<Widget> result = [];
+    for (var i = 0; i < teamMembers.length; i++) {
+      result.add(_buildAssignerComponent(teamMembers[i], context));
+    }
+    return result;
+  }
+
   GestureDetector _buildAssignerComponent(
-      String assignerName, BuildContext context) {
+      UserModel user, BuildContext context) {
     return GestureDetector(
-      onTap: () => _showInformationDialog(assignerName, context),
+      onTap: () => _showInformationDialog(user, context),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
@@ -68,31 +87,35 @@ class ProjectAdministrator extends StatelessWidget {
             const SizedBox(
               width: 5,
             ),
-            Text(assignerName),
+            Text(user.nickname ?? ''),
           ],
         ),
       ),
     );
   }
 
-  void _showInformationDialog(String assignerName, BuildContext context) {
-    context.dialog(child: _buildInformationDialog(assignerName, context));
+  void _showInformationDialog(UserModel user, BuildContext context) {
+    context.dialog(child: _buildInformationDialog(user, context));
   }
 
-  Widget _buildInformationDialog(String assignerName, BuildContext context) {
+  Widget _buildInformationDialog(UserModel user, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('프로젝트 담당자 $assignerName'),
+          Text('프로젝트 담당자 ${user.nickname}'),
           const Text('으로 변경하시겠습니까?'),
           const SizedBox(height: 16),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               ElevatedButton(
-                onPressed: () => _showConfirmationDialog(assignerName, context),
+                onPressed: () {
+                  Navigator.pop(context);
+                  onChanged(user);
+                  _showConfirmationDialog(user.nickname ?? '', context);
+                },
                 child: const Text('확인'),
               ),
               ElevatedButton(
@@ -123,7 +146,6 @@ class ProjectAdministrator extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
             Navigator.pop(context);
-            Navigator.pop(context);
           },
           child: const Text('닫기'),
         ),
@@ -132,15 +154,15 @@ class ProjectAdministrator extends StatelessWidget {
   }
 }
 
-@widgetbook.UseCase(
-  name: '',
-  type: ProjectAdministrator,
-)
-Widget ProjectAdministratorUseCase(BuildContext context) {
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      Container(color: Colors.white, child: const ProjectAdministrator()),
-    ],
-  );
-}
+// @widgetbook.UseCase(
+//   name: '',
+//   type: ProjectAdministrator,
+// )
+// Widget ProjectAdministratorUseCase(BuildContext context) {
+//   return Column(
+//     mainAxisAlignment: MainAxisAlignment.center,
+//     children: [
+//       Container(color: Colors.white, child: const ProjectAdministrator()),
+//     ],
+//   );
+// }
