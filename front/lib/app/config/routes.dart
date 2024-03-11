@@ -92,7 +92,6 @@ final router = GoRouter(initialLocation: '/', routes: [
             pageBuilder: (context, state) => const NoTransitionPage(
                   child: MyPage(),
                 )),
-        // 여기에 추가 페이지 라우트 구성
       ],
     ),
   ]),

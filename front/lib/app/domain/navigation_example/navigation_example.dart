@@ -36,15 +36,6 @@ class _BottomNavigationBarScaffoldState
   Widget build(BuildContext context) {
     return Scaffold(
       body: widget.child,
-      // bottomNavigationBar: BottomNavigationBar(
-      //   onTap: changeTab,
-      //   currentIndex: currentIndex,
-      //   items: const [
-      //     BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-      //     BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
-      //     // 추가 탭이 있다면 여기에 아이템 추가
-      //   ],
-      // ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: selectedIndex,
         destinations: const [
