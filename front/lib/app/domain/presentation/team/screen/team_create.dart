@@ -97,22 +97,29 @@ class TeamCreateScreen extends StatelessWidget {
             Center(
               child: TextButton(
                 onPressed: () {
-                  context.dialog<String>(
-                      child: Padding(
-                    padding: const EdgeInsets.all(32.0),
-                    child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text('팀 생성이 완료되었습니다. 팀을 초대하여 보세요'),
-                          TextButton(
-                              onPressed: () {
-                                context.pop();
-                              },
-                              child: const Text('닫기'))
-                        ]),
-                  ));
+                  // context.dialog<String>(
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.all(32.0),
+                  //     child: Column(
+                  //         mainAxisSize: MainAxisSize.min,
+                  //         crossAxisAlignment: CrossAxisAlignment.center,
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         children: [
+                  //           const Text('팀 생성이 완료되었습니다. 팀을 초대하여 보세요'),
+                  //           TextButton(
+                  //               onPressed: () {
+                  //                 context.pop();
+                  //               },
+                  //               child: const Text('닫기'))
+                  //         ]),
+                  //   ),
+                  // );
+
+
+
+                  print("팀 만들기");
+
+
                 },
                 child: const Text(
                   '생성',

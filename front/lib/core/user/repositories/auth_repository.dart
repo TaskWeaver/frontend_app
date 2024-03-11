@@ -9,7 +9,7 @@ import 'package:front/core/utils/failure.dart';
 
 abstract class AuthRepository {
   /// 사용자 정보, 토큰 ,로그인 여부 등을 저장하는 리포지토리
-  ///RemoteDataSource에서 받아온 데이터를 Either로 감싸서 반환
+  /// RemoteDataSource에서 받아온 데이터를 Either로 감싸서 반환
   Future<Either<Failure, UserRegistrationResponse>> signUp(
       UserRegistrationRequest userRegistrationRequest);
   Future<Either<Failure, LoginResponse>> signIn(
