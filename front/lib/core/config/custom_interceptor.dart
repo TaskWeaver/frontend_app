@@ -1,7 +1,12 @@
+import 'dart:io';
+
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart'
     hide Options;
 import 'package:front/core/const/const.dart';
+import 'package:front/core/utils/exception.dart';
+import 'package:front/core/utils/failure.dart';
 
 ///토큰을 헤더에 추가, 에러를 다루기 위한 인터셉터
 class CustomInterceptor extends Interceptor {
@@ -92,12 +97,49 @@ class CustomInterceptor extends Interceptor {
   //     } on DioException catch (e) {
   //       // 새로운 Access Token임에도 에러가 발생한다면, Refresh Token마저도 만료된 것임
 
-  //       await ref.read(userMeNotifierProvider.notifier).logout();
-
   //       return handler.reject(e);
   //     }
   //   }
 
   //   return handler.reject(err);
   // }
+}
+
+mixin ErrorHandler {
+  Future<Either<Failure, T>> catchError<T>(Future<T> Function() f) async {
+    try {
+      return Future.value(Right(await f()));
+    } on DioException catch (err) {
+      switch (err.type) {
+        case DioExceptionType.badCertificate:
+          return Future.value(Left(ResponseFailure.unknown.getFailure()));
+        case DioExceptionType.badResponse:
+          return Future.value(Left(ResponseFailure.values
+              .firstWhere((value) => value.code == err.response?.statusCode,
+                  orElse: () => ResponseFailure.unknown)
+              .failure
+              .copyWith(message: err.response?.data['message'])));
+        case DioExceptionType.cancel:
+          return Future.value(Left(ResponseFailure.cancel.getFailure()));
+        case DioExceptionType.connectionError:
+          return Future.value(
+              Left(ResponseFailure.connectionError.getFailure()));
+        case DioExceptionType.connectionTimeout:
+          return Future.value(
+              Left(ResponseFailure.connectionTimeout.getFailure()));
+        case DioExceptionType.receiveTimeout:
+          return Future.value(
+              Left(ResponseFailure.receiveTimeout.getFailure()));
+        case DioExceptionType.sendTimeout:
+          return Future.value(Left(ResponseFailure.sendTimeout.getFailure()));
+        case DioExceptionType.unknown:
+          return Future.value(Left(ResponseFailure.unknown.getFailure()));
+      }
+    } on ServerException {
+      return Future.value(const Left(ServerFailure('An error has occurred')));
+    } on SocketException {
+      return Future.value(
+          const Left(ServerFailure('Failed to connect to the network')));
+    }
+  }
 }
