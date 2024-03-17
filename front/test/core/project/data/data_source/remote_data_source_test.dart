@@ -4,7 +4,6 @@ import 'package:front/core/config/providers/dio.dart';
 import 'package:front/core/project/data/data_sources/remote_data_source.dart';
 import 'package:front/core/project/data/models/project.dart';
 import 'package:front/core/project/data/models/project_request.dart';
-import 'package:front/core/utils/exception.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 import '../../../../helpers/dummy_data/project/api_response.dart';
 import '../../../../helpers/provider_container.dart';
@@ -63,7 +62,7 @@ void main() {
           '/v1/projects/$teamId', (server) => server.reply(500, null));
 
       expect(projectRemoteDataSource.getProjectsByTeamId(teamId),
-          throwsA(isA<ServerException>()));
+          throwsA(isA<DioException>()));
     });
   });
 
@@ -86,7 +85,7 @@ void main() {
           '/v1/project/$projectId', (server) => server.reply(500, null));
 
       expect(projectRemoteDataSource.getProjectsByTeamId(projectId),
-          throwsA(isA<ServerException>()));
+          throwsA(isA<DioException>()));
     });
   });
 
@@ -115,7 +114,7 @@ void main() {
       expect(
           projectRemoteDataSource.updateProjectById(
               projectRequestModel, projectId),
-          throwsA(isA<ServerException>()));
+          throwsA(isA<DioException>()));
     });
   });
 
@@ -139,7 +138,7 @@ void main() {
           '/v1/project/$projectId', (server) => server.reply(500, null));
 
       expect(projectRemoteDataSource.deleteProjectById(projectId),
-          throwsA(isA<ServerException>()));
+          throwsA(isA<DioException>()));
     });
   });
 }
