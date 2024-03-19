@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:front/app/domain/presentation/team/componet/team_tile.dart';
+import 'package:front/core/team/data/data_source/team_remote_data_source_impl.dart';
+import 'package:front/core/team/repositories/team_repository_impl.dart';
+import 'package:front/core/team/usecases/get_teams_use_case.dart';
+import 'package:front/presentation/pages/team/widgets/team_tile.dart';
 import 'package:go_router/go_router.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -11,6 +14,24 @@ class TeamsListScreen extends StatefulWidget {
 }
 
 class _TeamsListScreenState extends State<TeamsListScreen> {
+
+  @override
+  void initState() {
+
+    super.initState();
+    // getTeams();
+  }
+
+  // void getTeams() async{
+  //   final result = await GetTeamsUseCase(
+  //     TeamRepositoryImpl(
+  //       teamRemoteDataSource: TeamRemoteDataSourceImpl(),
+  //     ),
+  //   ).call();
+  //
+  //   print('result: $result');
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

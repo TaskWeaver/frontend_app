@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:front/app/domain/presentation/team/componet/dialog.dart';
-import 'package:front/app/domain/presentation/team/componet/selecting_sharing_method_dialog.dart';
 import 'package:front/app/domain/presentation/team/state/projects_state.dart';
 import 'package:front/app/domain/presentation/team/viewmodel/team_detail.dart';
+import 'package:front/presentation/pages/team/widgets/dialog.dart';
+import 'package:front/presentation/pages/team/widgets/selecting_sharing_method_dialog.dart';
 
 class TeamDetailScreen extends ConsumerStatefulWidget {
   TeamDetailScreen({super.key});

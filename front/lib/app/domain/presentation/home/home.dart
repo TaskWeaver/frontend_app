@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:front/app/domain/presentation/team/screen/team_create.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -8,51 +7,47 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('홈')),
-      body: Center(
-        child: Column(
-          children: [
-            ElevatedButton(
+        appBar: AppBar(title: const Text('홈')),
+        body: Center(
+            child: Column(children: [
+          ElevatedButton(
+            onPressed: () {
+              context.push('/login'); // 로그인 화면으로 이동
+            },
+            child: const Text('로그인'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              context.push('/teamsList'); // 로그인 화면으로 이동
+            },
+            child: const Text('team'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              context.push('/example'); // 로그인 화면으로 이동
+            },
+            child: const Text('formExample'),
+          ),
+          ElevatedButton(
               onPressed: () {
-                context.push('/login'); // 로그인 화면으로 이동
+                context.go('/projectDetail');
               },
-              child: const Text('로그인'),
-            ),
-            ElevatedButton(
+              child: const Text('프로젝트')),
+          ElevatedButton(
               onPressed: () {
-                context.push('/teamsList');
+                context.go('/projectCreation');
               },
-              child: const Text('team'),
-            ),
-            ElevatedButton(
+              child: const Text('프로젝트 생성')),
+          ElevatedButton(
               onPressed: () {
-                context.push('/example'); // 로그인 화면으로 이동
+                context.go('/projectUpdate');
               },
-              child: const Text('formExample'),
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  context.go('/projectDetail');
-                },
-                child: const Text('프로젝트')),
-            ElevatedButton(
-                onPressed: () {
-                  context.go('/projectCreation');
-                },
-                child: const Text('프로젝트 생성')),
-            ElevatedButton(
-                onPressed: () {
-                  context.go('/projectUpdate');
-                },
-                child: const Text('프로젝트 수정')),
-            ElevatedButton(
-                onPressed: () {
-                  context.go('/main');
-                },
-                child: const Text('메인 페이지'))
-          ],
-        ),
-      ),
-    );
+              child: const Text('프로젝트 수정')),
+          ElevatedButton(
+              onPressed: () {
+                context.go('/main');
+              },
+              child: const Text('메인 페이지'))
+        ])));
   }
 }

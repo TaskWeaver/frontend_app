@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front/app/domain/presentation/login/component/hinted_textfield.dart';
-import 'package:front/app/domain/presentation/team/componet/dialog.dart';
-import 'package:go_router/go_router.dart';
+import 'package:front/app/locator.dart';
+import 'package:front/core/team/data/models/team.dart';
 
-class TeamCreateScreen extends StatelessWidget {
+class TeamCreateScreen extends ConsumerStatefulWidget {
   const TeamCreateScreen({Key? key}) : super(key: key);
+
+  @override
+  ConsumerState<TeamCreateScreen> createState() => _TeamCreateScreenState();
+}
+
+class _TeamCreateScreenState extends ConsumerState<TeamCreateScreen> {
+  final textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +94,7 @@ class TeamCreateScreen extends StatelessWidget {
               width: double.infinity,
             ),
             HintedTextField(
+                controller: textController,
                 hintText: '',
                 title: '팀 이름',
                 onSaved: (_) {},
@@ -96,30 +105,36 @@ class TeamCreateScreen extends StatelessWidget {
             ),
             Center(
               child: TextButton(
-                onPressed: () {
+                onPressed: () async {
+                  final result = await createTeamUseCase.call(
+                    name: {
+                      'name': textController.text.trim(),
+                    },
+                  );
+
+
+                  print('result:: ${result}');
+
+
+                  // print('result: $result');
                   // context.dialog<String>(
                   //   child: Padding(
                   //     padding: const EdgeInsets.all(32.0),
                   //     child: Column(
-                  //         mainAxisSize: MainAxisSize.min,
-                  //         crossAxisAlignment: CrossAxisAlignment.center,
-                  //         mainAxisAlignment: MainAxisAlignment.center,
-                  //         children: [
-                  //           const Text('팀 생성이 완료되었습니다. 팀을 초대하여 보세요'),
-                  //           TextButton(
-                  //               onPressed: () {
-                  //                 context.pop();
-                  //               },
-                  //               child: const Text('닫기'))
-                  //         ]),
+                  //       mainAxisSize: MainAxisSize.min,
+                  //       crossAxisAlignment: CrossAxisAlignment.center,
+                  //       mainAxisAlignment: MainAxisAlignment.center,
+                  //       children: [
+                  //         const Text('팀 생성이 완료되었습니다. 팀을 초대하여 보세요'),
+                  //         TextButton(
+                  //             onPressed: () {
+                  //               context.pop();
+                  //             },
+                  //             child: const Text('닫기'))
+                  //       ],
+                  //     ),
                   //   ),
                   // );
-
-
-
-                  print("팀 만들기");
-
-
                 },
                 child: const Text(
                   '생성',
