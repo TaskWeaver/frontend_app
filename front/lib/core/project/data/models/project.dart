@@ -2,7 +2,7 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:front/core/const/enum.dart';
-import 'package:front/core/project/domain/entities/project.dart';
+import 'package:front/core/project/domain/entities/project_entity.dart';
 
 part 'project.freezed.dart';
 part 'project.g.dart';
@@ -20,7 +20,7 @@ class ProjectModel with _$ProjectModel {
   factory ProjectModel.fromJson(Map<String, dynamic> json) =>
       _$ProjectModelFromJson(json);
 
-  factory ProjectModel.fromEntity(Project project) {
+  factory ProjectModel.fromEntity(ProjectEntity project) {
     return ProjectModel(
       projectId: project.projectId,
       managerId: project.managerId,
@@ -32,12 +32,13 @@ class ProjectModel with _$ProjectModel {
 
   ProjectModel._();
 
-  Project toEntity() {
-    return Project(
+  ProjectEntity toEntity() {
+    return ProjectEntity(
       projectId: projectId,
       managerId: managerId,
       name: name,
       description: description,
-      projectState: ProjectStateEnum.getByCode(projectState),);
+      projectState: ProjectStateEnum.getByCode(projectState),
+    );
   }
 }

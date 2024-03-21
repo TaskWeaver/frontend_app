@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:front/core/project/data/data_sources/remote_data_source.dart';
 import 'package:front/core/project/data/data_sources/temp_data_source.dart';
 import 'package:front/core/project/data/models/project_request.dart';
-import 'package:front/core/project/domain/entities/project.dart';
+import 'package:front/core/project/domain/entities/project_entity.dart';
 import 'package:front/core/project/domain/repositories/project_repository.dart';
 import 'package:front/core/utils/exception.dart';
 import 'package:front/core/utils/failure.dart';
@@ -16,10 +16,11 @@ class ProjectRepositoryImpl implements ProjectRepository {
   final ProjectRemoteDataSource projectRemoteDataSource;
   final ProjectTempDataSource projectTempDataSource;
 
-  Map<int, Project> projects = {};
+  Map<int, ProjectEntity> projects = {};
 
   @override
-  Future<Either<Failure, List<Project>>> getProjectsByTeamId(int teamId) async {
+  Future<Either<Failure, List<ProjectEntity>>> getProjectsByTeamId(
+      int teamId) async {
     try {
       var result = await projectRemoteDataSource.getProjectsByTeamId(teamId);
       for (var element in result) {
@@ -37,7 +38,7 @@ class ProjectRepositoryImpl implements ProjectRepository {
   }
 
   @override
-  Future<Either<Failure, Project>> getProjectById(int projectId) async {
+  Future<Either<Failure, ProjectEntity>> getProjectById(int projectId) async {
     try {
       var result = await projectRemoteDataSource.getProjectById(projectId);
       projects.addAll({projectId: result.toEntity()});
@@ -63,7 +64,7 @@ class ProjectRepositoryImpl implements ProjectRepository {
   }
 
   @override
-  Future<Either<Failure, Project>> updateProjectById(
+  Future<Either<Failure, ProjectEntity>> updateProjectById(
       ProjectRequestModel project, int projectId) async {
     try {
       var result =
@@ -78,7 +79,7 @@ class ProjectRepositoryImpl implements ProjectRepository {
   }
 
   @override
-  Future<Either<Failure, Project>> createProject(
+  Future<Either<Failure, ProjectEntity>> createProject(
       ProjectRequestModel project, int teamId) async {
     try {
       var result = await projectRemoteDataSource.createProject(project, teamId);

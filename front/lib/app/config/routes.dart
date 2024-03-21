@@ -10,6 +10,7 @@ import 'package:front/app/domain/presentation/project/screen/project_update.dart
 import 'package:front/app/domain/presentation/team/screen/team_create.dart';
 import 'package:front/app/domain/presentation/team/screen/team_datail.dart';
 import 'package:front/app/domain/presentation/team/screen/teams_list.dart';
+import 'package:front/app/domain/presentation/todo/screen/todo_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(initialLocation: '/', routes: [
@@ -69,5 +70,9 @@ final router = GoRouter(initialLocation: '/', routes: [
       name: 'main',
       builder: (context, state) => const MainScreen(),
     ),
+    GoRoute(
+        path: 'todo',
+        name: 'todo',
+        builder: (context, state) => const TodoScreen())
   ]),
 ]);

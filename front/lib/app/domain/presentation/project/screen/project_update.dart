@@ -6,7 +6,7 @@ import 'package:front/app/domain/presentation/project/component/project_manager_
 import 'package:front/app/domain/presentation/project/viewmodel/project.dart';
 import 'package:front/core/const/enum.dart';
 import 'package:front/core/project/data/models/project_request.dart';
-import 'package:front/core/project/domain/entities/project.dart';
+import 'package:front/core/project/domain/entities/project_entity.dart';
 import 'package:front/core/user/models/user.dart';
 import 'package:front/shared/atom/bottom_navigation_bar.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';
@@ -47,7 +47,7 @@ class _Body extends ConsumerStatefulWidget {
   final TextStyle h1TextStyle = const TextStyle(
       fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black);
 
-  final project = Project(
+  final project = ProjectEntity(
     projectId: 1,
     name: 'name',
     description: 'description',
