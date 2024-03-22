@@ -1,31 +1,16 @@
-import 'package:front/core/config/providers/dio.dart';
 import 'package:front/core/network_handling/app_dio.dart';
 import 'package:front/core/team/data/api/team_api.dart';
 import 'package:front/core/team/data/data_source/team_remote_data_source.dart';
 import 'package:front/core/team/data/models/team.dart';
-import 'package:front/core/team/domain/entities/team_entity.dart';
-// part 'team_remote_data_source_impl.g.dart';
+import 'package:front/core/team/data/models/team_detail.dart';
+import 'package:front/core/utils/api_response.dart';
 
 final class TeamRemoteDataSourceImpl implements TeamRemoteDataSource {
-  // TeamRemoteDataSourceImpl({required TeamAPI teamAPI}) : _teamAPI = teamAPI;
-  // final TeamAPI _teamAPI;
-
-  // TeamRemoteDataSourceImpl({required this.dio});
   final TeamAPI _teamAPI = TeamAPI(
     AppDio.instance,
     baseUrl:
         'http://ec2-3-34-95-39.ap-northeast-2.compute.amazonaws.com:8083/v1',
   );
-
-  // @override
-  // Future checkInviteLink() {
-  //   throw UnimplementedError();
-  // }
-
-  // @override
-  // Future<List<TeamEntity>> getTeams() async {
-  //   return _teamAPI.getTeams();
-  // }
 
   @override
   Future<TeamModel> createTeam(Map<String, dynamic> name) {
@@ -33,31 +18,32 @@ final class TeamRemoteDataSourceImpl implements TeamRemoteDataSource {
   }
 
   @override
-  Future deleteMember(int teamId) {
-    // TODO: implement deleteMember
+  Future<TeamModel> deleteMember(int teamId, Map<String, dynamic> memberId) {
     throw UnimplementedError();
   }
 
   @override
-  Future<TeamModel> getTeamById(int teamId) {
-    throw UnimplementedError();
+  Future<ApiResponse<TeamDetailModel>> getTeamById(int teamId) {
+    return _teamAPI.getTeamById(teamId: teamId);
   }
 
   @override
   Future invitationNotification() {
-    // TODO: implement invitationNotification
     throw UnimplementedError();
   }
 
   @override
-  Future invitationResponse(int teamId, int inviteState) {
-    // TODO: implement invitationResponse
+  Future invitationAnswer(int teamId, int inviteState) {
     throw UnimplementedError();
   }
 
   @override
   Future inviteTeamByEmail(String id) {
-    // TODO: implement inviteTeamById
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<TeamModel>> getTeams() {
     throw UnimplementedError();
   }
 }

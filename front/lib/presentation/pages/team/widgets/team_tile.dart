@@ -5,7 +5,10 @@ import 'package:go_router/go_router.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class TeamTile extends StatelessWidget {
+  final int teamId;
+
   const TeamTile({
+    required this.teamId,
     super.key,
   });
 
@@ -14,19 +17,20 @@ class TeamTile extends StatelessWidget {
     return Container(
       color: Colors.grey[300],
       child: ListTile(
-        onTap: () => context.push('/teamDetail'),
-        title:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Row(
-            children: [
-              const Text(
-                '[ 팀 이름 ]',
-                style: TextStyle(fontSize: 16),
-              ),
-              const SizedBox(
-                width: 16,
-              ),
-              Container(
+        onTap: () => context.push('/teamDetail/$teamId'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                const Text(
+                  '[ 팀 이름 ]',
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(
+                  width: 16,
+                ),
+                Container(
                   decoration: const BoxDecoration(color: Colors.white),
                   child: const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -34,17 +38,19 @@ class TeamTile extends StatelessWidget {
                       '팀장',
                       style: TextStyle(fontSize: 12),
                     ),
-                  )),
-            ],
-          ),
-          const TeamMemberClips(teamMembersNumber: 4)
-        ]),
+                  ),
+                ),
+              ],
+            ),
+            const TeamMemberClips(teamMembersNumber: 4),
+          ],
+        ),
       ),
     );
   }
 }
 
-@widgetbook.UseCase(name: '', type: TeamTile)
-Widget loginScreenUseCase(BuildContext context) {
-  return const WidgetBookContainer(child: TeamTile());
-}
+// @widgetbook.UseCase(name: '', type: TeamTile)
+// Widget loginScreenUseCase(BuildContext context) {
+//   return const WidgetBookContainer(child: TeamTile());
+// }

@@ -31,8 +31,6 @@ class LoggerInterceptor implements Interceptor {
     log('⬅️ Received network response');
     log('${'✅ ${response.statusCode} ✅'} ${response.requestOptions.baseUrl}${response.requestOptions.path}');
     log('Query params: ${response.requestOptions.queryParameters}');
-    log('requestOptions data: ${response.requestOptions.data}');
-    log('requestOptions.extra: ${response.requestOptions.extra}');
     log('Response Data: ${response.data}');
     log('-------------------------');
     return handler.next(response);

@@ -1,20 +1,22 @@
 import 'package:front/core/team/data/models/team.dart';
-import 'package:front/core/team/domain/entities/team_entity.dart';
+import 'package:front/core/team/data/models/team_detail.dart';
+import 'package:front/core/utils/api_response.dart';
 
 abstract class TeamRemoteDataSource {
-  // Future<List<TeamEntity>> getTeams();
+  Future<List<TeamModel>> getTeams();
+
+  Future<ApiResponse<TeamDetailModel>> getTeamById(int teamId);
 
   Future<TeamModel> createTeam(Map<String, dynamic> name);
 
-  Future<TeamModel> getTeamById(int teamId);
-
   Future inviteTeamByEmail(String id);
 
-  // Future checkInviteLink();
+  Future<TeamModel> deleteMember(
+    int teamId,
+    Map<String, dynamic> memberId,
+  );
 
-  Future deleteMember(int teamId); //
-  // 팀장 권한 넘기기
   Future invitationNotification();
 
-  Future invitationResponse(int teamId, int inviteState);
+  Future invitationAnswer(int teamId, int inviteState);
 }

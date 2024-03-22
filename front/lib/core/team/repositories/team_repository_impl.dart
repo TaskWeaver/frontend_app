@@ -1,7 +1,8 @@
 import 'package:front/core/team/data/data_source/team_remote_data_source.dart';
 import 'package:front/core/team/data/models/team.dart';
-import 'package:front/core/team/domain/entities/team_entity.dart';
+import 'package:front/core/team/data/models/team_detail.dart';
 import 'package:front/core/team/repositories/team_repository.dart';
+import 'package:front/core/utils/api_response.dart';
 import 'package:front/core/utils/result.dart';
 
 class TeamRepositoryImpl implements TeamRepository {
@@ -14,63 +15,59 @@ class TeamRepositoryImpl implements TeamRepository {
   @override
   Future<Result<TeamModel>> createTeam(Map<String, dynamic> name) async {
     try {
-      // final result = await _teamRemoteDataSource.createTeam(name);
-      var value = await _teamRemoteDataSource.createTeam(name);
-      // return Result.success(UserDataEntity.fromDto(userDto));
-
-      // print('impl result: $result');
-      // return Result.success(result);
-      return Result.success(value);
-      // return Result.success(TeamModel.fromModel(result));
+      final result = await _teamRemoteDataSource.createTeam(name);
+      print('impl result: $result');
+      return Result.success(TeamModel.fromModel(result));
     } on Exception catch (e) {
-      return Result.error(e);
+      return Result.failure(e);
     }
   }
 
-  // @override
-  // Future<Result<List<TeamEntity>>> getTeams() async {
-  //   try {
-  //     var result = await _teamRemoteDataSource.getTeams();
-  //     return Result.success(result);
-  //   } on Exception catch (e) {
-  //     return Result.error(e);
-  //   }
-  // }
-
   @override
-  Future<Result<TeamModel>> getTeamById(int teamId) async {
-    throw UnimplementedError();
+  Future<Result<ApiResponse<TeamDetailModel>>> getTeamById(int teamId) async {
+    try {
+      final result = await _teamRemoteDataSource.getTeamById(teamId);
+      return Result.success(result);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
   }
 
-  // @override
-  // Future<Result> checkInviteLink() {
-  //   // TODO: implement checkInviteLink
-  //   throw UnimplementedError();
-  // }
-
   @override
-  Future<Result> deleteMember(int teamId) {
-    // TODO: implement deleteMember
+  Future<Result> deleteMember(
+    int teamId,
+    Map<String, dynamic> memberId,
+  ) {
     throw UnimplementedError();
   }
-
-
 
   @override
   Future<Result> invitationNotification() {
-    // TODO: implement invitationNotification
     throw UnimplementedError();
   }
 
   @override
   Future<Result> invitationResponse(int teamId, int inviteState) {
-    // TODO: implement invitationResponse
     throw UnimplementedError();
   }
 
   @override
   Future<Result> inviteTeamByEmail(String id) {
-    // TODO: implement inviteTeamById
     throw UnimplementedError();
   }
+
+  @override
+  Future<Result<List<TeamModel>>> getTeams() {
+    throw UnimplementedError();
+  }
+
+// @override
+// Future<Result<List<TeamEntity>>> getTeams() async {
+//   try {
+//     var result = await _teamRemoteDataSource.getTeams();
+//     return Result.success(result);
+//   } on Exception catch (e) {
+//     return Result.error(e);
+//   }
+// }
 }

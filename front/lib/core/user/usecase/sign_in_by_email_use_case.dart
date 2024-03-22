@@ -30,9 +30,6 @@ class SignInByEmailUseCase {
     }, (r) async {
       var token =
           Token(accessToken: r.accessToken, refreshToken: r.refreshToken);
-
-      print('accessToken = ${r.accessToken}');
-
       await saveTokenUseCase.call(token);
       var getMeResponse = await getRemoteUserInfoUseCase.call();
       return getMeResponse.fold((l) {

@@ -3,21 +3,22 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:front/app/locator.dart';
 import 'package:front/core/network_handling/interceptors/logger_interceptor.dart';
 import 'package:front/core/network_handling/interceptors/token_interceptor.dart';
-
-import '../config/providers/secure_storage.dart';
 
 abstract class AppDio {
   AppDio._internal();
 
   static Dio? _instance;
+
   static Dio get instance => _instance ??= _AppDio();
 }
 
 class _AppDio with DioMixin implements Dio {
   _AppDio() {
+    // final storage = locator<FlutterSecureStorage>();
+
     httpClientAdapter = IOHttpClientAdapter();
     options = BaseOptions(
       connectTimeout: Duration(milliseconds: 30000),
@@ -28,10 +29,8 @@ class _AppDio with DioMixin implements Dio {
 
     (transformer as BackgroundTransformer).jsonDecodeCallback = parseJson;
 
-
     interceptors.addAll([
-      TokenInterceptor(),
-      // CustomInterceptor(storage: storage),
+      TokenInterceptor(storage: getStorage),
       LoggerInterceptor(),
     ]);
   }

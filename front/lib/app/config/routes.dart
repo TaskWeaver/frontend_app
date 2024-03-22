@@ -45,9 +45,11 @@ final router = GoRouter(initialLocation: '/', routes: [
       builder: (context, state) => const TeamCreateScreen(),
     ),
     GoRoute(
-      path: 'teamDetail',
-      name: 'teamDetail',
-      builder: (context, state) => TeamDetailScreen(),
+      path: 'teamDetail/:teamId',
+      name: 'teamDetail/:teamId',
+      builder: (context, state) {
+        return TeamDetailScreen(state.pathParameters['teamId']!);
+      },
     ),
     GoRoute(
       path: 'projectDetail',

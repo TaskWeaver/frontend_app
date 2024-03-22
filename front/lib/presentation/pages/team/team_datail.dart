@@ -4,9 +4,12 @@ import 'package:front/app/domain/presentation/team/state/projects_state.dart';
 import 'package:front/app/domain/presentation/team/viewmodel/team_detail.dart';
 import 'package:front/presentation/pages/team/widgets/dialog.dart';
 import 'package:front/presentation/pages/team/widgets/selecting_sharing_method_dialog.dart';
+import 'package:front/presentation/providers/team_controller.dart';
 
 class TeamDetailScreen extends ConsumerStatefulWidget {
-  TeamDetailScreen({super.key});
+  final String teamId;
+
+  TeamDetailScreen(this.teamId, {super.key});
 
   final elevatedButtonStyle = ElevatedButton.styleFrom(
     padding: const EdgeInsets.all(16.0),
@@ -23,17 +26,21 @@ class TeamDetailScreen extends ConsumerStatefulWidget {
 
 class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
   late TeamDetailViewmodel viewmodel;
+  late TeamController teamController;
 
   @override
   void initState() {
     super.initState();
     viewmodel = ref.read(teamDetailViewmodelProvider.notifier);
     viewmodel.getProjectsByTeamId(1);
+    teamController = ref.read(teamControllerProvider.notifier);
+    teamController.getTeamById(int.parse(widget.teamId));
   }
 
   @override
   Widget build(BuildContext context) {
     var projectsState = ref.watch(teamDetailViewmodelProvider);
+    final teamState = ref.watch(teamControllerProvider);
 
     var textStyle = const TextStyle(
       color: Colors.black,
@@ -79,69 +86,74 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
           ],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //TODO: extract these widgets and move to component
-            Text(
-              '팀이름 의 Board',
-              style: textStyle.copyWith(fontSize: 20),
-            ),
-            const SizedBox(
-              height: 22,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Team Member (팀원 수)',
-                  style: textStyle.copyWith(fontSize: 15),
-                ),
-                TextButton(
-                    onPressed: () =>
-                        context.dialog(child: SelectingSharingMethodDailog()),
-                    child: const Text('share'))
-              ],
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            SizedBox(
-              height: 40,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 15,
-                  itemExtent: 48,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: const ShapeDecoration(
-                          color: Color(0xFFD9D9D9),
-                          shape: OvalBorder(),
+      body: teamState.when(
+        (teamModel) => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //TODO: extract these widgets and move to component
+
+              Text(
+                '${teamModel.name} 의 Board',
+                style: textStyle.copyWith(fontSize: 20),
+              ),
+              const SizedBox(
+                height: 22,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Team Member (${teamModel.memberCount})',
+                    style: textStyle.copyWith(fontSize: 15),
+                  ),
+                  TextButton(
+                      onPressed: () =>
+                          context.dialog(child: SelectingSharingMethodDailog()),
+                      child: const Text('share'))
+                ],
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              SizedBox(
+                height: 40,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 15,
+                    itemExtent: 48,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: const ShapeDecoration(
+                            color: Color(0xFFD9D9D9),
+                            shape: OvalBorder(),
+                          ),
                         ),
-                      ),
-                    );
-                  }),
-            ),
-            Padding(
-                padding: const EdgeInsets.only(bottom: 16.0, top: 16.0),
-                child: Text(
-                  'Team Project',
-                  style: textStyle.copyWith(fontSize: 15),
-                )),
-            Expanded(
-              child: ProjectList(
-                  widget: widget,
-                  textStyle: textStyle,
-                  projectsState: projectsState),
-            ),
-          ],
+                      );
+                    }),
+              ),
+              Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0, top: 16.0),
+                  child: Text(
+                    'Team Project',
+                    style: textStyle.copyWith(fontSize: 15),
+                  )),
+              Expanded(
+                child: ProjectList(
+                    widget: widget,
+                    textStyle: textStyle,
+                    projectsState: projectsState),
+              ),
+            ],
+          ),
         ),
+        loading: () => Center(child: CircularProgressIndicator()),
+        error: (message) => Text(message ?? ''),
       ),
     );
   }
