@@ -1,11 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:front/app/domain/presentation/project/component/project_from.dart';
+import 'package:front/app/domain/presentation/project/component/project_form.dart';
 import 'package:front/app/domain/presentation/project/component/project_manager_selector.dart';
 import 'package:front/app/domain/presentation/project/viewmodel/project.dart';
 import 'package:front/core/project/data/models/project_request.dart';
 import 'package:front/core/user/models/user.dart';
+import 'package:front/i18n/strings.g.dart';
 import 'package:front/shared/atom/bottom_navigation_bar.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -84,32 +85,34 @@ class _BodyState extends ConsumerState<_Body> {
 
   @override
   Widget build(BuildContext context) {
+    var translations = Translations.of(context);
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            buildHeader(),
+            buildHeader(translations),
             const SizedBox(height: 10),
             ProjectManagerSelector(
                 teamMembers: teamMembers,
                 manager: manager,
                 onChanged: onManagerChanged),
             Expanded(
-              child: ProjectFrom(
+              child: ProjectForm(
                 formKey: _formKey,
                 onFormChanged: onFormChanged,
               ),
             ),
             const SizedBox(height: 20),
-            buildCreateButton(),
+            buildCreateButton(translations),
           ],
         ),
       ),
     );
   }
 
-  Widget buildHeader() {
+  Widget buildHeader(Translations translations) {
+    var t = translations.projectCreationScreen;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -118,15 +121,16 @@ class _BodyState extends ConsumerState<_Body> {
           style: widget.h1TextStyle,
         ),
         Text(
-          'Project 추가하기',
+          t.addProjectHeader,
           style: widget.h1TextStyle,
         ),
-        const Text('새로운 프로젝트를 추가해보세요'),
+        Text(t.addProjectDescription),
       ],
     );
   }
 
-  Row buildCreateButton() {
+  Row buildCreateButton(Translations translations) {
+    var t = translations.projectCreationScreen;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -146,7 +150,7 @@ class _BodyState extends ConsumerState<_Body> {
             }
           },
           child: Text(
-            '생성',
+            t.createButton,
             style: widget.h1TextStyle.copyWith(fontSize: 15),
           ),
         ),
