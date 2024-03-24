@@ -1,4 +1,4 @@
-import 'package:front/core/team/repositories/team_repository.dart';
+import 'package:front/features/team/repositories/team_repository.dart';
 import 'package:front/core/utils/api_response.dart';
 import 'package:front/core/utils/result.dart';
 

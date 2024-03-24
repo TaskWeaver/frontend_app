@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:front/app/domain/presentation/team/state/projects_state.dart';
-import 'package:front/app/domain/presentation/team/viewmodel/team_detail.dart';
 import 'package:front/core/team/data/models/team_detail.dart';
+import 'package:front/features/team/state/projects_state.dart';
+import 'package:front/features/team/viewmodel/team_detail.dart';
 import 'package:front/presentation/pages/team/widgets/dialog.dart';
 import 'package:front/presentation/pages/team/widgets/selecting_sharing_method_dialog.dart';
 import 'package:front/presentation/providers/team_controller.dart';
@@ -84,7 +84,7 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
                   style: textStyle.copyWith(fontSize: 15),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),
@@ -97,7 +97,6 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //TODO: extract these widgets and move to component
-
                 Text(
                   '${teamDetailModel.name} 의 Board',
                   style: textStyle.copyWith(fontSize: 20),
@@ -113,9 +112,13 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
                       style: textStyle.copyWith(fontSize: 15),
                     ),
                     TextButton(
-                        onPressed: () =>
-                            context.dialog(child: SelectingSharingMethodDailog()),
-                        child: const Text('share'))
+                      onPressed: () => context.dialog(
+                        child: SelectingSharingMethodDialog(
+                          teamId: int.parse(widget.teamId),
+                        ),
+                      ),
+                      child: const Text('share'),
+                    ),
                   ],
                 ),
                 const SizedBox(
@@ -142,11 +145,12 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
                       }),
                 ),
                 Padding(
-                    padding: const EdgeInsets.only(bottom: 16.0, top: 16.0),
-                    child: Text(
-                      'Team Project',
-                      style: textStyle.copyWith(fontSize: 15),
-                    )),
+                  padding: const EdgeInsets.only(bottom: 16.0, top: 16.0),
+                  child: Text(
+                    'Team Project',
+                    style: textStyle.copyWith(fontSize: 15),
+                  ),
+                ),
                 Expanded(
                   child: ProjectList(
                       widget: widget,
@@ -179,31 +183,34 @@ class ProjectList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return projectsState.when(
-        (projects) {
-          return CustomScrollView(
-            slivers: <Widget>[
-              SliverList.builder(
-                itemCount: projects.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: widget.elevatedButtonStyle,
-                      child: Text(
-                        projects[index].name,
-                        style: textStyle.copyWith(fontSize: 15),
-                      ),
+      (projects) {
+        return CustomScrollView(
+          slivers: <Widget>[
+            SliverList.builder(
+              itemCount: projects.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: widget.elevatedButtonStyle,
+                    child: Text(
+                      projects[index].name,
+                      style: textStyle.copyWith(fontSize: 15),
                     ),
-                  );
-                },
-              ),
-            ],
-          );
-        },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (message) {
-          return Text(message ?? '');
-        });
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      },
+      loading: () => const Center(
+        child: CircularProgressIndicator(),
+      ),
+      error: (message) {
+        return Text(message ?? '');
+      },
+    );
   }
 }
