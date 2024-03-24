@@ -31,7 +31,7 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
         throw ServerException();
       }
     } on DioException {
-      throw ServerException();
+      rethrow;
     }
   }
 
@@ -46,7 +46,7 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
         throw ServerException();
       }
     } on DioException {
-      throw ServerException();
+      rethrow;
     }
   }
 
@@ -62,7 +62,7 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
         throw ServerException();
       }
     } on DioException {
-      throw ServerException();
+      rethrow;
     }
   }
 
@@ -77,7 +77,7 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
         throw ServerException();
       }
     } on DioException {
-      throw ServerException();
+      rethrow;
     }
   }
 
@@ -93,8 +93,8 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
       } else {
         throw ServerException();
       }
-    }  on DioException {
-      throw ServerException();
+    } on DioException {
+      rethrow;
     }
   }
 }
