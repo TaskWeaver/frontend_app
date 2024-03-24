@@ -15,8 +15,6 @@ class TokenInterceptor implements InterceptorsWrapper {
 
     final token = await storage.read(key: accessTokenKey); // accessTokenKey는 토큰을 저장할 때 사용한 키
 
-    print('access token: $token');
-
     if (token != null) {
       options.headers['Authorization'] = 'Bearer $token';
     }

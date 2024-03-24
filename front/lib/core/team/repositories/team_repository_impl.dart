@@ -1,4 +1,6 @@
 import 'package:front/core/team/data/data_source/team_remote_data_source.dart';
+import 'package:front/core/team/data/models/invite_response.dart';
+import 'package:front/core/team/data/models/invite_team.dart';
 import 'package:front/core/team/data/models/team.dart';
 import 'package:front/core/team/data/models/team_detail.dart';
 import 'package:front/core/team/repositories/team_repository.dart';
@@ -13,11 +15,13 @@ class TeamRepositoryImpl implements TeamRepository {
   final TeamRemoteDataSource _teamRemoteDataSource;
 
   @override
-  Future<Result<TeamModel>> createTeam(Map<String, dynamic> name) async {
+  Future<Result<ApiResponse<TeamModel>>> createTeam(String name) async {
     try {
-      final result = await _teamRemoteDataSource.createTeam(name);
-      print('impl result: $result');
-      return Result.success(TeamModel.fromModel(result));
+      final result = await _teamRemoteDataSource.createTeam({
+        'name': name,
+      });
+
+      return Result.success(result);
     } on Exception catch (e) {
       return Result.failure(e);
     }
@@ -34,40 +38,61 @@ class TeamRepositoryImpl implements TeamRepository {
   }
 
   @override
-  Future<Result> deleteMember(
-    int teamId,
-    Map<String, dynamic> memberId,
-  ) {
-    throw UnimplementedError();
+  Future<Result<ApiResponse>> deleteMember({
+    required int teamId,
+    // required Map<String, dynamic> memberId,
+    required List<int> memberId,
+  }) async {
+    try {
+      final result = await _teamRemoteDataSource.deleteMember(
+        teamId,
+        {'memberId': memberId},
+      );
+      return Result.success(result);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
   }
 
   @override
-  Future<Result> invitationNotification() {
-    throw UnimplementedError();
+  Future<Result<ApiResponse>> invitationNotification() async {
+    try {
+      final result = await _teamRemoteDataSource.invitationNotification();
+      return Result.success(result);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
   }
 
   @override
-  Future<Result> invitationResponse(int teamId, int inviteState) {
-    throw UnimplementedError();
+  Future<Result<ApiResponse>> answerToInvitation(
+      InviteResponse inviteResponse) async {
+    try {
+      final result =
+          await _teamRemoteDataSource.answerToInvitation(inviteResponse);
+      return Result.success(result);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
   }
 
   @override
-  Future<Result> inviteTeamByEmail(String id) {
-    throw UnimplementedError();
+  Future<Result<ApiResponse>> inviteTeamByEmail(InviteTeam inviteTeam) async {
+    try {
+      final result = await _teamRemoteDataSource.inviteTeamByEmail(inviteTeam);
+      return Result.success(result);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
   }
 
   @override
-  Future<Result<List<TeamModel>>> getTeams() {
-    throw UnimplementedError();
+  Future<Result<ApiResponse<List<TeamModel>>>> getTeams() async {
+    try {
+      final result = await _teamRemoteDataSource.getTeams();
+      return Result.success(result);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
   }
-
-// @override
-// Future<Result<List<TeamEntity>>> getTeams() async {
-//   try {
-//     var result = await _teamRemoteDataSource.getTeams();
-//     return Result.success(result);
-//   } on Exception catch (e) {
-//     return Result.error(e);
-//   }
-// }
 }

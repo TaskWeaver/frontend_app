@@ -9,7 +9,7 @@ class TeamModel with _$TeamModel  {
     required int id,
     required String name,
     required String inviteLink,
-    String? teamLeader,
+    int? teamLeader,
     required String createdAt,
   }) = _TeamModel;
 

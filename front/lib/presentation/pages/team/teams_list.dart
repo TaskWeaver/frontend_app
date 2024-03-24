@@ -40,7 +40,7 @@ class _TeamsListScreenState extends State<TeamsListScreen> {
                       color: Colors.grey,
                       borderRadius: BorderRadius.circular(100)),
                 ),
-              )
+              ),
             ],
           ),
         ),

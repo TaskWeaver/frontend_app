@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart' hide Headers;
+import 'package:front/core/team/data/models/invite_response.dart';
+import 'package:front/core/team/data/models/invite_team.dart';
 import 'package:front/core/team/data/models/team.dart';
 import 'package:front/core/team/data/models/team_detail.dart';
 import 'package:front/core/utils/api_response.dart';
@@ -12,12 +14,11 @@ abstract class TeamAPI {
 
   @GET('/teams')
   @Headers({'accessToken': 'true'})
-  Future<List<TeamModel>> getTeams();
+  Future<ApiResponse<List<TeamModel>>> getTeams();
 
-  // TODO: Body 모델 타입으로 받기
   @POST('/team')
   @Headers({'accessToken': 'true'})
-  Future<TeamModel> createTeam({
+  Future<ApiResponse<TeamModel>> createTeam({
     @Body() required Map<String, dynamic> name,
   });
 
@@ -26,29 +27,26 @@ abstract class TeamAPI {
     @Path() required int teamId,
   });
 
-  // TODO: Body 모델 타입으로 받기
   @POST('/team/invitation/email')
   @Headers({'accessToken': 'true'})
-  Future inviteTeamByEmail({
-    @Body() required Map<String, dynamic> invite,
-  });
+  Future<ApiResponse> inviteTeamByEmail(
+    @Body() InviteTeam inviteTeam,
+  );
 
-  // TODO: Body 모델 타입으로 받기
   @POST('/team/{teamId}/delete')
   @Headers({'accessToken': 'true'})
-  Future deleteMember({
+  Future<ApiResponse> deleteTeamMember({
     @Path() required int teamId,
     @Body() required Map<String, dynamic> memberId,
   });
 
   @POST('/team/invitation/notification')
   @Headers({'accessToken': 'true'})
-  Future invitationNotification();
+  Future<ApiResponse> invitationNotification();
 
   @POST('/team/invitation/answer')
   @Headers({'accessToken': 'true'})
-  Future invitationAnswer({
-    @Body() required Map<String, dynamic> invitation,
-  });
-
+  Future<ApiResponse> answerToInvitation(
+    @Body() InviteResponse inviteResponse,
+  );
 }

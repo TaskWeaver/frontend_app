@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front/app/domain/presentation/team/state/projects_state.dart';
 import 'package:front/app/domain/presentation/team/viewmodel/team_detail.dart';
+import 'package:front/core/team/data/models/team_detail.dart';
 import 'package:front/presentation/pages/team/widgets/dialog.dart';
 import 'package:front/presentation/pages/team/widgets/selecting_sharing_method_dialog.dart';
 import 'package:front/presentation/providers/team_controller.dart';
@@ -33,8 +34,9 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
     super.initState();
     viewmodel = ref.read(teamDetailViewmodelProvider.notifier);
     viewmodel.getProjectsByTeamId(1);
-    teamController = ref.read(teamControllerProvider.notifier);
-    teamController.getTeamById(int.parse(widget.teamId));
+    ref
+        .read(teamControllerProvider.notifier)
+        .getTeamById(int.parse(widget.teamId));
   }
 
   @override
@@ -87,71 +89,74 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
         ),
       ),
       body: teamState.when(
-        (teamModel) => Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              //TODO: extract these widgets and move to component
+        (teamDetailModel) {
+          teamDetailModel as TeamDetailModel;
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //TODO: extract these widgets and move to component
 
-              Text(
-                '${teamModel.name} 의 Board',
-                style: textStyle.copyWith(fontSize: 20),
-              ),
-              const SizedBox(
-                height: 22,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Team Member (${teamModel.memberCount})',
-                    style: textStyle.copyWith(fontSize: 15),
-                  ),
-                  TextButton(
-                      onPressed: () =>
-                          context.dialog(child: SelectingSharingMethodDailog()),
-                      child: const Text('share'))
-                ],
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              SizedBox(
-                height: 40,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 15,
-                    itemExtent: 48,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: const ShapeDecoration(
-                            color: Color(0xFFD9D9D9),
-                            shape: OvalBorder(),
+                Text(
+                  '${teamDetailModel.name} 의 Board',
+                  style: textStyle.copyWith(fontSize: 20),
+                ),
+                const SizedBox(
+                  height: 22,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Team Member (${teamDetailModel.memberCount})',
+                      style: textStyle.copyWith(fontSize: 15),
+                    ),
+                    TextButton(
+                        onPressed: () =>
+                            context.dialog(child: SelectingSharingMethodDailog()),
+                        child: const Text('share'))
+                  ],
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                SizedBox(
+                  height: 40,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 15,
+                      itemExtent: 48,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Container(
+                            width: 40,
+                            height: 40,
+                            decoration: const ShapeDecoration(
+                              color: Color(0xFFD9D9D9),
+                              shape: OvalBorder(),
+                            ),
                           ),
-                        ),
-                      );
-                    }),
-              ),
-              Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0, top: 16.0),
-                  child: Text(
-                    'Team Project',
-                    style: textStyle.copyWith(fontSize: 15),
-                  )),
-              Expanded(
-                child: ProjectList(
-                    widget: widget,
-                    textStyle: textStyle,
-                    projectsState: projectsState),
-              ),
-            ],
-          ),
-        ),
+                        );
+                      }),
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0, top: 16.0),
+                    child: Text(
+                      'Team Project',
+                      style: textStyle.copyWith(fontSize: 15),
+                    )),
+                Expanded(
+                  child: ProjectList(
+                      widget: widget,
+                      textStyle: textStyle,
+                      projectsState: projectsState),
+                ),
+              ],
+            ),
+          );
+        },
         loading: () => Center(child: CircularProgressIndicator()),
         error: (message) => Text(message ?? ''),
       ),

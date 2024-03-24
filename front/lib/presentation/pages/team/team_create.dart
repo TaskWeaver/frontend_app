@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front/app/domain/presentation/login/component/hinted_textfield.dart';
 import 'package:front/app/locator.dart';
-import 'package:front/core/team/data/models/team.dart';
+import 'package:front/presentation/pages/team/widgets/dialog.dart';
+import 'package:go_router/go_router.dart';
 
 class TeamCreateScreen extends ConsumerStatefulWidget {
   const TeamCreateScreen({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class _TeamCreateScreenState extends ConsumerState<TeamCreateScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -107,34 +109,34 @@ class _TeamCreateScreenState extends ConsumerState<TeamCreateScreen> {
               child: TextButton(
                 onPressed: () async {
                   final result = await createTeamUseCase.call(
-                    name: {
-                      'name': textController.text.trim(),
+                      name: textController.text.trim());
+
+                  await result.fold(
+                    onSuccess: (value) {
+                      return context.dialog<String>(
+                        child: Padding(
+                          padding: const EdgeInsets.all(32.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('팀 생성이 완료되었습니다. 팀을 초대하여 보세요'),
+                              // Text(t.dialog.teamCreationComplete),
+                              TextButton(
+                                onPressed: () {
+                                  context.pop();
+                                  context.pop();
+                                },
+                                child: Text('닫기'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
                     },
+                    onFailure: (e) {},
                   );
-
-
-                  print('result:: ${result}');
-
-
-                  // print('result: $result');
-                  // context.dialog<String>(
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.all(32.0),
-                  //     child: Column(
-                  //       mainAxisSize: MainAxisSize.min,
-                  //       crossAxisAlignment: CrossAxisAlignment.center,
-                  //       mainAxisAlignment: MainAxisAlignment.center,
-                  //       children: [
-                  //         const Text('팀 생성이 완료되었습니다. 팀을 초대하여 보세요'),
-                  //         TextButton(
-                  //             onPressed: () {
-                  //               context.pop();
-                  //             },
-                  //             child: const Text('닫기'))
-                  //       ],
-                  //     ),
-                  //   ),
-                  // );
                 },
                 child: const Text(
                   '생성',
@@ -148,7 +150,7 @@ class _TeamCreateScreenState extends ConsumerState<TeamCreateScreen> {
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

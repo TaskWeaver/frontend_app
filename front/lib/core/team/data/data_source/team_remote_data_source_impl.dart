@@ -1,6 +1,8 @@
 import 'package:front/core/network_handling/app_dio.dart';
 import 'package:front/core/team/data/api/team_api.dart';
 import 'package:front/core/team/data/data_source/team_remote_data_source.dart';
+import 'package:front/core/team/data/models/invite_response.dart';
+import 'package:front/core/team/data/models/invite_team.dart';
 import 'package:front/core/team/data/models/team.dart';
 import 'package:front/core/team/data/models/team_detail.dart';
 import 'package:front/core/utils/api_response.dart';
@@ -13,13 +15,14 @@ final class TeamRemoteDataSourceImpl implements TeamRemoteDataSource {
   );
 
   @override
-  Future<TeamModel> createTeam(Map<String, dynamic> name) {
+  Future<ApiResponse<TeamModel>> createTeam(Map<String, dynamic> name) {
     return _teamAPI.createTeam(name: name);
   }
 
   @override
-  Future<TeamModel> deleteMember(int teamId, Map<String, dynamic> memberId) {
-    throw UnimplementedError();
+  Future<ApiResponse> deleteMember(
+      int teamId, Map<String, dynamic> memberId) {
+    return _teamAPI.deleteTeamMember(teamId: teamId, memberId: memberId);
   }
 
   @override
@@ -28,28 +31,22 @@ final class TeamRemoteDataSourceImpl implements TeamRemoteDataSource {
   }
 
   @override
-  Future invitationNotification() {
-    throw UnimplementedError();
+  Future<ApiResponse> invitationNotification() {
+    return _teamAPI.invitationNotification();
   }
 
   @override
-  Future invitationAnswer(int teamId, int inviteState) {
-    throw UnimplementedError();
+  Future<ApiResponse> answerToInvitation(InviteResponse inviteResponse) {
+    return _teamAPI.answerToInvitation(inviteResponse);
   }
 
   @override
-  Future inviteTeamByEmail(String id) {
-    throw UnimplementedError();
+  Future<ApiResponse> inviteTeamByEmail(InviteTeam inviteTeam) {
+    throw _teamAPI.inviteTeamByEmail(inviteTeam);
   }
 
   @override
-  Future<List<TeamModel>> getTeams() {
-    throw UnimplementedError();
+  Future<ApiResponse<List<TeamModel>>> getTeams() {
+    return _teamAPI.getTeams();
   }
 }
-
-// @riverpod
-// TeamRemoteDataSource teamRemoteDataSource(TeamRemoteDataSourceRef ref) {
-//   final dio = ref.watch(dioProvider);
-//   return TeamRemoteDataSourceImpl(teamAPI: dio);
-// }
