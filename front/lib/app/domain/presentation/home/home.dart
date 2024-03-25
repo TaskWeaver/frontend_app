@@ -52,7 +52,12 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 context.go('/todo');
               },
-              child: const Text('투두스크린'))
+              child: const Text('투두스크린')),
+          ElevatedButton(
+              onPressed: () {
+                context.go('/taskDetail');
+              },
+              child: const Text('taskDetail'))
         ])));
   }
 }
