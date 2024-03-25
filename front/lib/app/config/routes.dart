@@ -65,6 +65,11 @@ final router = GoRouter(initialLocation: '/', routes: [
       builder: (context, state) => ProjectUpdateScreen(),
     ),
     GoRoute(
+      path: 'taskCreate',
+      name: 'tskCreate',
+      builder: (context, state) => TaskCreateScreen(),
+    ),
+    GoRoute(
       path: 'main',
       name: 'main',
       builder: (context, state) => const MainScreen(),
