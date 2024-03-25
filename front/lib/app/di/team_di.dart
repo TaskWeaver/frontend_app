@@ -75,6 +75,6 @@ class TeamDependencyInjection {
   }
 
   void setupLocator() {
-    locator.registerSingleton<FlutterSecureStorage>(FlutterSecureStorage());
+    locator.registerSingleton<FlutterSecureStorage>(const FlutterSecureStorage());
   }
 }

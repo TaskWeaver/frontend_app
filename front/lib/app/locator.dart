@@ -26,6 +26,6 @@ final inviteTeamByEmailUseCase = locator<InviteTeamByEmailUseCase>();
 
 final getStorage = locator<FlutterSecureStorage>();
 
-initLocator() {
+void initLocator() {
   TeamDependencyInjection().init();
 }

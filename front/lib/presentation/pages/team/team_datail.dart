@@ -42,7 +42,10 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
   @override
   Widget build(BuildContext context) {
     var projectsState = ref.watch(teamDetailViewmodelProvider);
+    // final mainScreenViewModelState = ref.watch(mainScreenViewModelProvider);
     final teamState = ref.watch(teamControllerProvider);
+
+    String nickName = '';
 
     var textStyle = const TextStyle(
       color: Colors.black,
@@ -91,6 +94,23 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
       body: teamState.when(
         (teamDetailModel) {
           teamDetailModel as TeamDetailModel;
+
+
+          // mainScreenViewModelState.when(
+          //   data: (data) {
+          //
+          //     print('data : $data');
+          //     if(data != null) {
+          //       nickName = data.nickname;
+          //     }
+          //   },
+          //   error: (error, stack) => Text('Error: $error'),
+          //   loading: () => CircularProgressIndicator(),
+          // );
+
+          // final userInfo = ref.watch(getLocalUserInfoUseCaseProvider).call();
+          // userInfo.then((value) => value.fold((l) => null, (r) => debugPrint(r?.nickname)));
+
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
