@@ -1,15 +1,16 @@
 import 'package:front/app/domain/form_example/form_demo2.dart';
 import 'package:front/app/domain/presentation/home/home.dart';
-import 'package:front/app/domain/presentation/login/email_singin.dart';
-import 'package:front/app/domain/presentation/login/login.dart';
-import 'package:front/app/domain/presentation/login/signin.dart';
 import 'package:front/app/domain/presentation/main/screen/main_screen.dart';
 import 'package:front/app/domain/presentation/project/screen/project_creation.dart';
 import 'package:front/app/domain/presentation/project/screen/project_detail.dart';
 import 'package:front/app/domain/presentation/project/screen/project_update.dart';
+import 'package:front/app/domain/presentation/task/screen/task_create_screen.dart';
 import 'package:front/app/domain/presentation/team/screen/team_create.dart';
 import 'package:front/app/domain/presentation/team/screen/team_datail.dart';
 import 'package:front/app/domain/presentation/team/screen/teams_list.dart';
+import 'package:front/app/domain/presentation/user/screen/email_singin.dart';
+import 'package:front/app/domain/presentation/user/screen/login.dart';
+import 'package:front/app/domain/presentation/user/screen/signin.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(initialLocation: '/', routes: [
