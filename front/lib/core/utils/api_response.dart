@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:front/core/team/data/models/team.dart';
+import 'package:front/features/data/models/team.dart';
 
 part 'api_response.g.dart';
 

@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:front/core/team/domain/entities/team_members.dart';
+import 'package:front/features/domain/entities/team_members.dart';
 
 part 'team_member.freezed.dart';
 part 'team_member.g.dart';

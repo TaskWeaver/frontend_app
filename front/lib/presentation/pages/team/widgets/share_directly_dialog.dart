@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/locator.dart';
-import 'package:front/core/team/data/models/invite_team.dart';
+import 'package:front/features/data/models/invite_team.dart';
 import 'package:go_router/go_router.dart';
 
 class ShareDirectlyDialog extends StatelessWidget {

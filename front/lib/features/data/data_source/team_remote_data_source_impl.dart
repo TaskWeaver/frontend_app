@@ -1,11 +1,12 @@
 import 'package:front/core/network_handling/app_dio.dart';
-import 'package:front/core/team/data/api/team_api.dart';
-import 'package:front/core/team/data/data_source/team_remote_data_source.dart';
-import 'package:front/core/team/data/models/invite_response.dart';
-import 'package:front/core/team/data/models/invite_team.dart';
-import 'package:front/core/team/data/models/team.dart';
-import 'package:front/core/team/data/models/team_detail.dart';
+import 'package:front/features/data/api/team_api.dart';
+import 'package:front/features/data/models/invite_response.dart';
+import 'package:front/features/data/models/invite_team.dart';
+import 'package:front/features/data/models/team.dart';
+import 'package:front/features/data/models/team_detail.dart';
 import 'package:front/core/utils/api_response.dart';
+
+import 'team_remote_data_source.dart';
 
 final class TeamRemoteDataSourceImpl implements TeamRemoteDataSource {
   final TeamAPI _teamAPI = TeamAPI(

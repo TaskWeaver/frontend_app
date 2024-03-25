@@ -1,7 +1,7 @@
-import 'package:front/core/team/data/models/invite_response.dart';
-import 'package:front/features/team/repositories/team_repository.dart';
+import 'package:front/features/data/models/invite_response.dart';
 import 'package:front/core/utils/api_response.dart';
 import 'package:front/core/utils/result.dart';
+import 'package:front/features/team/repositories/team_repository.dart';
 
 final class AnswerToInvitationUseCase {
   const AnswerToInvitationUseCase(this._teamRepository);

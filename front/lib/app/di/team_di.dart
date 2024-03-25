@@ -1,7 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:front/app/locator.dart';
-import 'package:front/core/team/data/data_source/team_remote_data_source.dart';
-import 'package:front/core/team/data/data_source/team_remote_data_source_impl.dart';
+import 'package:front/features/data/data_source/team_remote_data_source.dart';
+import 'package:front/features/data/data_source/team_remote_data_source_impl.dart';
 import 'package:front/features/team/repositories/team_repository.dart';
 import 'package:front/features/team/repositories/team_repository_impl.dart';
 import 'package:front/features/team/usecases/answer_to_invitation_usecase.dart';
