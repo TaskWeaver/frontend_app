@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:front/app/domain/form_example/form_demo2.dart';
+import 'package:front/app/domain/navigation_example/navigation_example.dart';
 import 'package:front/app/domain/presentation/home/home.dart';
 import 'package:front/app/domain/presentation/login/email_singin.dart';
 import 'package:front/app/domain/presentation/login/login.dart';
@@ -11,6 +13,8 @@ import 'package:front/app/domain/presentation/team/screen/team_create.dart';
 import 'package:front/app/domain/presentation/team/screen/team_datail.dart';
 import 'package:front/app/domain/presentation/team/screen/teams_list.dart';
 import 'package:go_router/go_router.dart';
+
+final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(initialLocation: '/', routes: [
   GoRoute(path: '/', builder: (context, state) => const HomeScreen(), routes: [
@@ -68,6 +72,27 @@ final router = GoRouter(initialLocation: '/', routes: [
       path: 'main',
       name: 'main',
       builder: (context, state) => const MainScreen(),
+    ),
+    ShellRoute(
+      navigatorKey: _shellNavigatorKey,
+      builder: (context, state, child) =>
+          BottomNavigationBarScaffold(child: child),
+      routes: [
+        GoRoute(
+            path: 'todo',
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: ToDoPage())),
+        GoRoute(
+            path: 'board',
+            pageBuilder: (context, state) => const NoTransitionPage(
+                  child: TeamsListScreen(),
+                )),
+        GoRoute(
+            path: 'my',
+            pageBuilder: (context, state) => const NoTransitionPage(
+                  child: MyPage(),
+                )),
+      ],
     ),
   ]),
 ]);
