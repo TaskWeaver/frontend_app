@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front/app/domain/presentation/todo/component/todo_custom_component.dart';
-import 'package:front/app/domain/presentation/todo/provider.dart';
+import 'package:front/app/domain/presentation/todo/temp_provider.dart';
 import 'package:front/core/project/domain/entities/project_entity.dart';
 import 'package:front/core/team/domain/team_entity.dart';
 

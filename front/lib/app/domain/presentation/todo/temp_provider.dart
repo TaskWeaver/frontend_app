@@ -5,7 +5,7 @@ import 'package:front/core/team/domain/team_entity.dart';
 import 'package:front/core/todo/entity/todo_entity.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'provider.g.dart';
+part 'temp_provider.g.dart';
 
 @riverpod
 Future<List<TeamEntity>> teamList(TeamListRef ref) async {
