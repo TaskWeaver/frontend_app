@@ -56,6 +56,8 @@ dependencies:
   flutter_secure_storage: ^4.2.1
   http_mock_adapter: ^0.6.1
   shared_preferences: ^2.2.2
+  slang_flutter: ^3.30.0
+  slang_build_runner: ^3.30.0
   
 dev_dependencies:
   import_sorter: ^4.6.0

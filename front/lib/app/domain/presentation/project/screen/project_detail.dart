@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/domain/presentation/project/component/task_component.dart';
+import 'package:front/i18n/strings.g.dart'; // 수정: 생성된 번역 파일 import
 import 'package:front/shared/atom/bottom_navigation_bar.dart';
 import 'package:front/shared/utils/intl_format_date.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -24,9 +25,11 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var projectName = 'title';
+    var projectName = 'Flutter 프로젝트'; // 예시 프로젝트 이름
+    var projectDescription = '프로젝트 설명'; // 예시 프로젝트 설명
     var projectStartTime = DateTime.now();
     var projectTask = [];
+    var t = Translations.of(context).projectDetailScreen; // 수정: 번역 객체 접근
     var h1Textstyle =
         const TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
     return SafeArea(
@@ -37,11 +40,15 @@ class _Body extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '$projectName의 TimeLine',
+                t.timelineTitle(projectName: projectName),
                 style: h1Textstyle,
               ),
-              Text('${intlFormatDate(projectStartTime)}~'),
-              const Text('프로젝트 설명'),
+              Text(
+                  t.projectStartDate(
+                      projectStartDate:
+                          intlFormatDate(projectStartTime)), // 수정: 시작 날짜 포맷 변경
+                  style: const TextStyle()),
+              Text(projectDescription),
               for (int i = 0; i < projectTask.length; i++)
                 TaskComponent(task: projectTask[i])
             ],
@@ -57,13 +64,14 @@ class _AddTaskButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = Translations.of(context).projectDetailScreen; // 수정: 번역 객체 접근
     return FloatingActionButton(
       backgroundColor: Colors.grey[300],
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.0)),
       onPressed: () {
         // Task 추가 로직을 이곳에 구현합니다.
       },
-      child: const Text('Task 추가하기'),
+      child: Text(t.addTaskButton), // 수정: 번역된 문자열 사용
     );
   }
 }
