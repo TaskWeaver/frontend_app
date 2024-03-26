@@ -10,7 +10,6 @@ class TaskDetailHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var textButtonStyle = const TextStyle(fontSize: 12, color: Colors.black);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
