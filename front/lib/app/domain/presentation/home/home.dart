@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +49,6 @@ class HomeScreen extends StatelessWidget {
               child: const Text('메인 페이지')),
           ElevatedButton(
               onPressed: () {
-
                 context.go('/todoScreen');
               },
               child: const Text('투두스크린')),
@@ -59,9 +57,11 @@ class HomeScreen extends StatelessWidget {
                 context.go('/taskDetail');
               },
               child: const Text('taskDetail')),
+          ElevatedButton(
+              onPressed: () {
                 context.go('/todo');
               },
-              child: const Text('Todo'))
+              child: const Text('Todo')),
         ])));
   }
 }
