@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/domain/form_example/form_demo.dart';
+import 'package:front/i18n/strings.g.dart';
 import 'package:front/shared/atom/text_form_field.dart';
 import 'package:front/shared/atom/timer_text_form_field.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';
@@ -7,16 +8,29 @@ import 'package:front/shared/helper/FormHelper/form_validate_builder.dart';
 import 'package:front/shared/helper/FormHelper/interface/form_auto_validation_mode.dart';
 
 class EmailVerifierFormField extends StatefulWidget {
-  const EmailVerifierFormField({super.key});
+  const EmailVerifierFormField({super.key, required this.strings});
+  final Translations strings;
 
   @override
   State<EmailVerifierFormField> createState() => _EmailVerifierFormFieldState();
 }
 
 class _EmailVerifierFormFieldState extends State<EmailVerifierFormField> {
+  _EmailVerifierFormFieldState();
+
+  late Translations strings;
+  late String verificationButtonText;
+  @override
+  void initState() {
+    super.initState();
+    strings = widget.strings;
+    verificationButtonText =
+        strings.emailVerifierFormfieldScreen.verificationButton.unauthenticated;
+  }
+
   EmailAuthStatus _status = EmailAuthStatus.unauthenticated;
+
   var verificationCodeFieldVisiblity = false;
-  var verificationButtonText = '이메일 인증';
 
   final inputDecoration = InputDecoration(
       border: InputBorder.none, filled: true, fillColor: Colors.grey[300]);
@@ -44,42 +58,48 @@ class _EmailVerifierFormFieldState extends State<EmailVerifierFormField> {
     switch (_status) {
       case EmailAuthStatus.authenticated:
         verificationCodeFieldVisiblity = false;
-        verificationButtonText = '이메일 인증 완료';
+        verificationButtonText = strings
+            .emailVerifierFormfieldScreen.verificationButton.authenticated;
         break;
       case EmailAuthStatus.unauthenticated:
         verificationCodeFieldVisiblity = true;
-        verificationButtonText = '이메일 인증';
+        verificationButtonText = strings
+            .emailVerifierFormfieldScreen.verificationButton.unauthenticated;
         break;
       case EmailAuthStatus.authenticating:
         verificationCodeFieldVisiblity = true;
-        verificationButtonText = '이메일 인증 확인';
+        verificationButtonText = strings
+            .emailVerifierFormfieldScreen.verificationButton.authenticating;
         break;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    var t = Translations.of(context).emailVerifierFormfieldScreen;
     return Column(
       children: [
         CustomTextFormField(
           fieldName: 'email',
           validator: FieldValidationBuilder.field('email')
-              .required('이메일을 입력해주세요', AutoValidationMode.always)
+              .required(
+                  t.emailField.validation.required, AutoValidationMode.always)
               .build(),
-          decoration: inputDecoration.copyWith(hintText: '이메일'),
+          decoration: inputDecoration.copyWith(hintText: t.emailField.hintText),
         ),
         Visibility(
           visible: verificationCodeFieldVisiblity,
           child: TimerTextFormField(
             fieldName: 'emailVerificationCode',
             validator: FieldValidationBuilder.field('emailVerificationCode')
-                .required('인증번호를 입력해주세요', AutoValidationMode.disabled)
+                .required(t.emailVerificationCodeField.validation.required,
+                    AutoValidationMode.disabled)
                 .customCheck(
                     (val) => true, //TODO: check authentication code
-                    '인증코드가 일치하지 않습니다.',
+                    t.emailVerificationCodeField.validation.sameAs,
                     AutoValidationMode.disabled)
                 .build(),
-            hintText: '인증번호 입력',
+            hintText: t.emailVerificationCodeField.hintText,
             duration: const Duration(minutes: 5),
           ),
         ),

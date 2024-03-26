@@ -1,0 +1,177 @@
+{
+  "emailVerifierFormfieldScreen": {
+    "emailField": {
+      "hintText": "이메일",
+      "validation": {
+        "required": "이메일을 입력해주세요"
+      }
+    },
+    "emailVerificationCodeField": {
+      "hintText": "인증번호 입력",
+      "validation": {
+        "required": "인증번호를 입력해주세요",
+        "sameAs": "인증코드가 일치하지 않습니다."
+      }
+    },
+    "verificationButton": {
+      "unauthenticated": "이메일 인증",
+      "authenticating": "이메일 인증 확인",
+      "authenticated": "이메일 인증 완료"
+    }
+  },
+  "formDemoScreen2": {
+    "formDemo": "Form Demo",
+    "emailField": {
+      "hintText": "이메일",
+      "validation": {
+        "required": "이메일을 입력해주세요"
+      }
+    },
+    "passwordField": {
+      "hintText": "비밀번호",
+      "validation": {
+        "required": "비밀번호를 입력해주세요",
+        "pattern": "영어 대소문자, 숫자가 $minLength개 이상 사용되어야 합니다."
+      }
+    },
+    "passwordCheckField": {
+      "hintText": "비밀번호 확인",
+      "validation": {
+        "required": "비밀번호를 확인해주세요",
+        "sameAs": "비밀번호가 일치하지 않습니다."
+      }
+    },
+    "nicknameField": {
+      "hintText": "닉네임",
+      "validation": {
+        "required": "닉네임을 입력해주세요",
+        "minLength": "${minLength}글자 이상 입력해주세요"
+      }
+    },
+    "checkBoxField": {
+      "agreeAll": {
+        "title": "모두 동의",
+        "validation": "이용약관 동의가 필요합니다."
+      },
+      "serviceTermsTitle": "서비스 이용약관 동의 (필수)",
+      "privacyPolicyTitle": "개인정보 수집, 이용 동의 (필수)"
+    },
+    "submitButton": "회원가입"
+  },
+  "loginScreen": {
+    "title": "로그인",
+    "emailField": {
+      "hintText": "이메일",
+      "validation": {
+        "required": "이메일을 입력하세요"
+      }
+    },
+    "passwordField": {
+      "hintText": "비밀번호",
+      "validation": {
+        "required": "비밀번호를 입력해주세요",
+        "pattern": "영어 대소문자, 숫자가 ${minLength}개 이상 사용되어야 합니다."
+      }
+    },
+    "rememberMeCheckbox": "자동로그인",
+    "loginButton": "로그인",
+    "signUpButton": "회원가입",
+    "findIdButton": "아이디 찾기",
+    "findPasswordButton": "비밀번호 찾기",
+    "snsLoginTitle": "SNS 로그인",
+    "error": {
+      "loginFailed": "로그인 프로세스 중 에러 발생"
+    }
+  },
+  "projectCreationScreen": {
+    "headerTitle": "팀이름",
+    "addProjectHeader": "Project 추가하기",
+    "addProjectDescription": "새로운 프로젝트를 추가해보세요",
+    "managerSelectorLabel": "프로젝트 매니저 선택",
+    "projectNameLabel": "프로젝트 이름",
+    "projectDescriptionLabel": "프로젝트 설명",
+    "createButton": "생성",
+    "emailSignUp": "이메일로 회원가입",
+    "kakaoSignUp": "카카오로 회원가입",
+    "naverSignUp": "네이버로 회원가입"
+  },
+  "projectManagerSelector": {
+    "projectManager": "프로젝트 담당자",
+    "changeProjectManagerPrompt": "프로젝트 담당자를 변경하시겠습니까?",
+    "closeButton": "닫기",
+    "changeConfirmation": "$userName 으로 변경하시겠습니까?",
+    "confirmationButton": "확인",
+    "cancelButton": "취소",
+    "changeConfirmationMessage": "$userName 으로 변경되었습니다."
+  },
+  "projectForm": {
+    "projectTitleLabel": "프로젝트 제목",
+    "projectTitleRequired": "프로젝트 제목을 입력해주세요",
+    "projectContentLabel": "프로젝트 내용",
+    "projectContentRequired": "프로젝트 내용을 입력해주세요"
+  },
+  "projectDetailScreen": {
+    "timelineTitle": "$projectName의 TimeLine",
+    "projectDescription": "프로젝트 설명",
+    "addTaskButton": "Task 추가하기",
+    "projectStartDate": "${projectStartDate}~"
+  },
+  "projectUpdateScreen": {
+    "teamName": "${teamName} ",
+    "editProjectTitle": "Project 수정하기",
+    "editProjectDescription": "프로젝트의 내용을 수정해보세요",
+    "editButtonText": "수정",
+    "deleteButtonText": "삭제"
+  },
+  "signInScreen": {
+    "title": "회원가입",
+    "prompt": "회원가입 방식을 선택해주세요",
+    "emailSignUpButton": "이메일로 회원가입",
+    "kakaoSignUpButton": "카카오로 회원가입",
+    "naverSignUpButton": "네이버로 회원가입"
+  },
+  "teamCreateScreen": {
+    "appbar": {
+      "appBarTitle": "TeamW2aver",
+      "notification": "알림"
+    },
+    "screen": {
+      "createTeamTitle": "Team 만들기",
+      "createTeamSubtitle": "새로운 팀을 만들어보세요",
+      "teamNameHint": "팀 이름",
+      "createButton": "생성"
+    },
+    "dialog": {
+      "teamCreationComplete": "팀 생성이 완료되었습니다. 팀을 초대하여 보세요",
+      "closeButton": "닫기"
+    }
+  },
+  "teamDetailScreen": {
+    "appbar": {
+      "appBarTitle": "TeamW2aver",
+      "notification": "알림"
+    },
+    "screen": {
+      "teamBoardTitle": "$teamName 의 Board",
+      "teamMemberCount": "Team Member (${count} [팀원수])",
+      "shareButton": "share",
+      "teamProjectTitle": "Team Project"
+    }
+  },
+  "teamsListScreen": {
+    "appbar": {
+      "appBarTitle": "TeamW2aver",
+      "notification": "알림"
+    },
+    "screen": {
+      "teamBoardTitle": "$teamName 의 Board"
+    }
+  },
+  "teamTile": {
+    "teamName": "팀 이름",
+    "teamMemberType": {
+      "teamMember": "팀원",
+      "teamLeader": "팀장"
+    }
+  }
+}

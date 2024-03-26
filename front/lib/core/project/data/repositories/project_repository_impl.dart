@@ -1,15 +1,13 @@
-import 'dart:io';
-
 import 'package:dartz/dartz.dart';
+import 'package:front/core/config/custom_interceptor.dart';
 import 'package:front/core/project/data/data_sources/remote_data_source.dart';
 import 'package:front/core/project/data/data_sources/temp_data_source.dart';
 import 'package:front/core/project/data/models/project_request.dart';
 import 'package:front/core/project/domain/entities/project.dart';
 import 'package:front/core/project/domain/repositories/project_repository.dart';
-import 'package:front/core/utils/exception.dart';
 import 'package:front/core/utils/failure.dart';
 
-class ProjectRepositoryImpl implements ProjectRepository {
+class ProjectRepositoryImpl with ErrorHandler implements ProjectRepository {
   ProjectRepositoryImpl(
       {required this.projectRemoteDataSource,
       required this.projectTempDataSource});
@@ -20,77 +18,53 @@ class ProjectRepositoryImpl implements ProjectRepository {
 
   @override
   Future<Either<Failure, List<Project>>> getProjectsByTeamId(int teamId) async {
-    try {
-      var result = await projectRemoteDataSource.getProjectsByTeamId(teamId);
-      for (var element in result) {
-        projects.addAll({element.projectId: element.toEntity()});
-      }
-      return Right(result.map((e) => e.toEntity()).toList());
-    } on ServerException {
-      return const Left(ServerFailure('An error has occurred'));
-    } on SocketException {
-      return const Left(ServerFailure('Failed to connect to the network'));
-    } on UnimplementedError {
-      var result = await projectTempDataSource.getProjectsByTeamId(teamId);
-      return Right(result.map((e) => e.toEntity()).toList());
-    }
+    return catchError<List<Project>>(
+      () async {
+        var result = await projectRemoteDataSource.getProjectsByTeamId(teamId);
+        for (var element in result) {
+          projects.addAll({element.projectId: element.toEntity()});
+        }
+        return result.map((e) => e.toEntity()).toList();
+      },
+    );
   }
 
   @override
   Future<Either<Failure, Project>> getProjectById(int projectId) async {
-    try {
+    return catchError(() async {
       var result = await projectRemoteDataSource.getProjectById(projectId);
       projects.addAll({projectId: result.toEntity()});
-      return Right(projects[projectId]!);
-    } on ServerException {
-      return const Left(ServerFailure('An error has occurred'));
-    } on SocketException {
-      return const Left(ServerFailure('Failed to connect to the network'));
-    }
+      return projects[projectId]!;
+    });
   }
 
   @override
   Future<Either<Failure, void>> deleteProjectById(int projectId) async {
-    try {
+    return catchError(() async {
       await projectRemoteDataSource.deleteProjectById(projectId);
       projects.remove(projectId);
-      return const Right(null);
-    } on ServerException {
-      return const Left(ServerFailure('An error has occurred'));
-    } on SocketException {
-      return const Left(ServerFailure('Failed to connect to the network'));
-    }
+      return;
+    });
   }
 
   @override
   Future<Either<Failure, Project>> updateProjectById(
       ProjectRequestModel project, int projectId) async {
-    try {
+    return catchError(() async {
       var result =
           await projectRemoteDataSource.updateProjectById(project, projectId);
       projects.addAll({result.projectId: result.toEntity()});
-      return Right(result.toEntity());
-    } on ServerException {
-      return const Left(ServerFailure('An error has occurred'));
-    } on SocketException {
-      return const Left(ServerFailure('Failed to connect to the network'));
-    }
+      return result.toEntity();
+    });
   }
 
   @override
   Future<Either<Failure, Project>> createProject(
       ProjectRequestModel project, int teamId) async {
-    try {
+    return catchError(() async {
       var result = await projectRemoteDataSource.createProject(project, teamId);
       projects.addAll({result.projectId: result.toEntity()});
-      return Right(result.toEntity());
-    } on ServerException {
-      return const Left(ServerFailure('An error has occurred'));
-    } on SocketException {
-      return const Left(ServerFailure('Failed to connect to the network'));
-    } on UnimplementedError {
-      var result = await projectTempDataSource.createProject(project);
-      return Right(result.toEntity());
-    }
+      return result.toEntity();
+    });
   }
 }
