@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:front/app/domain/presentation/task/component/picker_component.dart';
 import 'package:front/app/domain/presentation/task/component/task_create_form_component.dart';
 import 'package:front/app/domain/presentation/task/component/task_member_adder_component.dart';
 import 'package:front/core/user/models/user.dart';
@@ -78,8 +79,13 @@ class _TaskCreateScreenState extends ConsumerState<_Body> {
           children: [
             buildHeader(translations),
             const SizedBox(height: 10),
+            const Picker(label: 'Icon'),
             TaskCreateForm(formKey: _formKey, onFormChanged: onFormChanged),
-            TaskMemberAdder(projectMembers: projectMembers, taskMembers: members, onChanged: onMembersChanged),
+            TaskMemberAdder(
+                projectMembers: projectMembers,
+                taskMembers: members,
+                onChanged: onMembersChanged),
+            const Picker(label: '파일 첨부'),
             const SizedBox(height: 20),
             buildCreateButton(translations),
           ],
