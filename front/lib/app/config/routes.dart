@@ -8,9 +8,12 @@ import 'package:front/app/domain/presentation/task/screen/task_create_screen.dar
 import 'package:front/app/domain/presentation/team/screen/team_create.dart';
 import 'package:front/app/domain/presentation/team/screen/team_datail.dart';
 import 'package:front/app/domain/presentation/team/screen/teams_list.dart';
+import 'package:front/app/domain/presentation/user/screen/change_info_list.dart';
 import 'package:front/app/domain/presentation/user/screen/email_singin.dart';
 import 'package:front/app/domain/presentation/user/screen/login.dart';
+import 'package:front/app/domain/presentation/user/screen/my_info_screen.dart';
 import 'package:front/app/domain/presentation/user/screen/signin.dart';
+import 'package:front/app/domain/presentation/user/screen/social_login_info_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(initialLocation: '/', routes: [
@@ -67,9 +70,24 @@ final router = GoRouter(initialLocation: '/', routes: [
     ),
     GoRoute(
       path: 'taskCreate',
-      name: 'tskCreate',
+      name: 'taskCreate',
       builder: (context, state) => TaskCreateScreen(),
     ),
+    ShellRoute(
+        builder: (context, state, child) => ScaffoldWithMyInfo(child: child),
+        routes: [
+          GoRoute(
+            path: 'myInfo',
+            name: 'myInfo',
+            builder: (context, state) => SocialLoginInfoScreen(),
+          ),
+          GoRoute(
+            path: 'changeMyInfoList',
+            name: 'changeMyInfoList',
+            pageBuilder: (context, state) =>
+                NoTransitionPage<void>(child: ChangeInfoListScreen()),
+          ),
+        ]),
     GoRoute(
       path: 'main',
       name: 'main',

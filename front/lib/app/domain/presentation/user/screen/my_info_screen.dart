@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-class MyInfoScreen extends StatelessWidget {
-  const MyInfoScreen({super.key});
+class ScaffoldWithMyInfo extends StatelessWidget {
+  const ScaffoldWithMyInfo({super.key, required this.child});
+
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -9,17 +11,38 @@ class MyInfoScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('My Info'),
       ),
-      body: Column(
-        children: [
-          Text('마이페이지'),
-          SizedBox(height: 20,),
-          CircleAvatar(),
-          Text('닉네임'),
-          Text('john.doe@example.com'),
-          Text('타일'),
-          Text('개인정보 수정'),
-          TextButton(onPressed: (){}, child: Text('로그아웃'))
-        ],
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Text('마이페이지'),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              height: 100,
+              width: 100,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle, border: Border.all(width: 1)),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text('닉네임'),
+            const SizedBox(
+              height: 10,
+            ),
+            Text('john.doe@example.com'),
+            const SizedBox(
+              height: 10,
+            ),
+            Text('타일'),
+            const SizedBox(
+              height: 10,
+            ),Expanded(child: child)
+          ],
+        ),
       ),
     );
   }

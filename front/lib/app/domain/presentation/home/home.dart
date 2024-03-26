@@ -50,6 +50,11 @@ class HomeScreen extends StatelessWidget {
               child: const Text('태스크 생성')),
           ElevatedButton(
               onPressed: () {
+                context.go('/myInfo');
+              },
+              child: const Text('마이 페이지')),
+          ElevatedButton(
+              onPressed: () {
                 context.go('/main');
               },
               child: const Text('메인 페이지'))

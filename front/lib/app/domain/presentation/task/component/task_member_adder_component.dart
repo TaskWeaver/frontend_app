@@ -36,7 +36,7 @@ class TaskMemberAdder extends StatelessWidget {
           onTap: () =>  context.dialog(child: _buildDialog(context, projectMembers)),
           child: CircleAvatar(
             backgroundColor: Colors.grey[300],
-            child: const Text('⭐'),
+            child: const Text('+'),
           ),
         ),
         ListView.builder(
