@@ -10,7 +10,7 @@ class TaskDetailCommentComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var timeTextStyle = const TextStyle(color: Colors.black87, fontSize: 10);
-    var buttonTextStyle = const TextStyle(color: Colors.black);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

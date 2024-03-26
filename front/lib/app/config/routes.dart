@@ -72,8 +72,8 @@ final router = GoRouter(initialLocation: '/', routes: [
       builder: (context, state) => const MainScreen(),
     ),
     GoRoute(
-        path: 'todo',
-        name: 'todo',
+        path: 'todoScreen',
+        name: 'todoScreen',
         builder: (context, state) => const TodoScreen()),
     GoRoute(
         path: 'taskDetail',
