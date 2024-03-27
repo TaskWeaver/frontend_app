@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:front/app/domain/presentation/login/component/checkbox_text_row.dart';
-import 'package:front/app/domain/presentation/login/component/rounded_elvatedbutton.dart';
-import 'package:front/app/domain/presentation/login/viewmodel/login_view_model.dart';
+import 'package:front/app/domain/presentation/user/component/checkbox_text_row.dart';
+import 'package:front/app/domain/presentation/user/component/rounded_elvatedbutton.dart';
+import 'package:front/app/domain/presentation/user/viewmodel/login_view_model.dart';
 import 'package:front/i18n/strings.g.dart';
 import 'package:front/shared/atom/text_form_field.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';

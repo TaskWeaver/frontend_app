@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:front/app/domain/presentation/login/component/checkbox_text_row.dart';
-import 'package:front/app/domain/presentation/login/component/hinted_textfield.dart';
-import 'package:front/app/domain/presentation/login/component/rounded_elvatedbutton.dart';
+import 'package:front/app/domain/presentation/user/component/checkbox_text_row.dart';
+import 'package:front/app/domain/presentation/user/component/hinted_textfield.dart';
+import 'package:front/app/domain/presentation/user/component/rounded_elvatedbutton.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class EmailSignInScreen extends StatefulWidget {
