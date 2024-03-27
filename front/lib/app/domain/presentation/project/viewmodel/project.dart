@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:front/app/domain/presentation/project/state/project_state.dart';
 import 'package:front/core/project/data/models/project_request.dart';
-import 'package:front/core/project/domain/entities/project.dart';
+import 'package:front/core/project/domain/entities/project_entity.dart';
 import 'package:front/core/project/domain/usecases/riverpod.dart';
 import 'package:front/core/utils/failure.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -21,12 +21,12 @@ class ProjectViewmodel extends _$ProjectViewmodel {
     );
   }
 
-  Future<Either<Failure, Project>> createProject(
+  Future<Either<Failure, ProjectEntity>> createProject(
       ProjectRequestModel project, int teamId) async {
     return await ref.read(createProjectUseCaseProvider)(project, teamId);
   }
 
-  Future<Either<Failure, Project>> updateProject(
+  Future<Either<Failure, ProjectEntity>> updateProject(
       ProjectRequestModel project, int projectId) async {
     return await ref.read(updateProjectByIdUseCaseProvider)(project, projectId);
   }
