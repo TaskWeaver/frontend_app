@@ -2,18 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:front/app/domain/form_example/form_demo2.dart';
 import 'package:front/app/domain/navigation_example/navigation_example.dart';
 import 'package:front/app/domain/presentation/home/home.dart';
-import 'package:front/app/domain/presentation/login/email_singin.dart';
-import 'package:front/app/domain/presentation/login/login.dart';
-import 'package:front/app/domain/presentation/login/signin.dart';
 import 'package:front/app/domain/presentation/main/screen/main_screen.dart';
 import 'package:front/app/domain/presentation/project/screen/project_creation.dart';
 import 'package:front/app/domain/presentation/project/screen/project_detail.dart';
 import 'package:front/app/domain/presentation/project/screen/project_update.dart';
-import 'package:front/app/domain/presentation/task/task_detail/screen/task_detail_page.dart';
+import 'package:front/app/domain/presentation/task/screen/task_create_screen.dart'; 
+import 'package:front/app/domain/presentation/task/task_detail/screen/task_detail_page.dart'; 
 import 'package:front/app/domain/presentation/team/screen/team_create.dart';
 import 'package:front/app/domain/presentation/team/screen/team_datail.dart';
 import 'package:front/app/domain/presentation/team/screen/teams_list.dart';
-import 'package:front/app/domain/presentation/todo/screen/todo_screen.dart';
+import 'package:front/app/domain/presentation/todo/screen/todo_screen.dart'; 
+import 'package:front/app/domain/presentation/user/screen/change_info_list.dart';
+import 'package:front/app/domain/presentation/user/screen/email_singin.dart';
+import 'package:front/app/domain/presentation/user/screen/login.dart';
+import 'package:front/app/domain/presentation/user/screen/my_info_screen.dart';
+import 'package:front/app/domain/presentation/user/screen/signin.dart';
+import 'package:front/app/domain/presentation/user/screen/social_login_info_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
@@ -70,6 +74,26 @@ final router = GoRouter(initialLocation: '/', routes: [
       name: 'projectUpdate',
       builder: (context, state) => ProjectUpdateScreen(),
     ),
+    GoRoute(
+      path: 'taskCreate',
+      name: 'taskCreate',
+      builder: (context, state) => TaskCreateScreen(),
+    ),
+    ShellRoute(
+        builder: (context, state, child) => ScaffoldWithMyInfo(child: child),
+        routes: [
+          GoRoute(
+            path: 'myInfo',
+            name: 'myInfo',
+            builder: (context, state) => SocialLoginInfoScreen(),
+          ),
+          GoRoute(
+            path: 'changeMyInfoList',
+            name: 'changeMyInfoList',
+            pageBuilder: (context, state) =>
+                NoTransitionPage<void>(child: ChangeInfoListScreen()),
+          ),
+        ]),
     GoRoute(
       path: 'main',
       name: 'main',

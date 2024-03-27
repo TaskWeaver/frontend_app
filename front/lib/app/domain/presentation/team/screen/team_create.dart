@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:front/app/domain/presentation/login/component/hinted_textfield.dart';
+import 'package:front/app/domain/presentation/user/component/hinted_textfield.dart';
 import 'package:front/app/domain/presentation/team/componet/dialog.dart';
 import 'package:front/i18n/strings.g.dart';
 import 'package:go_router/go_router.dart';
