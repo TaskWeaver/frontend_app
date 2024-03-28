@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:front/presentation/pages/team/widgets/team_tile.dart';
+import 'package:front/features/team/presentation/pages/team/widgets/team_tile.dart';
 import 'package:go_router/go_router.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 

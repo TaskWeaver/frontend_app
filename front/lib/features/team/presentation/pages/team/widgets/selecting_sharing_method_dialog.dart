@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:front/presentation/pages/team/widgets/dialog.dart';
-import 'package:front/presentation/pages/team/widgets/share_directly_dialog.dart';
-import 'package:front/presentation/pages/team/widgets/share_via_qr_dialog.dart';
+import 'package:front/features/team/presentation/pages/team/widgets/dialog.dart';
+import 'package:front/features/team/presentation/pages/team/widgets/share_directly_dialog.dart';
+import 'package:front/features/team/presentation/pages/team/widgets/share_via_qr_dialog.dart';
 import 'package:go_router/go_router.dart';
 
 class SelectingSharingMethodDialog extends StatelessWidget {

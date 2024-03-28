@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:front/main/widgetbook.dart';
-import 'package:front/presentation/pages/team/widgets/team_member_clips.dart';
+import 'package:front/features/team/presentation/pages/team/widgets/team_member_clips.dart';
 import 'package:go_router/go_router.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 

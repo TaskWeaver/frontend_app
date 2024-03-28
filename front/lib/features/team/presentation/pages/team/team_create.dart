@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front/app/domain/presentation/login/component/hinted_textfield.dart';
 import 'package:front/app/locator.dart';
-import 'package:front/presentation/pages/team/widgets/dialog.dart';
+import 'package:front/features/team/presentation/pages/team/widgets/dialog.dart';
 import 'package:go_router/go_router.dart';
 
 class TeamCreateScreen extends ConsumerStatefulWidget {

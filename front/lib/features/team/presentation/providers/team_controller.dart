@@ -1,9 +1,9 @@
 import 'package:front/app/locator.dart';
-import 'package:front/features/data/models/invite_response.dart';
-import 'package:front/features/data/models/invite_team.dart';
-import 'package:front/features/data/models/team.dart';
-import 'package:front/features/data/models/team_detail.dart';
-import 'package:front/presentation/pages/team/team_state.dart';
+import 'package:front/features/team/data/models/invite_response.dart';
+import 'package:front/features/team/data/models/invite_team.dart';
+import 'package:front/features/team/data/models/team.dart';
+import 'package:front/features/team/data/models/team_detail.dart';
+import 'package:front/features/team/presentation/pages/team/team_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'team_controller.g.dart';
