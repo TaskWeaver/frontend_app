@@ -1,26 +1,20 @@
-import 'package:flutter/material.dart';
-import 'package:front/app/domain/form_example/form_demo2.dart';
-import 'package:front/app/domain/navigation_example/navigation_example.dart';
-import 'package:front/app/domain/presentation/home/home.dart';
-import 'package:front/app/domain/presentation/main/screen/main_screen.dart';
-import 'package:front/app/domain/presentation/project/screen/project_creation.dart';
-import 'package:front/app/domain/presentation/project/screen/project_detail.dart';
-import 'package:front/app/domain/presentation/project/screen/project_update.dart';
-import 'package:front/app/domain/presentation/task/screen/task_create_screen.dart'; 
-import 'package:front/app/domain/presentation/task/task_detail/screen/task_detail_page.dart'; 
-import 'package:front/app/domain/presentation/team/screen/team_create.dart';
-import 'package:front/app/domain/presentation/team/screen/team_datail.dart';
-import 'package:front/app/domain/presentation/team/screen/teams_list.dart';
-import 'package:front/app/domain/presentation/todo/screen/todo_screen.dart'; 
-import 'package:front/app/domain/presentation/user/screen/change_info_list.dart';
-import 'package:front/app/domain/presentation/user/screen/email_singin.dart';
-import 'package:front/app/domain/presentation/user/screen/login.dart';
-import 'package:front/app/domain/presentation/user/screen/my_info_screen.dart';
-import 'package:front/app/domain/presentation/user/screen/signin.dart';
-import 'package:front/app/domain/presentation/user/screen/social_login_info_screen.dart';
+import 'package:front/features/form_example/form_demo2.dart';
+import 'package:front/features/home.dart';
+import 'package:front/features/login/presentation/screens/email_singin.dart';
+import 'package:front/features/login/presentation/screens/login.dart';
+import 'package:front/features/login/presentation/screens/signin.dart';
+import 'package:front/features/mypage/presentation/screen/change_info_list.dart';
+import 'package:front/features/mypage/presentation/screen/main_screen.dart';
+import 'package:front/features/mypage/presentation/screen/my_info_screen.dart';
+import 'package:front/features/mypage/presentation/screen/social_login_info_screen.dart';
+import 'package:front/features/project/presentaion/screen/project_creation.dart';
+import 'package:front/features/project/presentaion/screen/project_detail.dart';
+import 'package:front/features/project/presentaion/screen/project_update.dart';
+import 'package:front/features/task/presentation/task_detail/screen/task_detail_page.dart';
+import 'package:front/features/team/presentation/pages/team/team_create.dart';
+import 'package:front/features/team/presentation/pages/team/team_datail.dart';
+import 'package:front/features/team/presentation/pages/team/teams_list.dart';
 import 'package:go_router/go_router.dart';
-
-final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(initialLocation: '/', routes: [
   GoRoute(path: '/', builder: (context, state) => const HomeScreen(), routes: [
@@ -55,9 +49,11 @@ final router = GoRouter(initialLocation: '/', routes: [
       builder: (context, state) => const TeamCreateScreen(),
     ),
     GoRoute(
-      path: 'teamDetail',
-      name: 'teamDetail',
-      builder: (context, state) => TeamDetailScreen(),
+      path: 'teamDetail/:teamId',
+      name: 'teamDetail/:teamId',
+      builder: (context, state) {
+        return TeamDetailScreen(state.pathParameters['teamId']!);
+      },
     ),
     GoRoute(
       path: 'projectDetail',
@@ -75,60 +71,28 @@ final router = GoRouter(initialLocation: '/', routes: [
       builder: (context, state) => ProjectUpdateScreen(),
     ),
     GoRoute(
-      path: 'taskCreate',
-      name: 'taskCreate',
-      builder: (context, state) => TaskCreateScreen(),
+      path: 'main',
+      name: 'main',
+      builder: (context, state) => const MainScreen(),
     ),
+    GoRoute(
+        path: 'taskDetail',
+        name: 'taskDetail',
+        builder: (context, state) => const TaskDetailScreen()),
     ShellRoute(
         builder: (context, state, child) => ScaffoldWithMyInfo(child: child),
         routes: [
           GoRoute(
             path: 'myInfo',
             name: 'myInfo',
-            builder: (context, state) => SocialLoginInfoScreen(),
+            builder: (context, state) => const SocialLoginInfoScreen(),
           ),
           GoRoute(
             path: 'changeMyInfoList',
             name: 'changeMyInfoList',
             pageBuilder: (context, state) =>
-                NoTransitionPage<void>(child: ChangeInfoListScreen()),
+                const NoTransitionPage<void>(child: ChangeInfoListScreen()),
           ),
         ]),
-    GoRoute(
-      path: 'main',
-      name: 'main',
-      builder: (context, state) => const MainScreen(),
-    ),
-
-    GoRoute(
-        path: 'todoScreen',
-        name: 'todoScreen',
-        builder: (context, state) => const TodoScreen()),
-    GoRoute(
-        path: 'taskDetail',
-        name: 'taskDetail',
-        builder: (context, state) => const TaskDetailScreen()),
-
-    ShellRoute(
-      navigatorKey: _shellNavigatorKey,
-      builder: (context, state, child) =>
-          BottomNavigationBarScaffold(child: child),
-      routes: [
-        GoRoute(
-            path: 'todo',
-            pageBuilder: (context, state) =>
-                const NoTransitionPage(child: ToDoPage())),
-        GoRoute(
-            path: 'board',
-            pageBuilder: (context, state) => const NoTransitionPage(
-                  child: TeamsListScreen(),
-                )),
-        GoRoute(
-            path: 'my',
-            pageBuilder: (context, state) => const NoTransitionPage(
-                  child: MyPage(),
-                )),
-      ],
-    ),
   ]),
 ]);

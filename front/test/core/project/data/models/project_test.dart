@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:front/core/const/enum.dart';
-import 'package:front/core/project/data/models/project.dart';
-import 'package:front/core/project/domain/entities/project_entity.dart';
+import 'package:front/features/project/data/models/project.dart';
+import 'package:front/features/project/entities/project.dart';
 
 import '../../../../helpers/json_reader.dart';
 
@@ -15,7 +15,7 @@ void main() {
     managerId: 2,
     projectState: 'BEFORE',
   );
-  var testProject = ProjectEntity(
+  var testProject = Project(
     projectId: 1,
     name: 'name1',
     description: 'description1',
