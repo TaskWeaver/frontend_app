@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:front/core/project/data/data_sources/temp_data_source.dart';
-import 'package:front/core/project/data/models/project.dart';
-import 'package:front/core/project/data/repositories/project_repository_impl.dart';
 import 'package:front/core/utils/exception.dart';
 import 'package:front/core/utils/failure.dart';
+import 'package:front/features/project/data/data_sources/temp_data_source.dart';
+import 'package:front/features/project/data/models/project.dart';
+import 'package:front/features/project/data/repositories/project_repository_impl.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../../helpers/test_helper.mocks.dart';
@@ -50,7 +50,8 @@ void main() {
 
       var result = await projectRepository.getProjectsByTeamId(1);
 
-      expect(result.fold((l) => l, (r) => r), equals(Right(projectsEntity).fold((l) => l, (r) => r)));
+      expect(result.fold((l) => l, (r) => r),
+          equals(Right(projectsEntity).fold((l) => l, (r) => r)));
     });
 
     test(

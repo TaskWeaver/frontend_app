@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front/app/config/routes.dart';
 import 'package:front/core/config/providers/secure_storage.dart';
-import 'package:front/core/user/data_sources/rivorpod.dart';
+import 'package:front/features/login/data_sources/rivorpod.dart';
 import 'package:front/main/app_config.dart';
 
 class MyApp extends StatelessWidget {
