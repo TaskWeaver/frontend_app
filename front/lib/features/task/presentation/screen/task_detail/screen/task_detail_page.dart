@@ -7,6 +7,7 @@ import 'package:front/features/task/presentation/component/task_detail_content_b
 import 'package:front/features/task/presentation/component/task_detail_header.dart';
 import 'package:front/features/task/presentation/component/task_detail_status_component.dart';
 import 'package:front/features/task/presentation/temp_provider.dart';
+
 class TaskDetailScreen extends ConsumerWidget {
   const TaskDetailScreen({super.key});
 

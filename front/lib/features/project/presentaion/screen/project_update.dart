@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:front/core/const/enum.dart';
-import 'package:front/features/login/models/user.dart';
+import 'package:front/features/user/models/user.dart';
 import 'package:front/features/project/data/models/project_request.dart';
 import 'package:front/features/project/entities/project.dart';
 import 'package:front/features/project/presentaion/component/project_from.dart';

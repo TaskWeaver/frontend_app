@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front/app/locator.dart';
-import 'package:front/features/login/presentation/component/hinted_textfield.dart';
+import 'package:front/features/user/presentation/component/hinted_textfield.dart';
 import 'package:front/features/team/presentation/pages/team/widgets/dialog.dart';
 import 'package:go_router/go_router.dart';
 
