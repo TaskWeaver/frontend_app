@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:front/core/user/models/user.dart';
 import 'package:front/features/user/models/user.dart';
 import 'package:front/features/team/presentation/pages/team/widgets/dialog.dart';
 
