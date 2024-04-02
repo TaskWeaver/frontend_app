@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:front/app/domain/presentation/login/component/hinted_textfield.dart';
 import 'package:front/app/locator.dart';
+import 'package:front/features/user/presentation/component/hinted_textfield.dart';
 import 'package:front/features/team/presentation/pages/team/widgets/dialog.dart';
 import 'package:go_router/go_router.dart';
 
@@ -121,14 +121,14 @@ class _TeamCreateScreenState extends ConsumerState<TeamCreateScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('팀 생성이 완료되었습니다. 팀을 초대하여 보세요'),
+                              const Text('팀 생성이 완료되었습니다. 팀을 초대하여 보세요'),
                               // Text(t.dialog.teamCreationComplete),
                               TextButton(
                                 onPressed: () {
                                   context.pop();
                                   context.pop();
                                 },
-                                child: Text('닫기'),
+                                child: const Text('닫기'),
                               ),
                             ],
                           ),

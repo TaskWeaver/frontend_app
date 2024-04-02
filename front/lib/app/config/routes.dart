@@ -1,15 +1,19 @@
-import 'package:front/app/domain/form_example/form_demo2.dart';
-import 'package:front/app/domain/presentation/home/home.dart';
-import 'package:front/app/domain/presentation/login/email_singin.dart';
-import 'package:front/app/domain/presentation/login/login.dart';
-import 'package:front/app/domain/presentation/login/signin.dart';
-import 'package:front/app/domain/presentation/main/screen/main_screen.dart';
-import 'package:front/app/domain/presentation/project/screen/project_creation.dart';
-import 'package:front/app/domain/presentation/project/screen/project_detail.dart';
-import 'package:front/app/domain/presentation/project/screen/project_update.dart';
+import 'package:front/features/form_example/form_demo2.dart';
+import 'package:front/features/home.dart';
+import 'package:front/features/project/presentaion/screen/project_creation.dart';
+import 'package:front/features/project/presentaion/screen/project_detail.dart';
+import 'package:front/features/project/presentaion/screen/project_update.dart';
+import 'package:front/features/task/presentation/screen/task_detail_page.dart';
 import 'package:front/features/team/presentation/pages/team/team_create.dart';
 import 'package:front/features/team/presentation/pages/team/team_datail.dart';
 import 'package:front/features/team/presentation/pages/team/teams_list.dart';
+import 'package:front/features/user/presentation/component/change_info_list.dart';
+import 'package:front/features/user/presentation/screens/email_singin.dart';
+import 'package:front/features/user/presentation/screens/login.dart';
+import 'package:front/features/user/presentation/screens/main_screen.dart';
+import 'package:front/features/user/presentation/screens/my_info_screen.dart';
+import 'package:front/features/user/presentation/screens/signin.dart';
+import 'package:front/features/user/presentation/screens/social_login_info_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(initialLocation: '/', routes: [
@@ -71,5 +75,24 @@ final router = GoRouter(initialLocation: '/', routes: [
       name: 'main',
       builder: (context, state) => const MainScreen(),
     ),
+    GoRoute(
+        path: 'taskDetail',
+        name: 'taskDetail',
+        builder: (context, state) => const TaskDetailScreen()),
+    ShellRoute(
+        builder: (context, state, child) => ScaffoldWithMyInfo(child: child),
+        routes: [
+          GoRoute(
+            path: 'myInfo',
+            name: 'myInfo',
+            builder: (context, state) => const SocialLoginInfoScreen(),
+          ),
+          GoRoute(
+            path: 'changeMyInfoList',
+            name: 'changeMyInfoList',
+            pageBuilder: (context, state) =>
+                const NoTransitionPage<void>(child: ChangeInfoListScreen()),
+          ),
+        ]),
   ]),
 ]);

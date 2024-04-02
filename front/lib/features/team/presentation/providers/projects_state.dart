@@ -1,6 +1,5 @@
-
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:front/core/project/domain/entities/project.dart';
+import 'package:front/features/project/entities/project.dart';
 
 part 'projects_state.freezed.dart';
 

@@ -1,4 +1,5 @@
-import 'package:front/core/project/domain/usecases/riverpod.dart';
+
+import 'package:front/features/project/usecases/riverpod.dart';
 import 'package:front/features/team/presentation/providers/projects_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

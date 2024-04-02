@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:front/app/locator.dart';
+import 'package:front/i18n/strings.g.dart';
 import 'package:front/main/app_config.dart';
+import 'package:front/main/firebase.dart';
 import 'package:front/main/main.dart';
 
-void main() {
-  initLocator();
+void main() async {
+  setUpFirebaseCloudMessage();
+  WidgetsFlutterBinding.ensureInitialized(); // add this
+
+  LocaleSettings.useDeviceLocale(); //
+    initLocator();
+
   var configuredApp = const AppConfig(
     appName: 'Build flavors DEV',
     flavorName: 'development',
@@ -13,5 +19,5 @@ void main() {
     child: MyApp(),
   );
 
-  runApp(ProviderScope(child: configuredApp));
+  runApp(ProviderScope(child: TranslationProvider(child: configuredApp)));
 }
