@@ -30,8 +30,9 @@ final class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   }
 
   @override
-  Future<ApiResponse<TaskModel>> updateTask(int taskId, UpdateTask updateTask) {
-    return _taskAPI.updateTask(taskId: taskId, updateTask: updateTask);
+  Future<ApiResponse<TaskModel>> updateTask(UpdateTask updateTask) {
+    return _taskAPI.updateTask(
+        taskId: updateTask.taskId, updateTask: updateTask);
   }
 
   @override

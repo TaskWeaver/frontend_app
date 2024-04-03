@@ -3,7 +3,6 @@ import 'package:front/features/home.dart';
 import 'package:front/features/project/presentaion/screen/project_creation.dart';
 import 'package:front/features/project/presentaion/screen/project_detail.dart';
 import 'package:front/features/project/presentaion/screen/project_update.dart';
-import 'package:front/features/task/presentation/screen/task_detail_page.dart';
 import 'package:front/features/team/presentation/pages/team/team_create.dart';
 import 'package:front/features/team/presentation/pages/team/team_datail.dart';
 import 'package:front/features/team/presentation/pages/team/teams_list.dart';
@@ -75,10 +74,6 @@ final router = GoRouter(initialLocation: '/', routes: [
       name: 'main',
       builder: (context, state) => const MainScreen(),
     ),
-    GoRoute(
-        path: 'taskDetail',
-        name: 'taskDetail',
-        builder: (context, state) => const TaskDetailScreen()),
     ShellRoute(
         builder: (context, state, child) => ScaffoldWithMyInfo(child: child),
         routes: [
