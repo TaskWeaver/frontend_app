@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:front/features/team/data/models/team_detail.dart';
 import 'package:front/features/team/presentation/pages/team/widgets/dialog.dart';
 import 'package:front/features/team/presentation/pages/team/widgets/selecting_sharing_method_dialog.dart';
 import 'package:front/features/team/presentation/providers/projects_state.dart';
 import 'package:front/features/team/presentation/providers/team_controller.dart';
 import 'package:front/features/team/presentation/providers/team_detail.dart';
+import 'package:go_router/go_router.dart';
 
 class TeamDetailScreen extends ConsumerStatefulWidget {
-  final String teamId;
+  final int teamId;
 
   TeamDetailScreen(this.teamId, {super.key});
 
@@ -33,10 +33,10 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
   void initState() {
     super.initState();
     viewmodel = ref.read(teamDetailViewmodelProvider.notifier);
-    viewmodel.getProjectsByTeamId(1);
-    ref
-        .read(teamControllerProvider.notifier)
-        .getTeamById(int.parse(widget.teamId));
+    viewmodel.getProjectsByTeamId(widget.teamId);
+    // ref
+    //     .read(teamControllerProvider.notifier)
+    //     .getTeamById(int.parse(widget.teamId));
   }
 
   @override
@@ -55,136 +55,118 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
     );
 
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        scrolledUnderElevation: 0.0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              'TeamW2aver',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 12,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w400,
-                height: 0,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          scrolledUnderElevation: 0.0,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'TeamW2aver',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w400,
+                  height: 0,
+                ),
               ),
-            ),
-            Column(
-              children: [
-                Container(
-                  width: 30,
-                  height: 30,
-                  decoration: const ShapeDecoration(
-                    color: Color(0xFFD9D9D9),
-                    shape: OvalBorder(),
+              Column(
+                children: [
+                  Container(
+                    width: 30,
+                    height: 30,
+                    decoration: const ShapeDecoration(
+                      color: Color(0xFFD9D9D9),
+                      shape: OvalBorder(),
+                    ),
                   ),
-                ),
-                Text(
-                  '알림',
-                  textAlign: TextAlign.center,
-                  style: textStyle.copyWith(fontSize: 15),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-      body: teamState.when(
-        (teamDetailModel) {
-          teamDetailModel as TeamDetailModel;
-
-
-          // mainScreenViewModelState.when(
-          //   data: (data) {
-          //
-          //     print('data : $data');
-          //     if(data != null) {
-          //       nickName = data.nickname;
-          //     }
-          //   },
-          //   error: (error, stack) => Text('Error: $error'),
-          //   loading: () => CircularProgressIndicator(),
-          // );
-
-          // final userInfo = ref.watch(getLocalUserInfoUseCaseProvider).call();
-          // userInfo.then((value) => value.fold((l) => null, (r) => debugPrint(r?.nickname)));
-
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //TODO: extract these widgets and move to component
-                Text(
-                  '${teamDetailModel.name} 의 Board',
-                  style: textStyle.copyWith(fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 22,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Team Member (${teamDetailModel.memberCount})',
-                      style: textStyle.copyWith(fontSize: 15),
-                    ),
-                    TextButton(
-                      onPressed: () => context.dialog(
-                        child: SelectingSharingMethodDialog(
-                          teamId: int.parse(widget.teamId),
-                        ),
-                      ),
-                      child: const Text('share'),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                SizedBox(
-                  height: 40,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 15,
-                      itemExtent: 48,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            decoration: const ShapeDecoration(
-                              color: Color(0xFFD9D9D9),
-                              shape: OvalBorder(),
-                            ),
-                          ),
-                        );
-                      }),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0, top: 16.0),
-                  child: Text(
-                    'Team Project',
+                  Text(
+                    '알림',
+                    textAlign: TextAlign.center,
                     style: textStyle.copyWith(fontSize: 15),
                   ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //TODO: extract these widgets and move to component
+              Text(
+                ' 의 Board',
+                style: textStyle.copyWith(fontSize: 20),
+              ),
+              const SizedBox(
+                height: 22,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Team Member ',
+                    style: textStyle.copyWith(fontSize: 15),
+                  ),
+                  TextButton(
+                    onPressed: () => context.dialog(
+                      child: SelectingSharingMethodDialog(
+                        teamId: widget.teamId,
+                      ),
+                    ),
+                    child: const Text('share'),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              SizedBox(
+                height: 40,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 15,
+                    itemExtent: 48,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: const ShapeDecoration(
+                            color: Color(0xFFD9D9D9),
+                            shape: OvalBorder(),
+                          ),
+                        ),
+                      );
+                    }),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0, top: 16.0),
+                child: Text(
+                  'Team Project',
+                  style: textStyle.copyWith(fontSize: 15),
                 ),
-                Expanded(
-                  child: ProjectList(
-                      widget: widget,
-                      textStyle: textStyle,
-                      projectsState: projectsState),
-                ),
-              ],
-            ),
-          );
-        },
-        loading: () => Center(child: CircularProgressIndicator()),
-        error: (message) => Text(message ?? ''),
-      ),
-    );
+              ),
+              Expanded(
+                child: ProjectList(
+                    widget: widget,
+                    textStyle: textStyle,
+                    projectsState: projectsState),
+              ),
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(100),
+          ),
+          onPressed: () => context.push('/projectCreate/${widget.teamId}'),
+          child: const Icon(Icons.add),
+        ));
   }
 }
 

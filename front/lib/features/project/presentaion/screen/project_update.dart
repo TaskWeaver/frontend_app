@@ -188,6 +188,6 @@ class _BodyState extends ConsumerState<_Body> {
   name: '',
   type: ProjectUpdateScreen,
 )
-Widget projectCreationScreenUseCase(BuildContext context) {
+Widget projectCreateScreenUseCase(BuildContext context) {
   return ProjectUpdateScreen();
 }

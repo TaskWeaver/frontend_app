@@ -95,7 +95,7 @@ class _TaskCreateScreenState extends ConsumerState<_Body> {
   }
 
   Widget buildHeader(Translations translations) {
-    var t = translations.projectCreationScreen;
+    var t = translations.projectCreateScreen;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -109,7 +109,7 @@ class _TaskCreateScreenState extends ConsumerState<_Body> {
   }
 
   Row buildCreateButton(Translations translations) {
-    var t = translations.projectCreationScreen;
+    var t = translations.projectCreateScreen;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[

@@ -35,7 +35,7 @@ class HomeScreen extends StatelessWidget {
               child: const Text('프로젝트')),
           ElevatedButton(
               onPressed: () {
-                context.go('/projectCreation');
+                context.go('/projectCreate');
               },
               child: const Text('프로젝트 생성')),
           ElevatedButton(

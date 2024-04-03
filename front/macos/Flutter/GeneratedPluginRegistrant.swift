@@ -4,9 +4,10 @@
 
 import FlutterMacOS
 import Foundation
-import shared_preferences_foundation
+
 import firebase_core
 import firebase_messaging
+import shared_preferences_foundation
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   FLTFirebaseCorePlugin.register(with: registry.registrar(forPlugin: "FLTFirebaseCorePlugin"))
