@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:front/features/project/presentaion/component/task_component.dart';
 import 'package:front/shared/atom/bottom_navigation_bar.dart';
 import 'package:front/shared/utils/intl_format_date.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -42,8 +41,8 @@ class _Body extends StatelessWidget {
               ),
               Text('${intlFormatDate(projectStartTime)}~'),
               const Text('프로젝트 설명'),
-              for (int i = 0; i < projectTask.length; i++)
-                TaskComponent(task: projectTask[i])
+              //  for (int i = 0; i < projectTask.length; i++)
+              //  TaskComponent(task: projectTask[i])
             ],
           ),
         ),
