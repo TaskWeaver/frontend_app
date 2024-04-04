@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/locator.dart';
+import 'package:front/features/team/data/models/invite_response.dart';
 import 'package:front/features/team/data/models/invite_team.dart';
+import 'package:front/features/team/usecases/answer_to_invitation_usecase.dart';
 import 'package:go_router/go_router.dart';
 
 class ShareDirectlyDialog extends StatelessWidget {
@@ -36,6 +38,7 @@ class ShareDirectlyDialog extends StatelessWidget {
                   Expanded(
                     child: TextField(
                       controller: controller,
+                      onChanged: (value) => email = controller.text.trim(),
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         filled: true,
@@ -45,18 +48,21 @@ class ShareDirectlyDialog extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () async {
-
-                      final result = await inviteTeamByEmailUseCase.call(
-                        inviteTeam: InviteTeam(
-                          email: controller.text.trim(),
-                          team_id: teamId,
-                        ),
-                      );
-                      await result.fold(onSuccess: (value) {
-                        print('value $value');
-                      }, onFailure: (e) {
-                        print('fail $e');
-                      });
+                      if (email.isNotEmpty) {
+                        final result = await inviteTeamByEmailUseCase.call(
+                          inviteTeam: InviteTeam(
+                            email: controller.text.trim(),
+                            teamId: teamId,
+                          ),
+                        );
+                        result.fold(onSuccess: (value) {
+                          print('value $value');
+                        }, onFailure: (e) {
+                          print('fail $e');
+                        });
+                      } else {
+                        print('email: null');
+                      }
                     },
                     icon: const Icon(Icons.add),
                   ),

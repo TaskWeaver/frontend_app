@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:front/app/locator.dart';
+import 'package:front/features/login/presentation/viewmodel/main_screen_viewmodel.dart';
 import 'package:front/features/team/data/models/team_detail.dart';
 import 'package:front/features/team/presentation/pages/team/widgets/dialog.dart';
 import 'package:front/features/team/presentation/pages/team/widgets/selecting_sharing_method_dialog.dart';
 import 'package:front/features/team/presentation/providers/projects_state.dart';
 import 'package:front/features/team/presentation/providers/team_controller.dart';
 import 'package:front/features/team/presentation/providers/team_detail.dart';
+import 'package:front/features/team/presentation/providers/team_detail_controller.dart';
 
-class TeamDetailScreen extends ConsumerStatefulWidget {
+class TeamDetailView extends ConsumerStatefulWidget {
   final String teamId;
 
-  TeamDetailScreen(this.teamId, {super.key});
+  TeamDetailView(this.teamId, {super.key});
 
   final elevatedButtonStyle = ElevatedButton.styleFrom(
     padding: const EdgeInsets.all(16.0),
@@ -22,12 +25,13 @@ class TeamDetailScreen extends ConsumerStatefulWidget {
   );
 
   @override
-  ConsumerState<TeamDetailScreen> createState() => _TeamDetailScreenState();
+  ConsumerState<TeamDetailView> createState() => _TeamDetailScreenState();
 }
 
-class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
+class _TeamDetailScreenState extends ConsumerState<TeamDetailView> {
   late TeamDetailViewmodel viewmodel;
   late TeamController teamController;
+  final memberIdController = TextEditingController();
 
   @override
   void initState() {
@@ -35,16 +39,16 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
     viewmodel = ref.read(teamDetailViewmodelProvider.notifier);
     viewmodel.getProjectsByTeamId(1);
     ref
-        .read(teamControllerProvider.notifier)
+        .read(teamDetailControllerProvider.notifier)
         .getTeamById(int.parse(widget.teamId));
   }
 
   @override
   Widget build(BuildContext context) {
     var projectsState = ref.watch(teamDetailViewmodelProvider);
-    // final mainScreenViewModelState = ref.watch(mainScreenViewModelProvider);
-    final teamState = ref.watch(teamControllerProvider);
-
+    final mainScreenViewModelState = ref.watch(mainScreenViewModelProvider);
+    final teamState = ref.watch(teamDetailControllerProvider);
+    int? memberId;
     String nickName = '';
 
     var textStyle = const TextStyle(
@@ -92,25 +96,8 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
         ),
       ),
       body: teamState.when(
-        (teamDetailModel) {
+            (teamDetailModel) {
           teamDetailModel as TeamDetailModel;
-
-
-          // mainScreenViewModelState.when(
-          //   data: (data) {
-          //
-          //     print('data : $data');
-          //     if(data != null) {
-          //       nickName = data.nickname;
-          //     }
-          //   },
-          //   error: (error, stack) => Text('Error: $error'),
-          //   loading: () => CircularProgressIndicator(),
-          // );
-
-          // final userInfo = ref.watch(getLocalUserInfoUseCaseProvider).call();
-          // userInfo.then((value) => value.fold((l) => null, (r) => debugPrint(r?.nickname)));
-
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
@@ -132,11 +119,12 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
                       style: textStyle.copyWith(fontSize: 15),
                     ),
                     TextButton(
-                      onPressed: () => context.dialog(
-                        child: SelectingSharingMethodDialog(
-                          teamId: int.parse(widget.teamId),
-                        ),
-                      ),
+                      onPressed: () =>
+                          context.dialog(
+                            child: SelectingSharingMethodDialog(
+                              teamId: int.parse(widget.teamId),
+                            ),
+                          ),
                       child: const Text('share'),
                     ),
                   ],
@@ -148,7 +136,7 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
                   height: 40,
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: 15,
+                      itemCount: teamDetailModel.memberCount,
                       itemExtent: 48,
                       itemBuilder: (context, index) {
                         return Padding(
@@ -171,6 +159,69 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
                     style: textStyle.copyWith(fontSize: 15),
                   ),
                 ),
+                ElevatedButton(
+                  onPressed: () {
+                    context.dialog(
+                      child: SizedBox(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            SizedBox(
+                              width: 150,
+                              child: TextField(
+                                controller: memberIdController,
+                                onChanged: (value) {
+                                  memberId = int.parse(value);
+                                },
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    if (memberId != null) {
+                                      final result = await deleteMemberUseCase
+                                          .call(
+                                          teamId: int.parse(widget.teamId),
+                                          memberId: [memberId!],
+                                      );
+
+                                      result.fold(
+                                        onSuccess: (value) {
+                                          ref.read(teamDetailControllerProvider.notifier).getTeamById(int.parse(widget.teamId));
+                                          print('삭제가 완료 되습니다.');
+                                          Navigator.pop(context);
+                                        },
+                                        onFailure: (e) {
+                                          Text(e.toString());
+                                          Navigator.pop(context);
+                                        },
+                                      );
+                                    } else {
+                                      print('memberId = null');
+                                    }
+                                  },
+                                  child: const Text('삭제하기'),
+                                ),
+                                const SizedBox(width: 10),
+                                ElevatedButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: const Text('닫기'),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Text('팀원 삭제'),
+                ),
+
                 Expanded(
                   child: ProjectList(
                       widget: widget,
@@ -181,7 +232,10 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
             ),
           );
         },
-        loading: () => Center(child: CircularProgressIndicator()),
+        loading: () =>
+        const Center(
+          child: CircularProgressIndicator(),
+        ),
         error: (message) => Text(message ?? ''),
       ),
     );
@@ -196,14 +250,14 @@ class ProjectList extends StatelessWidget {
     required this.projectsState,
   });
 
-  final TeamDetailScreen widget;
+  final TeamDetailView widget;
   final TextStyle textStyle;
   final ProjectsState projectsState;
 
   @override
   Widget build(BuildContext context) {
     return projectsState.when(
-      (projects) {
+          (projects) {
         return CustomScrollView(
           slivers: <Widget>[
             SliverList.builder(
@@ -225,7 +279,8 @@ class ProjectList extends StatelessWidget {
           ],
         );
       },
-      loading: () => const Center(
+      loading: () =>
+      const Center(
         child: CircularProgressIndicator(),
       ),
       error: (message) {

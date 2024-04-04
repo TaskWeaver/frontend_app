@@ -1,15 +1,16 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-part 'invite_response.g.dart';
+
+part 'change_teamLeader.g.dart';
 
 @JsonSerializable()
-class InviteResponse {
+class ChangeTeamLeaderModel {
   final int teamId;
   final int inviteState;
 
-  InviteResponse({
+  ChangeTeamLeaderModel({
     required this.teamId,
     required this.inviteState,
   });
 
-  Map<String, dynamic> toJson() => _$InviteResponseToJson(this);
+  Map<String, dynamic> toJson() => _$ChangeTeamLeaderModelToJson(this);
 }

@@ -3,6 +3,7 @@ import 'package:front/app/di/team_di.dart';
 import 'package:front/features/team/data/data_source/team_remote_data_source.dart';
 import 'package:front/features/team/repositories/team_repository.dart';
 import 'package:front/features/team/usecases/answer_to_invitation_usecase.dart';
+import 'package:front/features/team/usecases/change_teamLeader_usecase.dart';
 import 'package:front/features/team/usecases/create_team_usecase.dart';
 import 'package:front/features/team/usecases/delete_member_usecase.dart';
 import 'package:front/features/team/usecases/get_team_by_id_usecase.dart';
@@ -23,6 +24,7 @@ final answerToInvitationUseCase =  locator<AnswerToInvitationUseCase>();
 final deleteMemberUseCase =  locator<DeleteMemberUseCase>();
 final invitationNotificationUseCase = locator<InvitationNotificationUseCase>();
 final inviteTeamByEmailUseCase = locator<InviteTeamByEmailUseCase>();
+final changeTeamLeaderUseCase = locator<ChangeTeamLeaderUseCase>();
 
 final getStorage = locator<FlutterSecureStorage>();
 

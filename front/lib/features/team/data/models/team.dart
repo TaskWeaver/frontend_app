@@ -8,9 +8,10 @@ class TeamModel with _$TeamModel  {
   factory TeamModel({
     required int id,
     required String name,
-    required String inviteLink,
-    int? teamLeader,
-    required String createdAt,
+    required String myRole,
+    // int? teamLeader,
+    required int totalMembers,
+    required List<Map<String, dynamic>> members,
   }) = _TeamModel;
 
   factory TeamModel.fromJson(Map<String, dynamic> json) =>
@@ -20,9 +21,9 @@ class TeamModel with _$TeamModel  {
     return TeamModel(
       id: team.id,
       name: team.name,
-      inviteLink: team.inviteLink,
-      teamLeader: team.teamLeader,
-      createdAt: team.createdAt,
+      myRole: team.myRole,
+      totalMembers: team.totalMembers,
+      members: team.members,
     );
   }
 
