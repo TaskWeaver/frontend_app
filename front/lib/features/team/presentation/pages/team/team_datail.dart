@@ -194,7 +194,9 @@ class ProjectList extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.push('/projectDetail/${projects[index].projectId}');
+                    },
                     style: widget.elevatedButtonStyle,
                     child: Text(
                       projects[index].name,

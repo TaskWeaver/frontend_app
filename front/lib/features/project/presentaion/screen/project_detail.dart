@@ -1,53 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:front/core/const/enum.dart';
+import 'package:front/features/project/entities/project.dart';
 import 'package:front/features/project/presentaion/component/task_component.dart';
+import 'package:front/features/project/presentaion/viewmodel/project.dart';
 import 'package:front/shared/atom/bottom_navigation_bar.dart';
 import 'package:front/shared/utils/intl_format_date.dart';
+import 'package:go_router/go_router.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-class ProjectDetailScreen extends StatelessWidget {
-  const ProjectDetailScreen({super.key});
+class ProjectDetailScreen extends ConsumerStatefulWidget {
+  const ProjectDetailScreen({super.key, required this.projectId});
+
+  final int projectId;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: const _Body(),
-      floatingActionButton: const _AddTaskButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      bottomNavigationBar: const ProjectBottomNavigationBar(),
-    );
-  }
+  ConsumerState<ProjectDetailScreen> createState() =>
+      _ProjectDetailScreenState();
 }
 
-class _Body extends StatelessWidget {
-  const _Body({Key? key}) : super(key: key);
+class _ProjectDetailScreenState extends ConsumerState<ProjectDetailScreen> {
+  late ProjectViewmodel viewmodel;
+
+  @override
+  void initState() {
+    super.initState();
+    viewmodel = ref.read(projectViewmodelProvider.notifier);
+    viewmodel.getProjectById(widget.projectId);
+  }
 
   @override
   Widget build(BuildContext context) {
-    var projectName = 'title';
+    var projectState = ref.watch(projectViewmodelProvider);
     var projectStartTime = DateTime.now();
     var projectTask = [];
     var h1Textstyle =
         const TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '$projectName의 TimeLine',
-                style: h1Textstyle,
+    return Scaffold(
+      appBar: AppBar(),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: SingleChildScrollView(
+            child: projectState.when(
+              (project) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${project.name}의 TimeLine',
+                    style: h1Textstyle,
+                  ),
+                  Text('${intlFormatDate(projectStartTime)}~'),
+                  Text(project.description),
+                  for (int i = 0; i < projectTask.length; i++)
+                    TaskComponent(task: projectTask[i]),
+                  TextButton(
+                    child: Text('수정d'),
+                    onPressed: () =>
+                        context.push('/projectUpdate', extra: project),
+                  )
+                ],
               ),
-              Text('${intlFormatDate(projectStartTime)}~'),
-              const Text('프로젝트 설명'),
-              for (int i = 0; i < projectTask.length; i++)
-                TaskComponent(task: projectTask[i])
-            ],
+              loading: () => const CircularProgressIndicator(),
+              error: (message) => Text(message.toString()),
+              
+            ),
           ),
         ),
       ),
+      floatingActionButton: const _AddTaskButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      bottomNavigationBar: const ProjectBottomNavigationBar(),
     );
   }
 }
@@ -73,5 +96,6 @@ class _AddTaskButton extends StatelessWidget {
   type: ProjectDetailScreen,
 )
 Widget ProjectDetailScreenUseCase(BuildContext context) {
-  return const ProjectDetailScreen();
+  return ProjectDetailScreen(
+      projectId: 1);
 }

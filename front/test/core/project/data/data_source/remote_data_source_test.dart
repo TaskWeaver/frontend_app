@@ -77,7 +77,7 @@ void main() {
 
       var result = await projectRemoteDataSource.getProjectById(projectId);
 
-      expect(result, equals(projectModel));
+      expect(result, equals(projectRequestModel));
     });
 
     test('should return server exception when a call to api is unsuccessful',

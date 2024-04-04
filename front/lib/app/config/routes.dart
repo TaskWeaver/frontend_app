@@ -7,6 +7,7 @@ import 'package:front/features/mypage/presentation/screen/change_info_list.dart'
 import 'package:front/features/mypage/presentation/screen/main_screen.dart';
 import 'package:front/features/mypage/presentation/screen/my_info_screen.dart';
 import 'package:front/features/mypage/presentation/screen/social_login_info_screen.dart';
+import 'package:front/features/project/entities/project.dart';
 import 'package:front/features/project/presentaion/screen/project_creation.dart';
 import 'package:front/features/project/presentaion/screen/project_detail.dart';
 import 'package:front/features/project/presentaion/screen/project_update.dart';
@@ -56,9 +57,9 @@ final router = GoRouter(initialLocation: '/', routes: [
       },
     ),
     GoRoute(
-      path: 'projectDetail',
-      name: 'projectDetail',
-      builder: (context, state) => const ProjectDetailScreen(),
+      path: 'projectDetail/:projectId',
+      name: 'projectDetail/:projectId',
+      builder: (context, state) => ProjectDetailScreen(projectId: int.parse(state.pathParameters['projectId']!)),
     ),
     GoRoute(
       path: 'projectCreate/:teamId',
@@ -69,7 +70,7 @@ final router = GoRouter(initialLocation: '/', routes: [
     GoRoute(
       path: 'projectUpdate',
       name: 'projectUpdate',
-      builder: (context, state) => ProjectUpdateScreen(),
+      builder: (context, state) => ProjectUpdateScreen(project: state.extra! as Project),
     ),
     GoRoute(
       path: 'main',

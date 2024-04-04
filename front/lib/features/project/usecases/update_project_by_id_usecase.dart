@@ -9,7 +9,7 @@ class UpdateProjectUseCase {
   final ProjectRepository projectRepository;
 
   Future<Either<Failure, Project>> call(
-      ProjectRequestModel project, int projectId) {
+      Project project, int projectId) {
     return projectRepository.updateProjectById(project, projectId);
   }
 }
