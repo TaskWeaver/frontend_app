@@ -3,6 +3,7 @@ import 'package:front/core/utils/result.dart';
 import 'package:front/features/user/data/models/change_password.dart';
 import 'package:front/features/user/data/models/sign_in_request.dart';
 import 'package:front/features/user/data/models/sign_up_request.dart';
+import 'package:front/features/user/data/models/token.dart';
 import 'package:front/features/user/data/models/user.dart';
 
 abstract class UserRepository {
@@ -18,4 +19,6 @@ abstract class UserRepository {
 
   Future<Result> setAutoSignInTrue();
   Future<Result> setAutoSignInFalse();
+
+  Future<Result<TokenModel>> getToken();
 }
