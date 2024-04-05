@@ -15,6 +15,7 @@ import 'package:front/features/task/presentation/task_detail/screen/task_detail_
 import 'package:front/features/team/presentation/pages/team/team_create.dart';
 import 'package:front/features/team/presentation/pages/team/team_datail.dart';
 import 'package:front/features/team/presentation/pages/team/teams_list.dart';
+import 'package:front/features/tmp/notificatoin_token_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(initialLocation: '/', routes: [
@@ -96,5 +97,9 @@ final router = GoRouter(initialLocation: '/', routes: [
                 const NoTransitionPage<void>(child: ChangeInfoListScreen()),
           ),
         ]),
+        GoRoute(
+        path: 'notificationToken',
+        name: 'notificationToken',
+        builder: (context, state) => const NotificationTokenScreen()),
   ]),
 ]);

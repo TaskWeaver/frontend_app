@@ -10,6 +10,7 @@ part 'project.g.dart';
 
 @riverpod
 class ProjectViewmodel extends _$ProjectViewmodel {
+
   @override
   ProjectState build() => const ProjectState.loading();
 

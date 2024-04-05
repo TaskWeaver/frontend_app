@@ -43,6 +43,11 @@ class HomeScreen extends StatelessWidget {
                 context.go('/myInfo');
               },
               child: const Text('마이 페이지')),
+          ElevatedButton(
+              onPressed: () {
+                context.go('/notificationToken');
+              },
+              child: const Text('알림 토큰 확인')),
         ])));
   }
 }

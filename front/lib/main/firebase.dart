@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:front/core/const/const.dart';
 import 'package:front/firebase_options.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void setUpFirebaseCloudMessage() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -9,7 +11,7 @@ void setUpFirebaseCloudMessage() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  var sharedPreferences = await SharedPreferences.getInstance();
   var messaging = FirebaseMessaging.instance;
 
   var settings = await messaging.requestPermission(
@@ -31,6 +33,8 @@ void setUpFirebaseCloudMessage() async {
   debugPrint('User granted permission: ${settings.authorizationStatus}');
 
   var token = await messaging.getToken();
+  await sharedPreferences.setString(
+      NOTIFICATION_TOKEN, token ?? 'error token not generated');
   debugPrint('Token: $token');
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
