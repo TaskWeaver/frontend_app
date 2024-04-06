@@ -12,13 +12,13 @@ class SocialLoginInfoScreen extends StatelessWidget {
             onPressed: () {
               context.push('/changeMyInfoList');
             },
-            child: Text('⚙ 개인정보 수정')),
-        Expanded(
+            child: const Text('⚙ 개인정보 수정')),
+        const Expanded(
           child: SizedBox(),
         ),
         Padding(
           padding: const EdgeInsets.all(80.0),
-          child: TextButton(onPressed: () {}, child: Text('로그아웃')),
+          child: TextButton(onPressed: () {}, child: const Text('로그아웃')),
         )
       ],
     );

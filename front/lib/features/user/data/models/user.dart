@@ -23,7 +23,7 @@ class UserModel with _$UserModel {
       id: user.id,
       email: user.email,
       nickName: user.nickName,
-      imageUrl: user.imageUrl,
+      imageUrl: user.imageUrl, type: user.type,
     );
   }
 }

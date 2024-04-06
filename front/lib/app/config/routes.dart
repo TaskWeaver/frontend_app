@@ -7,11 +7,9 @@ import 'package:front/features/team/presentation/pages/team/team_create.dart';
 import 'package:front/features/team/presentation/pages/team/team_datail.dart';
 import 'package:front/features/team/presentation/pages/team/teams_list.dart';
 import 'package:front/features/user/presentation/component/change_info_list.dart';
-import 'package:front/features/user/presentation/screens/email_singin.dart';
-import 'package:front/features/user/presentation/screens/login.dart';
-import 'package:front/features/user/presentation/screens/main_screen.dart';
+
 import 'package:front/features/user/presentation/screens/my_info_screen.dart';
-import 'package:front/features/user/presentation/screens/signin.dart';
+
 import 'package:front/features/user/presentation/screens/social_login_info_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,21 +20,8 @@ final router = GoRouter(initialLocation: '/', routes: [
       name: 'example',
       builder: (context, state) => const FormDemoScreen2(),
     ),
-    GoRoute(
-      path: 'login',
-      name: 'login',
-      builder: (context, state) => const LoginScreen(),
-    ),
-    GoRoute(
-      path: 'signup',
-      name: 'signup',
-      builder: (context, state) => const SignInScreen(),
-    ),
-    GoRoute(
-      path: 'emailSignup',
-      name: 'emailSignup',
-      builder: (context, state) => const EmailSignInScreen(),
-    ),
+
+    
     GoRoute(
       path: 'teamsList',
       name: 'teamsList',
@@ -69,11 +54,7 @@ final router = GoRouter(initialLocation: '/', routes: [
       name: 'projectUpdate',
       builder: (context, state) => ProjectUpdateScreen(),
     ),
-    GoRoute(
-      path: 'main',
-      name: 'main',
-      builder: (context, state) => const MainScreen(),
-    ),
+   
     ShellRoute(
         builder: (context, state, child) => ScaffoldWithMyInfo(child: child),
         routes: [

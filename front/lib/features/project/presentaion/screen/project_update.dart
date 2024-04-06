@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:front/core/const/enum.dart';
-import 'package:front/features/user/models/user.dart';
+import 'package:front/features/user/data/models/user.dart';
 import 'package:front/features/project/data/models/project_request.dart';
 import 'package:front/features/project/entities/project.dart';
 import 'package:front/features/project/presentaion/component/project_from.dart';
@@ -66,13 +66,13 @@ class _BodyState extends ConsumerState<_Body> {
   final _formKey = GlobalKey<CustomFormState>();
   late CustomFormState? currentState;
   var manager =
-      UserModel(id: 1, nickname: 'user1', email: 'email', type: 'type');
+      UserModel(id: 1, nickName: 'user1', email: 'email', type: 'type');
   final List<UserModel> teamMembers = [
-    UserModel(id: 1, email: 'email', nickname: 'user1', type: 'MEMBER'),
-    UserModel(id: 1, email: 'email', nickname: 'user2', type: 'MEMBER'),
-    UserModel(id: 1, email: 'email', nickname: 'user3', type: 'MEMBER'),
-    UserModel(id: 1, email: 'email', nickname: 'user4', type: 'MEMBER'),
-    UserModel(id: 1, email: 'email', nickname: 'user5', type: 'MEMBER'),
+    UserModel(id: 1, email: 'email', nickName: 'user1', type: 'MEMBER'),
+    UserModel(id: 1, email: 'email', nickName: 'user2', type: 'MEMBER'),
+    UserModel(id: 1, email: 'email', nickName: 'user3', type: 'MEMBER'),
+    UserModel(id: 1, email: 'email', nickName: 'user4', type: 'MEMBER'),
+    UserModel(id: 1, email: 'email', nickName: 'user5', type: 'MEMBER'),
   ];
 
   @override

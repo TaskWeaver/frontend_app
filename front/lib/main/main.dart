@@ -32,7 +32,6 @@ class _EagerInitialization extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(sharedPrefProvider);
     ref.watch(secureStorageProvider);
 
     return child;
