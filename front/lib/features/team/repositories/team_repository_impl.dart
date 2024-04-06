@@ -1,4 +1,5 @@
 import 'package:front/features/team/data/data_source/team_remote_data_source.dart';
+import 'package:front/features/team/data/models/change_teamLeader.dart';
 import 'package:front/features/team/data/models/invite_response.dart';
 import 'package:front/features/team/data/models/invite_team.dart';
 import 'package:front/features/team/data/models/team.dart';
@@ -92,6 +93,16 @@ class TeamRepositoryImpl implements TeamRepository {
       final result = await _teamRemoteDataSource.getTeams();
       return Result.success(result);
     } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<ApiResponse>> changeTeamLeader(ChangeTeamLeaderModel changeTeamLeaderModel) async{
+    try {
+      final result = await _teamRemoteDataSource.changeTeamLeader(changeTeamLeaderModel);
+      return Result.success(result);
+    } on Exception catch(e) {
       return Result.failure(e);
     }
   }

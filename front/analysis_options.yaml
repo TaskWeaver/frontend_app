@@ -34,7 +34,7 @@ linter:
     - curly_braces_in_flow_control_structures
     - omit_local_variable_types
     - annotate_overrides
-    - sort_constructors_first
+#    - sort_constructors_first
     - unawaited_futures
     - directives_ordering
 #    - unnecessary_final

@@ -4,9 +4,9 @@ import 'package:front/features/project/presentaion/screen/project_creation.dart'
 import 'package:front/features/project/presentaion/screen/project_detail.dart';
 import 'package:front/features/project/presentaion/screen/project_update.dart';
 import 'package:front/features/task/presentation/screen/task_detail_page.dart';
-import 'package:front/features/team/presentation/pages/team/team_create.dart';
-import 'package:front/features/team/presentation/pages/team/team_datail.dart';
-import 'package:front/features/team/presentation/pages/team/teams_list.dart';
+import 'package:front/features/team/presentation/pages/team/team_create_view.dart';
+import 'package:front/features/team/presentation/pages/team/team_datail_view.dart';
+import 'package:front/features/team/presentation/pages/team/teams_list_view.dart';
 import 'package:front/features/user/presentation/component/change_info_list.dart';
 import 'package:front/features/user/presentation/screens/email_singin.dart';
 import 'package:front/features/user/presentation/screens/login.dart';
@@ -41,18 +41,18 @@ final router = GoRouter(initialLocation: '/', routes: [
     GoRoute(
       path: 'teamsList',
       name: 'teamsList',
-      builder: (context, state) => const TeamsListScreen(),
+      builder: (context, state) => const TeamsListView(),
     ),
     GoRoute(
       path: 'teamCreate',
       name: 'teamCreate',
-      builder: (context, state) => const TeamCreateScreen(),
+      builder: (context, state) => const TeamCreateView(),
     ),
     GoRoute(
       path: 'teamDetail/:teamId',
       name: 'teamDetail/:teamId',
       builder: (context, state) {
-        return TeamDetailScreen(state.pathParameters['teamId']!);
+        return TeamDetailView(state.pathParameters['teamId']!);
       },
     ),
     GoRoute(

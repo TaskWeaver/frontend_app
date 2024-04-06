@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front/app/locator.dart';
+import 'package:front/features/team/presentation/providers/team_controller.dart';
 import 'package:front/features/user/presentation/component/hinted_textfield.dart';
-import 'package:front/features/team/presentation/pages/team/widgets/dialog.dart';
+import 'package:front/shared/atom/dialog.dart';
 import 'package:go_router/go_router.dart';
 
-class TeamCreateScreen extends ConsumerStatefulWidget {
-  const TeamCreateScreen({Key? key}) : super(key: key);
+class TeamCreateView extends ConsumerStatefulWidget {
+  const TeamCreateView({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<TeamCreateScreen> createState() => _TeamCreateScreenState();
+  ConsumerState<TeamCreateView> createState() => _TeamCreateScreenState();
 }
 
-class _TeamCreateScreenState extends ConsumerState<TeamCreateScreen> {
+class _TeamCreateScreenState extends ConsumerState<TeamCreateView> {
   final textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    String teamName = '';
 
     return Scaffold(
       appBar: AppBar(
@@ -100,6 +102,9 @@ class _TeamCreateScreenState extends ConsumerState<TeamCreateScreen> {
                 hintText: '',
                 title: '팀 이름',
                 onSaved: (_) {},
+                onChanged: (value) {
+                  teamName = value;
+                },
                 validator: (_) => null),
             const SizedBox(
               height: 64,
@@ -108,35 +113,40 @@ class _TeamCreateScreenState extends ConsumerState<TeamCreateScreen> {
             Center(
               child: TextButton(
                 onPressed: () async {
-                  final result = await createTeamUseCase.call(
-                      name: textController.text.trim());
+                  if (teamName.isNotEmpty) {
+                    final result = await createTeamUseCase.call(
+                        name: textController.text.trim());
 
-                  await result.fold(
-                    onSuccess: (value) {
-                      return context.dialog<String>(
-                        child: Padding(
-                          padding: const EdgeInsets.all(32.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text('팀 생성이 완료되었습니다. 팀을 초대하여 보세요'),
-                              // Text(t.dialog.teamCreationComplete),
-                              TextButton(
-                                onPressed: () {
-                                  context.pop();
-                                  context.pop();
-                                },
-                                child: const Text('닫기'),
-                              ),
-                            ],
+                    result.fold(
+                      onSuccess: (value) {
+                        ref.read(teamControllerProvider.notifier).getTeams();
+                        return context.dialog<String>(
+                          child: Padding(
+                            padding: const EdgeInsets.all(32.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text('팀 생성이 완료되었습니다. 팀을 초대하여 보세요'),
+                                // Text(t.dialog.teamCreationComplete),
+                                TextButton(
+                                  onPressed: () {
+                                    context.pop();
+                                    context.pop();
+                                  },
+                                  child: const Text('닫기'),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                    onFailure: (e) {},
-                  );
+                        );
+                      },
+                      onFailure: (e) => Text(e.toString()),
+                    );
+                  } else {
+                    // teamName null 일 경우
+                  }
                 },
                 child: const Text(
                   '생성',

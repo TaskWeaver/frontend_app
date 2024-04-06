@@ -17,7 +17,7 @@ class HintedTextField extends StatelessWidget {
   final String hintText;
   final FormFieldSetter<String> onSaved;
   final FormFieldValidator<String> validator;
-  final void Function(String?)? onChanged;
+  final ValueChanged<String>? onChanged;
 
   final TextEditingController? controller;
 
