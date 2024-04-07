@@ -35,9 +35,8 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
       } else {
         throw ServerException();
       }
-    } on DioException catch (e) {
-      debugPrint(e.response?.data.toString());
-      throw ServerException();
+    } on DioException {
+      rethrow;
     }
   }
 
@@ -53,7 +52,7 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
         throw ServerException();
       }
     } on DioException {
-      throw ServerException();
+      rethrow;
     }
   }
 
@@ -76,9 +75,8 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
       } else {
         throw ServerException();
       }
-    } on DioException catch (e) {
-      debugPrint(e.response?.data.toString());
-      throw ServerException();
+    } on DioException {
+      rethrow;
     }
   }
 
@@ -93,9 +91,8 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
       } else {
         throw ServerException();
       }
-    } on DioException catch (e){
-      debugPrint(e.response?.toString());
-      throw ServerException();
+    } on DioException {
+      rethrow;
     }
   }
 
@@ -104,17 +101,18 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
       ProjectRequestModel project, int projectId) async {
     try {
       dio.options.headers = {'accessToken': 'true'};
-      var response =
-          await dio.patch('/v1/project/$projectId', data: project.toJson(),);
+      var response = await dio.patch(
+        '/v1/project/$projectId',
+        data: project.toJson(),
+      );
 
       if (response.statusCode == 204 && response.data?['resultCode'] == 204) {
         return project;
       } else {
         throw ServerException();
       }
-    } on DioException catch (e) {
-      debugPrint(e.response?.toString());
-      throw ServerException();
+    } on DioException {
+      rethrow;
     }
   }
 }
