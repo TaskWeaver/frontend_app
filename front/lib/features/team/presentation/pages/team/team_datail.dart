@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:front/features/project/presentaion/viewmodel/project_viewmodel.dart';
 import 'package:front/features/team/presentation/pages/team/widgets/dialog.dart';
 import 'package:front/features/team/presentation/pages/team/widgets/selecting_sharing_method_dialog.dart';
 import 'package:front/features/team/presentation/providers/projects_state.dart';
 import 'package:front/features/team/presentation/providers/team_controller.dart';
-import 'package:front/features/team/presentation/providers/team_detail.dart';
 import 'package:go_router/go_router.dart';
 
 class TeamDetailScreen extends ConsumerStatefulWidget {
@@ -26,13 +26,13 @@ class TeamDetailScreen extends ConsumerStatefulWidget {
 }
 
 class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
-  late TeamDetailViewmodel viewmodel;
+  late ProjectViewmodel viewmodel;
   late TeamController teamController;
 
   @override
   void initState() {
     super.initState();
-    viewmodel = ref.read(teamDetailViewmodelProvider.notifier);
+    viewmodel = ref.read(projectViewmodelProvider(widget.teamId).notifier);
     viewmodel.getProjectsByTeamId(widget.teamId);
     // ref
     //     .read(teamControllerProvider.notifier)
@@ -41,7 +41,7 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var projectsState = ref.watch(teamDetailViewmodelProvider);
+    var projectsState = ref.watch(projectViewmodelProvider(widget.teamId));
     // final mainScreenViewModelState = ref.watch(mainScreenViewModelProvider);
     final teamState = ref.watch(teamControllerProvider);
 
@@ -195,7 +195,7 @@ class ProjectList extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 16),
                   child: ElevatedButton(
                     onPressed: () {
-                      context.push('/projectDetail/${projects[index].projectId}');
+                      context.push('/projectDetail/${widget.teamId}/${projects[index].projectId}');
                     },
                     style: widget.elevatedButtonStyle,
                     child: Text(

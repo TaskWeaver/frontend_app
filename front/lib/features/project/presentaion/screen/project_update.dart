@@ -2,28 +2,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:front/core/const/enum.dart';
 import 'package:front/features/login/models/user.dart';
-import 'package:front/features/project/data/models/project_request.dart';
 import 'package:front/features/project/entities/project.dart';
 import 'package:front/features/project/presentaion/component/project_from.dart';
 import 'package:front/features/project/presentaion/component/project_manager_selector.dart';
-import 'package:front/features/project/presentaion/viewmodel/project.dart';
+import 'package:front/features/project/presentaion/viewmodel/project_viewmodel.dart';
 
 import 'package:front/shared/atom/bottom_navigation_bar.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+import 'package:go_router/go_router.dart';
 
 class ProjectUpdateScreen extends ConsumerStatefulWidget {
-  ProjectUpdateScreen({
-    Key? key,
-    required this.project,
-  }) : super(key: key);
+  ProjectUpdateScreen({Key? key, required this.project, required this.teamId})
+      : super(key: key);
 
   final Project project;
+  final int teamId;
 
   final team = {
-    'id': '1',
+    'id': 1,
     'name': '팀이름',
   };
 
@@ -80,7 +77,6 @@ class _ProjectUpdateScreenState extends ConsumerState<ProjectUpdateScreen> {
                 Row(
                   children: [
                     buildUpdateButton(),
-                    buildDeleteButton(),
                   ],
                 )
               ],
@@ -96,7 +92,7 @@ class _ProjectUpdateScreenState extends ConsumerState<ProjectUpdateScreen> {
   void initState() {
     super.initState();
     currentState = _formKey.currentState;
-    viewmodel = ref.read(projectViewmodelProvider.notifier);
+    viewmodel = ref.read(projectViewmodelProvider(widget.teamId).notifier);
   }
 
   void onFormChanged() {
@@ -132,34 +128,24 @@ class _ProjectUpdateScreenState extends ConsumerState<ProjectUpdateScreen> {
     return TextButton(
       onPressed: () async {
         if (_formKey.currentState?.validate(null) ?? false) {
-          var result = await viewmodel.updateProject(
-              Project(
-                  managerId: manager.id,
-                  name: _formKey.currentState!.fields['name']!.value,
-                  description:
-                      _formKey.currentState!.fields['description']!.value,
-                  projectId: widget.project.projectId,
-                  projectState: widget.project.projectState),
-              widget.project.projectId);
-          result.fold(
-              (l) => debugPrint(l.toString()), (r) => debugPrint(r.toString()));
+          try {
+            await viewmodel.updateProject(
+                Project(
+                    managerId: manager.id,
+                    name: _formKey.currentState!.fields['name']!.value,
+                    description:
+                        _formKey.currentState!.fields['description']!.value,
+                    projectId: widget.project.projectId,
+                    projectState: widget.project.projectState),
+                widget.project.projectId);
+            context.pop();
+          } catch (e) {
+            debugPrint(e.toString());
+          }
         }
       },
       child: Text(
         '수정',
-        style: widget.h1TextStyle.copyWith(fontSize: 15),
-      ),
-    );
-  }
-
-  Widget buildDeleteButton() {
-    return TextButton(
-      onPressed: () async {
-        var result = await viewmodel.deleteProject(widget.project.projectId);
-        result.fold((l) => debugPrint(l.toString()), (r) => null);
-      },
-      child: Text(
-        '삭제',
         style: widget.h1TextStyle.copyWith(fontSize: 15),
       ),
     );

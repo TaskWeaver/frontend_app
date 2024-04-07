@@ -58,20 +58,23 @@ final router = GoRouter(initialLocation: '/', routes: [
       },
     ),
     GoRoute(
-      path: 'projectDetail/:projectId',
-      name: 'projectDetail/:projectId',
-      builder: (context, state) => ProjectDetailScreen(projectId: int.parse(state.pathParameters['projectId']!)),
+      path: 'projectDetail/:teamId/:projectId',
+      name: 'projectDetail/:teamId/:projectId',
+      builder: (context, state) => ProjectDetailScreen(
+          projectId: int.parse(state.pathParameters['projectId']!),
+          teamId: int.parse(state.pathParameters['teamId']!)),
     ),
     GoRoute(
       path: 'projectCreate/:teamId',
       name: 'projectCreate/:teamId',
-      builder: (context, state) =>
-          ProjectCreateScreen(teamId: int.parse(state.pathParameters['teamId']!)),
+      builder: (context, state) => ProjectCreateScreen(
+          teamId: int.parse(state.pathParameters['teamId']!)),
     ),
     GoRoute(
-      path: 'projectUpdate',
-      name: 'projectUpdate',
-      builder: (context, state) => ProjectUpdateScreen(project: state.extra! as Project),
+      path: 'projectUpdate/:teamId',
+      name: 'projectUpdate/:teamId',
+      builder: (context, state) =>
+          ProjectUpdateScreen(project: state.extra! as Project, teamId: int.parse(state.pathParameters['teamId']!)),
     ),
     GoRoute(
       path: 'main',
@@ -97,7 +100,7 @@ final router = GoRouter(initialLocation: '/', routes: [
                 const NoTransitionPage<void>(child: ChangeInfoListScreen()),
           ),
         ]),
-        GoRoute(
+    GoRoute(
         path: 'notificationToken',
         name: 'notificationToken',
         builder: (context, state) => const NotificationTokenScreen()),
