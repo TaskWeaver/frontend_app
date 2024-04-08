@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front/shared/theme/elevated_button_theme.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 ThemeData themeData = ThemeData(
   colorScheme: const ColorScheme(
@@ -16,4 +17,6 @@ ThemeData themeData = ThemeData(
     surface: Colors.white,
   ),
   elevatedButtonTheme: elevatedButtonThemeData,
+  textTheme: GoogleFonts.notoSansKrTextTheme(),
+
 );

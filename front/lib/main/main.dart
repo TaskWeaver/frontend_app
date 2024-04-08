@@ -15,6 +15,9 @@ class MyApp extends StatelessWidget {
     // environment specific configuration
 
     /// {@category Architecture}
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+    debugPrint('width: $width, height: $height');
     var config = AppConfig.of(context)!;
     return _EagerInitialization(
         child: MaterialApp.router(

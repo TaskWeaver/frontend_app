@@ -39,6 +39,7 @@ dependencies:
   slang_flutter: ^3.30.0
   slang_build_runner: ^3.30.0
   get_it: ^7.6.7
+  google_fonts: ^6.0.0
   
   
 dev_dependencies:
