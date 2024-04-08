@@ -13,7 +13,7 @@ Color? getBackgroundColor(Set<MaterialState> states) {
 
 Color? getOverlayColor(Set<MaterialState> states) {
   if (states.contains(MaterialState.hovered)) {
-    return Colors.black.withOpacity(0.12);
+    return Colors.black.withOpacity(0.04);
   } else if (states.contains(MaterialState.pressed)) {
     return Colors.black.withOpacity(0.08);
   }
@@ -22,13 +22,13 @@ Color? getOverlayColor(Set<MaterialState> states) {
 
 Color? getForegroundColor(Set<MaterialState> states) {
   if (states.contains(MaterialState.disabled)) {
-    return themeData.colorScheme.onPrimary.withOpacity(0.7);
+    return themeData.colorScheme.onPrimary.withOpacity(0.35);
   }
   return themeData.colorScheme.onPrimary;
 }
 
 TextStyle? getButtonTextStyle(Set<MaterialState> states) {
-  return TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
+  return TextStyle(fontSize: 14);
 }
 
 ElevatedButtonThemeData elevatedButtonThemeData = ElevatedButtonThemeData(
@@ -37,10 +37,10 @@ ElevatedButtonThemeData elevatedButtonThemeData = ElevatedButtonThemeData(
     textStyle: MaterialStateProperty.resolveWith(getButtonTextStyle),
     padding: MaterialStateProperty.all(
       EdgeInsets.symmetric(
-        vertical: 13,
+        vertical: 24,
       ),
     ),
-    foregroundColor: MaterialStateProperty.all(Colors.white),
+    foregroundColor: MaterialStateProperty.resolveWith(getForegroundColor),
     overlayColor: MaterialStateProperty.resolveWith(getOverlayColor),
     shadowColor: MaterialStateProperty.all(Colors.transparent),
     shape: MaterialStateProperty.all(
@@ -56,8 +56,7 @@ ElevatedButtonThemeData elevatedButtonThemeData = ElevatedButtonThemeData(
   type: ElevatedButton,
 )
 Widget elevatedButtonUseCase(BuildContext context) {
-  return SafeArea(
-    child: Container(
+  return Container(
       color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -67,7 +66,10 @@ Widget elevatedButtonUseCase(BuildContext context) {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ElevatedButton(
-              onPressed: () {},
+              onPressed:
+                  context.knobs.boolean(label: 'Disabled', initialValue: false)
+                      ? null
+                      : () {},
               child: Text(context.knobs.string(
                   label: 'Elevated Button Text',
                   initialValue: 'Elevated Button')),
@@ -75,6 +77,5 @@ Widget elevatedButtonUseCase(BuildContext context) {
           ],
         )),
       ),
-    ),
-  );
+    );
 }
