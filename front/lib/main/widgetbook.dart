@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 // Import the generated directories variable
 import 'package:front/main/widgetbook.directories.g.dart';
+import 'package:front/shared/theme/theme.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -24,7 +25,7 @@ class WidgetbookApp extends StatelessWidget {
           themes: [
             WidgetbookTheme(
               name: 'Light',
-              data: ThemeData.light(),
+              data: themeData,
             ),
             WidgetbookTheme(
               name: 'Dark',
