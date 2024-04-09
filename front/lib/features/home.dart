@@ -77,6 +77,15 @@ class HomeScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.white),
                     )),
                 const SizedBox(height: 10),
+                ElevatedButton(
+                    onPressed: () {
+                      context.go('/design');
+                    },
+                    child: const Text(
+                      '디자인 페이지',
+                      style: TextStyle(color: Colors.white),
+                    )),
+                const SizedBox(height: 10),
               ])),
         ));
   }
