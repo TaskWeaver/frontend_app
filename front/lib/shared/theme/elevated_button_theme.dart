@@ -28,7 +28,7 @@ Color? getForegroundColor(Set<MaterialState> states) {
 }
 
 TextStyle? getButtonTextStyle(Set<MaterialState> states) {
-  return TextStyle(fontSize: 14);
+  return themeData.textTheme.labelLarge;
 }
 
 ElevatedButtonThemeData elevatedButtonThemeData = ElevatedButtonThemeData(
@@ -36,8 +36,8 @@ ElevatedButtonThemeData elevatedButtonThemeData = ElevatedButtonThemeData(
     backgroundColor: MaterialStateProperty.resolveWith(getBackgroundColor),
     textStyle: MaterialStateProperty.resolveWith(getButtonTextStyle),
     padding: MaterialStateProperty.all(
-      EdgeInsets.symmetric(
-        vertical: 24,
+      const EdgeInsets.symmetric(
+        vertical: 16,
       ),
     ),
     foregroundColor: MaterialStateProperty.resolveWith(getForegroundColor),
@@ -57,25 +57,25 @@ ElevatedButtonThemeData elevatedButtonThemeData = ElevatedButtonThemeData(
 )
 Widget elevatedButtonUseCase(BuildContext context) {
   return Container(
-      color: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            ElevatedButton(
-              onPressed:
-                  context.knobs.boolean(label: 'Disabled', initialValue: false)
-                      ? null
-                      : () {},
-              child: Text(context.knobs.string(
-                  label: 'Elevated Button Text',
-                  initialValue: 'Elevated Button')),
-            ),
-          ],
-        )),
-      ),
-    );
+    color: Colors.white,
+    child: Padding(
+      padding: const EdgeInsets.all(24.0),
+      child: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ElevatedButton(
+            onPressed:
+                context.knobs.boolean(label: 'Disabled', initialValue: false)
+                    ? null
+                    : () {},
+            child: Text(context.knobs.string(
+                label: 'Elevated Button Text',
+                initialValue: 'Elevated Button')),
+          ),
+        ],
+      )),
+    ),
+  );
 }

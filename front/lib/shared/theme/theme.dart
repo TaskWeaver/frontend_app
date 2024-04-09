@@ -17,6 +17,11 @@ ThemeData themeData = ThemeData(
     surface: Colors.white,
   ),
   elevatedButtonTheme: elevatedButtonThemeData,
-  textTheme: GoogleFonts.notoSansKrTextTheme(),
+  textTheme: TextTheme(
+    labelLarge: GoogleFonts.notoSans(
+      fontSize: 16,
+      fontWeight: FontWeight.w700,
+    ),
+  ),
 
 );

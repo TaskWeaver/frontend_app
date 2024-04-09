@@ -6,6 +6,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+    print('width: $width, height: $height');
     return Scaffold(
         appBar: AppBar(title: const Text('홈')),
         body: Padding(
@@ -18,53 +21,53 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () {
                     context.push('/login'); // 로그인 화면으로 이동
                   },
-                  child: Text('로그인'),
+                  child: const Text('로그인'),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 8),
                 ElevatedButton(
                   onPressed: () {
                     context.push('/teamsList'); // 로그인 화면으로 이동
                   },
                   child: const Text('team'),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
                     context.push('/example'); // 로그인 화면으로 이동
                   },
                   child: const Text('formExample'),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 ElevatedButton(
                     onPressed: () {
                       context.go('/projectDetail');
                     },
                     child: const Text('프로젝트')),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 ElevatedButton(
                     onPressed: () {
                       context.go('/projectCreation');
                     },
                     child: const Text('프로젝트 생성')),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 ElevatedButton(
                     onPressed: () {
                       context.go('/projectUpdate');
                     },
                     child: const Text('프로젝트 수정')),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 ElevatedButton(
                     onPressed: () {
                       context.go('/main');
                     },
                     child: const Text('메인 페이지')),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 ElevatedButton(
                     onPressed: () {
                       context.go('/taskDetail');
                     },
                     child: const Text('taskDetail')),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 ElevatedButton(
                     onPressed: () {
                       context.go('/myInfo');
@@ -73,7 +76,7 @@ class HomeScreen extends StatelessWidget {
                       '마이 페이지',
                       style: TextStyle(color: Colors.white),
                     )),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
               ])),
         ));
   }
