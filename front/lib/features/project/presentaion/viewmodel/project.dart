@@ -10,6 +10,7 @@ part 'project.g.dart';
 
 @riverpod
 class ProjectViewmodel extends _$ProjectViewmodel {
+
   @override
   ProjectState build() => const ProjectState.loading();
 
@@ -27,11 +28,12 @@ class ProjectViewmodel extends _$ProjectViewmodel {
   }
 
   Future<Either<Failure, Project>> updateProject(
-      ProjectRequestModel project, int projectId) async {
+      Project project, int projectId) async {
     return await ref.read(updateProjectByIdUseCaseProvider)(project, projectId);
   }
 
   Future<Either<Failure, void>> deleteProject(int projectId) async {
-    return await ref.read(deleteProjectByIdUseCaseProvider)(projectId);
+    var result = await ref.read(deleteProjectByIdUseCaseProvider)(projectId);
+    return result;
   }
 }

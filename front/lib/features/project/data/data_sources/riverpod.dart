@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:front/core/config/providers/dio.dart';
 
 import 'package:front/features/project/data/data_sources/remote_data_source.dart';
 import 'package:front/features/project/data/data_sources/temp_data_source.dart';
@@ -10,7 +11,7 @@ part 'riverpod.g.dart';
 ProjectRemoteDataSource projectRemoteDataSource(
   ProjectRemoteDataSourceRef ref,
 ) {
-  var dio = Dio();
+  var dio = ref.read(dioProvider);
   return ProjectRemoteDataSourceImpl(dio: dio);
 }
 

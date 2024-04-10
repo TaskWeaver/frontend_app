@@ -10,15 +10,36 @@ import 'package:front/shared/atom/bottom_navigation_bar.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-class ProjectCreationScreen extends StatelessWidget {
-  ProjectCreationScreen({
+class ProjectCreateScreen extends ConsumerStatefulWidget {
+  ProjectCreateScreen({
     Key? key,
+    required this.teamId,
   }) : super(key: key);
 
+  final int teamId;
+
   final team = {
-    'id': 1,
-    'name': '팀이름',
+    'id': 9,
+    'name': 'Team Name',
   };
+
+  final TextStyle h1TextStyle = const TextStyle(
+      fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black);
+
+  @override
+  ConsumerState<ProjectCreateScreen> createState() =>
+      _ProjectCreateScreenState();
+}
+
+class _ProjectCreateScreenState extends ConsumerState<ProjectCreateScreen> {
+  late ProjectViewmodel viewmodel;
+  final _formKey = GlobalKey<CustomFormState>();
+  late CustomFormState? currentState;
+  var manager =
+      UserModel(id: 1, nickname: '코난', email: 'test@gmail.com', type: 'LEADER');
+  final List<UserModel> teamMembers = [
+    UserModel(id: 1, email: '코난', nickname: 'test@gmail.com', type: 'LEADER'),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -26,42 +47,33 @@ class ProjectCreationScreen extends StatelessWidget {
       appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: _Body(team: team),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                buildHeader(),
+                const SizedBox(height: 10),
+                ProjectManagerSelector(
+                    teamMembers: teamMembers,
+                    manager: manager,
+                    onChanged: onManagerChanged),
+                Expanded(
+                  child: ProjectFrom(
+                    formKey: _formKey,
+                    onFormChanged: onFormChanged,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                buildCreateButton(widget.teamId),
+              ],
+            ),
+          ),
+        ),
       ),
       bottomNavigationBar: const ProjectBottomNavigationBar(),
     );
   }
-}
-//view
-
-class _Body extends ConsumerStatefulWidget {
-  const _Body({
-    Key? key,
-    required this.team,
-  }) : super(key: key);
-
-  final Map<String, dynamic> team;
-
-  final TextStyle h1TextStyle = const TextStyle(
-      fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black);
-
-  @override
-  ConsumerState<_Body> createState() => _BodyState();
-}
-
-class _BodyState extends ConsumerState<_Body> {
-  late ProjectViewmodel viewmodel;
-  final _formKey = GlobalKey<CustomFormState>();
-  late CustomFormState? currentState;
-  var manager =
-      UserModel(id: 1, nickname: 'user1', email: 'email', type: 'type');
-  final List<UserModel> teamMembers = [
-    UserModel(id: 1, email: 'email', nickname: 'user1', type: 'MEMBER'),
-    UserModel(id: 1, email: 'email', nickname: 'user2', type: 'MEMBER'),
-    UserModel(id: 1, email: 'email', nickname: 'user3', type: 'MEMBER'),
-    UserModel(id: 1, email: 'email', nickname: 'user4', type: 'MEMBER'),
-    UserModel(id: 1, email: 'email', nickname: 'user5', type: 'MEMBER'),
-  ];
 
   @override
   void initState() {
@@ -82,39 +94,12 @@ class _BodyState extends ConsumerState<_Body> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            buildHeader(),
-            const SizedBox(height: 10),
-            ProjectManagerSelector(
-                teamMembers: teamMembers,
-                manager: manager,
-                onChanged: onManagerChanged),
-            Expanded(
-              child: ProjectFrom(
-                formKey: _formKey,
-                onFormChanged: onFormChanged,
-              ),
-            ),
-            const SizedBox(height: 20),
-            buildCreateButton(),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget buildHeader() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          widget.team['name'],
+          widget.team['name'].toString(),
           style: widget.h1TextStyle,
         ),
         Text(
@@ -126,7 +111,7 @@ class _BodyState extends ConsumerState<_Body> {
     );
   }
 
-  Row buildCreateButton() {
+  Row buildCreateButton(int teamId) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -134,13 +119,12 @@ class _BodyState extends ConsumerState<_Body> {
           onPressed: () async {
             if (_formKey.currentState?.validate(null) ?? false) {
               var result = await viewmodel.createProject(
-                ProjectRequestModel(
-                  managerId: manager.id,
-                  name: currentState!.fields['name']!.value,
-                  description: currentState!.fields['description']!.value,
-                ),
-                widget.team['id'],
-              );
+                  ProjectRequestModel(
+                    managerId: manager.id,
+                    name: currentState!.fields['name']!.value,
+                    description: currentState!.fields['description']!.value,
+                  ),
+                  teamId);
               result.fold((l) => debugPrint(l.toString()),
                   (r) => debugPrint(r.toString()));
             }
@@ -159,8 +143,8 @@ class _BodyState extends ConsumerState<_Body> {
 
 @widgetbook.UseCase(
   name: '',
-  type: ProjectCreationScreen,
+  type: ProjectCreateScreen,
 )
-Widget projectCreationScreenUseCase(BuildContext context) {
-  return ProjectCreationScreen();
+Widget projectCreateScreenUseCase(BuildContext context) {
+  return ProjectCreateScreen(teamId: 1);
 }

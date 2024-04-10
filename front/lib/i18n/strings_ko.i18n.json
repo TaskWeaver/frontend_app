@@ -83,7 +83,7 @@
       "loginFailed": "로그인 프로세스 중 에러 발생"
     }
   },
-  "projectCreationScreen": {
+  "projectCreateScreen": {
     "headerTitle": "팀이름",
     "addProjectHeader": "Project 추가하기",
     "addProjectDescription": "새로운 프로젝트를 추가해보세요",
