@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:front/features/login/models/user.dart';
+import 'package:front/features/user/models/user.dart';
 import 'package:front/features/team/presentation/pages/team/widgets/dialog.dart';
 import 'package:front/i18n/strings.g.dart';
 

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front/features/assiners/entity.dart/assiner.dart';
-import 'package:front/features/task/presentation/task_detail/component/task_detail_comment_input_builder.dart';
-import 'package:front/features/task/presentation/task_detail/component/task_detail_comments_builder.dart';
-import 'package:front/features/task/presentation/task_detail/component/task_detail_content_builder.dart';
-import 'package:front/features/task/presentation/task_detail/component/task_detail_header.dart';
-import 'package:front/features/task/presentation/task_detail/component/task_detail_status_component.dart';
-import 'package:front/features/task/presentation/task_detail/temp_provider.dart';
-
+import 'package:front/features/task/presentation/component/task_detail_comment_input_builder.dart';
+import 'package:front/features/task/presentation/component/task_detail_comments_builder.dart';
+import 'package:front/features/task/presentation/component/task_detail_content_builder.dart';
+import 'package:front/features/task/presentation/component/task_detail_header.dart';
+import 'package:front/features/task/presentation/component/task_detail_status_component.dart';
+import 'package:front/features/task/presentation/temp_provider.dart';
 class TaskDetailScreen extends ConsumerWidget {
   const TaskDetailScreen({super.key});
 

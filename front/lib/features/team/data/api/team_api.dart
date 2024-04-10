@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart' hide Headers;
+import 'package:front/features/team/data/models/change_teamLeader.dart';
 import 'package:front/features/team/data/models/invite_response.dart';
 import 'package:front/features/team/data/models/invite_team.dart';
 import 'package:front/features/team/data/models/team.dart';
@@ -48,5 +49,11 @@ abstract class TeamAPI {
   @Headers({'accessToken': 'true'})
   Future<ApiResponse> answerToInvitation(
     @Body() InviteResponse inviteResponse,
+  );
+
+  @POST('/team/{teamId}/changeLeader')
+  @Headers({'accessToken': 'true'})
+  Future<ApiResponse> changeTeamLeader(
+    @Body() ChangeTeamLeaderModel changeTeamLeaderModel,
   );
 }

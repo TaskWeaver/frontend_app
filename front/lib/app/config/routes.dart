@@ -1,21 +1,21 @@
 import 'package:front/features/form_example/form_demo2.dart';
 import 'package:front/features/home.dart';
-import 'package:front/features/login/presentation/screens/email_singin.dart';
-import 'package:front/features/login/presentation/screens/login.dart';
-import 'package:front/features/login/presentation/screens/signin.dart';
-import 'package:front/features/mypage/presentation/screen/change_info_list.dart';
-import 'package:front/features/mypage/presentation/screen/main_screen.dart';
-import 'package:front/features/mypage/presentation/screen/my_info_screen.dart';
-import 'package:front/features/mypage/presentation/screen/social_login_info_screen.dart';
 import 'package:front/features/project/entities/project.dart';
 import 'package:front/features/project/presentaion/screen/project_creation.dart';
 import 'package:front/features/project/presentaion/screen/project_detail.dart';
 import 'package:front/features/project/presentaion/screen/project_update.dart';
-import 'package:front/features/task/presentation/task_detail/screen/task_detail_page.dart';
-import 'package:front/features/team/presentation/pages/team/team_create.dart';
-import 'package:front/features/team/presentation/pages/team/team_datail.dart';
-import 'package:front/features/team/presentation/pages/team/teams_list.dart';
+import 'package:front/features/task/presentation/screen/task_detail_page.dart';
+import 'package:front/features/team/presentation/pages/team/team_create_view.dart';
+import 'package:front/features/team/presentation/pages/team/team_datail_view.dart';
+import 'package:front/features/team/presentation/pages/team/teams_list_view.dart';
 import 'package:front/features/tmp/notificatoin_token_screen.dart';
+import 'package:front/features/user/presentation/component/change_info_list.dart';
+import 'package:front/features/user/presentation/screens/email_singin.dart';
+import 'package:front/features/user/presentation/screens/login.dart';
+import 'package:front/features/user/presentation/screens/main_screen.dart';
+import 'package:front/features/user/presentation/screens/my_info_screen.dart';
+import 'package:front/features/user/presentation/screens/signin.dart';
+import 'package:front/features/user/presentation/screens/social_login_info_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(initialLocation: '/', routes: [
@@ -43,35 +43,37 @@ final router = GoRouter(initialLocation: '/', routes: [
     GoRoute(
       path: 'teamsList',
       name: 'teamsList',
-      builder: (context, state) => const TeamsListScreen(),
+      builder: (context, state) => const TeamsListView(),
     ),
     GoRoute(
       path: 'teamCreate',
       name: 'teamCreate',
-      builder: (context, state) => const TeamCreateScreen(),
+      builder: (context, state) => const TeamCreateView(),
     ),
     GoRoute(
       path: 'teamDetail/:teamId',
       name: 'teamDetail/:teamId',
       builder: (context, state) {
-        return TeamDetailScreen(int.parse(state.pathParameters['teamId']!));
+        return TeamDetailView(state.pathParameters['teamId']!);
       },
     ),
     GoRoute(
       path: 'projectDetail/:projectId',
       name: 'projectDetail/:projectId',
-      builder: (context, state) => ProjectDetailScreen(projectId: int.parse(state.pathParameters['projectId']!)),
+      builder: (context, state) => ProjectDetailScreen(
+          projectId: int.parse(state.pathParameters['projectId']!)),
     ),
     GoRoute(
       path: 'projectCreate/:teamId',
       name: 'projectCreate/:teamId',
-      builder: (context, state) =>
-          ProjectCreateScreen(teamId: int.parse(state.pathParameters['teamId']!)),
+      builder: (context, state) => ProjectCreateScreen(
+          teamId: int.parse(state.pathParameters['teamId']!)),
     ),
     GoRoute(
       path: 'projectUpdate',
       name: 'projectUpdate',
-      builder: (context, state) => ProjectUpdateScreen(project: state.extra! as Project),
+      builder: (context, state) =>
+          ProjectUpdateScreen(project: state.extra! as Project),
     ),
     GoRoute(
       path: 'main',
@@ -97,7 +99,7 @@ final router = GoRouter(initialLocation: '/', routes: [
                 const NoTransitionPage<void>(child: ChangeInfoListScreen()),
           ),
         ]),
-        GoRoute(
+    GoRoute(
         path: 'notificationToken',
         name: 'notificationToken',
         builder: (context, state) => const NotificationTokenScreen()),
