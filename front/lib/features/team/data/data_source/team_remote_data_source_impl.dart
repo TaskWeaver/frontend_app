@@ -1,5 +1,6 @@
 import 'package:front/core/network_handling/app_dio.dart';
 import 'package:front/features/team/data/api/team_api.dart';
+import 'package:front/features/team/data/models/change_teamLeader.dart';
 import 'package:front/features/team/data/models/invite_response.dart';
 import 'package:front/features/team/data/models/invite_team.dart';
 import 'package:front/features/team/data/models/team.dart';
@@ -43,11 +44,17 @@ final class TeamRemoteDataSourceImpl implements TeamRemoteDataSource {
 
   @override
   Future<ApiResponse> inviteTeamByEmail(InviteTeam inviteTeam) {
-    throw _teamAPI.inviteTeamByEmail(inviteTeam);
+    return _teamAPI.inviteTeamByEmail(inviteTeam);
   }
 
   @override
   Future<ApiResponse<List<TeamModel>>> getTeams() {
     return _teamAPI.getTeams();
   }
+
+  @override
+  Future<ApiResponse> changeTeamLeader(ChangeTeamLeaderModel changeTeamLeaderModel) {
+    return _teamAPI.changeTeamLeader(changeTeamLeaderModel);
+  }
+
 }

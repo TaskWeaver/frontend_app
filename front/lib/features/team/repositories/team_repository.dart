@@ -1,3 +1,4 @@
+import 'package:front/features/team/data/models/change_teamLeader.dart';
 import 'package:front/features/team/data/models/invite_response.dart';
 import 'package:front/features/team/data/models/invite_team.dart';
 import 'package:front/features/team/data/models/team.dart';
@@ -22,4 +23,6 @@ abstract class TeamRepository {
   Future<Result<ApiResponse>> invitationNotification();
 
   Future<Result<ApiResponse>> answerToInvitation(InviteResponse inviteResponse);
+
+  Future<Result<ApiResponse>> changeTeamLeader(ChangeTeamLeaderModel changeTeamLeaderModel);
 }

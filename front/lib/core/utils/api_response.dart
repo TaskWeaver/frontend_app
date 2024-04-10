@@ -1,11 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:front/features/team/data/models/team.dart';
 
 part 'api_response.g.dart';
 
 @JsonSerializable()
 class ApiResponse<T> {
-  final Map<String, dynamic> result;
+  final dynamic result;
   final int resultCode;
   final String resultMsg;
 
@@ -15,15 +14,14 @@ class ApiResponse<T> {
     required this.resultMsg,
   });
 
-  factory ApiResponse.fromJson(Map<String, dynamic> json) =>
-      _$ApiResponseFromJson(json);
-
-  // TeamModel toTeamModel(Map<String, dynamic> json) {
-  //   return TeamModel(
-  //     id: json['result']['id'],
-  //     name: json['result']['name'],
-  //     inviteLink: json['result']['inviteLink'],
-  //     createdAt: json['result']['name'],
-  //   );
-  // }
+  factory ApiResponse.fromJson(Map<String, dynamic> json) {
+    dynamic result = json['result'];
+    if (result is Map<String, dynamic>) {
+    } else if (result is List<dynamic>) {}
+    return ApiResponse(
+      result: result,
+      resultCode: json['resultCode'] as int,
+      resultMsg: json['resultMsg'] as String,
+    );
+  }
 }

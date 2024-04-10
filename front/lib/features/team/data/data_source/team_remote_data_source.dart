@@ -1,3 +1,4 @@
+import 'package:front/features/team/data/models/change_teamLeader.dart';
 import 'package:front/features/team/data/models/invite_response.dart';
 import 'package:front/features/team/data/models/invite_team.dart';
 import 'package:front/features/team/data/models/team.dart';
@@ -21,4 +22,6 @@ abstract class TeamRemoteDataSource {
   Future<ApiResponse> invitationNotification();
 
   Future<ApiResponse> answerToInvitation(InviteResponse inviteResponse);
+
+  Future<ApiResponse> changeTeamLeader(ChangeTeamLeaderModel changeTeamLeaderModel);
 }

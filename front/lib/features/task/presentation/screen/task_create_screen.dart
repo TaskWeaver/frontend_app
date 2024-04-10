@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:front/features/login/models/user.dart';
+import 'package:front/features/user/models/user.dart';
 import 'package:front/features/task/presentation/component/picker_component.dart';
 import 'package:front/features/task/presentation/component/task_create_form_component.dart';
 import 'package:front/features/task/presentation/component/task_member_adder_component.dart';

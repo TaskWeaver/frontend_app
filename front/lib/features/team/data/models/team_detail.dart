@@ -11,7 +11,7 @@ class TeamDetailModel with _$TeamDetailModel {
     required int id,
     required String name,
     required String inviteLink,
-    String? teamLeader,
+    required int teamLeader,
     required String createdAt,
     required int memberCount,
     List<TeamMemberModel>? teamMembers,

@@ -34,10 +34,10 @@ linter:
     - curly_braces_in_flow_control_structures
     - omit_local_variable_types
     - annotate_overrides
-    - sort_constructors_first
+#    - sort_constructors_first
     - unawaited_futures
     - directives_ordering
-    - unnecessary_final
+#    - unnecessary_final
     - unnecessary_parenthesis
     - conditional_uri_does_not_exist
     - prefer_single_quotes
@@ -47,6 +47,7 @@ linter:
     - comment_references
     - prefer_void_to_null
     - use_key_in_widget_constructors
+#    - prefer_final_locals
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
 

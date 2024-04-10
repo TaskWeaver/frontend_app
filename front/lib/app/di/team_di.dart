@@ -5,13 +5,13 @@ import 'package:front/features/team/data/data_source/team_remote_data_source_imp
 import 'package:front/features/team/repositories/team_repository.dart';
 import 'package:front/features/team/repositories/team_repository_impl.dart';
 import 'package:front/features/team/usecases/answer_to_invitation_usecase.dart';
+import 'package:front/features/team/usecases/change_teamLeader_usecase.dart';
 import 'package:front/features/team/usecases/create_team_usecase.dart';
 import 'package:front/features/team/usecases/delete_member_usecase.dart';
 import 'package:front/features/team/usecases/get_team_by_id_usecase.dart';
 import 'package:front/features/team/usecases/get_teams_use_case.dart';
 import 'package:front/features/team/usecases/invitation_notification_usecase.dart';
 import 'package:front/features/team/usecases/invite_team_by_email_usecase.dart';
-
 
 class TeamDependencyInjection {
   void init() {
@@ -67,6 +67,11 @@ class TeamDependencyInjection {
           teamRepository,
         ),
       )
+      ..registerFactory<ChangeTeamLeaderUseCase>(
+        () => ChangeTeamLeaderUseCase(
+          teamRepository,
+        ),
+      )
       ..registerFactory<AnswerToInvitationUseCase>(
         () => AnswerToInvitationUseCase(
           teamRepository,
@@ -75,6 +80,7 @@ class TeamDependencyInjection {
   }
 
   void setupLocator() {
-    locator.registerSingleton<FlutterSecureStorage>(const FlutterSecureStorage());
+    locator
+        .registerSingleton<FlutterSecureStorage>(const FlutterSecureStorage());
   }
 }
