@@ -60,6 +60,10 @@ final router = GoRouter(initialLocation: '/', routes: [
     GoRoute(
       path: 'projectDetail/:teamId/:projectId',
       name: 'projectDetail/:teamId/:projectId',
+      builder: (context, state) => ProjectDetailScreen(
+        teamId: int.parse(state.pathParameters['teamId']!),
+        projectId: int.parse(state.pathParameters['projectId']!),
+      ),
     ),
     GoRoute(
       path: 'projectCreate/:teamId',
