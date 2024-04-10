@@ -13,7 +13,7 @@ final class TeamRemoteDataSourceImpl implements TeamRemoteDataSource {
   final TeamAPI _teamAPI = TeamAPI(
     AppDio.instance,
     baseUrl:
-        'http://ec2-3-34-95-39.ap-northeast-2.compute.amazonaws.com:8083/v1',
+        'v1/',
   );
 
   @override

@@ -24,6 +24,7 @@ class _AppDio with DioMixin implements Dio {
       connectTimeout: Duration(milliseconds: 30000),
       receiveTimeout: Duration(milliseconds: 30000),
       sendTimeout: Duration(milliseconds: 30000),
+      baseUrl: 'http://ec2-3-34-95-39.ap-northeast-2.compute.amazonaws.com:8083',
       receiveDataWhenStatusError: true,
     );
 

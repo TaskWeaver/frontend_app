@@ -12,7 +12,7 @@ ProjectRemoteDataSource projectRemoteDataSource(
   ProjectRemoteDataSourceRef ref,
 ) {
   var dio = ref.read(dioProvider);
-  return ProjectRemoteDataSourceImpl(dio: dio);
+  return ProjectRemoteDataSourceImpl();
 }
 
 @riverpod

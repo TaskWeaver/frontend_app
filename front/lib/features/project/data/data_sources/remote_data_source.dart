@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:front/core/network_handling/app_dio.dart';
 
 import 'package:front/core/utils/exception.dart';
 import 'package:front/features/project/data/models/project.dart';
@@ -15,8 +16,8 @@ abstract class ProjectRemoteDataSource {
 }
 
 class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
-  ProjectRemoteDataSourceImpl({required this.dio});
-  final Dio dio;
+  ProjectRemoteDataSourceImpl();
+  final Dio dio = AppDio.instance;
 
   @override
   Future<List<ProjectModel>> getProjectsByTeamId(int teamId) async {
