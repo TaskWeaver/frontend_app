@@ -54,13 +54,14 @@ final router = GoRouter(initialLocation: '/', routes: [
       path: 'teamDetail/:teamId',
       name: 'teamDetail/:teamId',
       builder: (context, state) {
-        return TeamDetailView(state.pathParameters['teamId']!);
+        return TeamDetailView(int.parse(state.pathParameters['teamId']!));
       },
     ),
     GoRoute(
       path: 'projectDetail/:teamId/:projectId',
       name: 'projectDetail/:teamId/:projectId',
     ),
+    GoRoute(
       path: 'projectCreate/:teamId',
       name: 'projectCreate/:teamId',
       builder: (context, state) => ProjectCreateScreen(
