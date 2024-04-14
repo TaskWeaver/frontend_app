@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
     // environment specific configuration
 
     /// {@category Architecture}
+
     var config = AppConfig.of(context)!;
     return _EagerInitialization(
         child: MaterialApp.router(

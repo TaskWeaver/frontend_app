@@ -8,6 +8,7 @@ import 'package:front/features/user/data/models/user.dart';
 
 abstract class UserRepository {
   Future<Result<ApiResponse<UserModel>>> getUserInfo();
+
   Future<Result<ApiResponse>> changePassword(ChangePassword changePassword);
 
   Future<Result<ApiResponse>> signUp(SignUpRequest signUpRequest);
@@ -20,5 +21,8 @@ abstract class UserRepository {
   Future<Result> setAutoSignInTrue();
   Future<Result> setAutoSignInFalse();
 
+  Future<Result> saveToken(TokenModel token);
   Future<Result<TokenModel>> getToken();
+
+  Future<Result<bool>> checkToken();
 }

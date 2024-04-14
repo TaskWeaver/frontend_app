@@ -30,7 +30,7 @@ class _AppDio with DioMixin implements Dio {
     (transformer as BackgroundTransformer).jsonDecodeCallback = parseJson;
 
     interceptors.addAll([
-      TokenInterceptor(storage: getStorage),
+      TokenInterceptor(storage: secureStorage),
       LoggerInterceptor(),
     ]);
   }

@@ -101,9 +101,29 @@ final class UserRepositoryImpl implements UserRepository {
   }
 
   @override
+  Future<Result> saveToken(TokenModel token) async {
+    try {
+      var result = await _userLocalDataSource.saveToken(token);
+      return Result.success(0);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
   Future<Result<TokenModel>> getToken() async {
     try {
       var result = await _userLocalDataSource.getToken();
+      return Result.success(result);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<bool>> checkToken() async {
+    try {
+      var result = await _userLocalDataSource.tokenCheck();
       return Result.success(result);
     } on Exception catch (e) {
       return Result.failure(e);

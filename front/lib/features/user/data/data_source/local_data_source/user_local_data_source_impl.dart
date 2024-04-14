@@ -1,13 +1,13 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:front/app/shared_preferences_service.dart';
 import 'package:front/features/user/data/data_source/local_data_source/user_local_data_source.dart';
 import 'package:front/features/user/data/models/token.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class UserLocalDataSourceImpl implements UserLocalDataSource {
   UserLocalDataSourceImpl(
       {required this.flutterSecureStorage, required this.sharedPreferences});
   final FlutterSecureStorage flutterSecureStorage;
-  final SharedPreferences sharedPreferences;
+  final SharedPreferencesService sharedPreferences;
   static const accessTokenKey = 'access_token';
   static const refreshTokenKey = 'refresh_token';
   static const autoSigninKey = 'auto_Signin';
@@ -44,7 +44,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
     return Future.wait([
       flutterSecureStorage.read(key: accessTokenKey),
       flutterSecureStorage.read(key: refreshTokenKey),
-    ]).then((value) => value[0] == null && value[1] == null);
+    ]).then((value) => value[0] != null && value[1] != null);
   }
 
   @override

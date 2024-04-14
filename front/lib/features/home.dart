@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
             child: Column(children: [
           ElevatedButton(
             onPressed: () {
-              context.push('/login'); // 로그인 화면으로 이동
+              context.push('/signIn'); // 로그인 화면으로 이동
             },
             child: const Text('로그인'),
           ),

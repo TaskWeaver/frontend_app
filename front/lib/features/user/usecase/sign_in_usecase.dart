@@ -3,8 +3,8 @@ import 'package:front/core/utils/result.dart';
 import 'package:front/features/user/data/models/sign_in_request.dart';
 import 'package:front/features/user/repositories/user_repositories.dart';
 
-final class SignIn {
-  const SignIn(this._userRepository);
+final class SignInUseCase {
+  const SignInUseCase(this._userRepository);
   final UserRepository _userRepository;
 
   Future<Result<ApiResponse>> call(SignInRequest signInRequest) async {
