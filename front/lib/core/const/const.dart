@@ -7,3 +7,5 @@ const refreshTokenKey = 'refresh_token';
 /// is authenticated key for secure storage
 const IS_AUTHENTICATED_KEY = 'IS_AUTHENTICATED_KEY';
 const AUTHENTICATED_USER_EMAIL_KEY = 'AUTHENTICATED_USER_EMAIL_KEY';
+
+const NOTIFICATION_TOKEN = 'NOTIFICATION_TOKEN';

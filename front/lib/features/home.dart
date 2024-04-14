@@ -6,12 +6,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
-    print('width: $width, height: $height');
     return Scaffold(
         appBar: AppBar(title: const Text('홈')),
-        body: Padding(
+        body:  Padding(
           padding: const EdgeInsets.all(32.0),
           child: Center(
               child: Column(

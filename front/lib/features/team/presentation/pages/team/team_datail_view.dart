@@ -13,16 +13,7 @@ import 'package:front/features/user/presentation/viewmodel/main_screen_viewmodel
 class TeamDetailView extends ConsumerStatefulWidget {
   final String teamId;
 
-  TeamDetailView(this.teamId, {super.key});
-
-  final elevatedButtonStyle = ElevatedButton.styleFrom(
-    padding: const EdgeInsets.all(16.0),
-    alignment: Alignment.centerLeft,
-    shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.zero)),
-    backgroundColor: const Color(0xFFD9D9D9),
-    foregroundColor: Colors.transparent,
-  );
+  const TeamDetailView(this.teamId, {super.key});
 
   @override
   ConsumerState<TeamDetailView> createState() => _TeamDetailScreenState();
@@ -46,10 +37,8 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailView> {
   @override
   Widget build(BuildContext context) {
     var projectsState = ref.watch(teamDetailViewmodelProvider);
-    final mainScreenViewModelState = ref.watch(mainScreenViewModelProvider);
     final teamState = ref.watch(teamDetailControllerProvider);
     int? memberId;
-    String nickName = '';
 
     var textStyle = const TextStyle(
       color: Colors.black,
@@ -177,7 +166,7 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailView> {
                                 },
                               ),
                             ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -193,7 +182,6 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailView> {
                                       result.fold(
                                         onSuccess: (value) {
                                           ref.read(teamDetailControllerProvider.notifier).getTeamById(int.parse(widget.teamId));
-                                          print('삭제가 완료 되습니다.');
                                           Navigator.pop(context);
                                         },
                                         onFailure: (e) {
@@ -202,7 +190,6 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailView> {
                                         },
                                       );
                                     } else {
-                                      print('memberId = null');
                                     }
                                   },
                                   child: const Text('삭제하기'),
@@ -224,7 +211,6 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailView> {
 
                 Expanded(
                   child: ProjectList(
-                      widget: widget,
                       textStyle: textStyle,
                       projectsState: projectsState),
                 ),
@@ -245,12 +231,10 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailView> {
 class ProjectList extends StatelessWidget {
   const ProjectList({
     super.key,
-    required this.widget,
     required this.textStyle,
     required this.projectsState,
   });
 
-  final TeamDetailView widget;
   final TextStyle textStyle;
   final ProjectsState projectsState;
 
@@ -267,7 +251,6 @@ class ProjectList extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 16),
                   child: ElevatedButton(
                     onPressed: () {},
-                    style: widget.elevatedButtonStyle,
                     child: Text(
                       projects[index].name,
                       style: textStyle.copyWith(fontSize: 15),
