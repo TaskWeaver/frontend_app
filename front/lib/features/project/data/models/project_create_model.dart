@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:front/features/project/entities/project.dart';
+import 'package:front/features/project/entities/project_entity.dart';
 
 part 'project_create_model.g.dart';
 

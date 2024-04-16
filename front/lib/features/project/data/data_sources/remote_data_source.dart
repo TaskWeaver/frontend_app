@@ -3,16 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:front/core/network_handling/app_dio.dart';
 
 import 'package:front/core/utils/exception.dart';
-import 'package:front/features/project/data/models/project.dart';
-import 'package:front/features/project/data/models/project_request.dart';
+import 'package:front/features/project/data/models/project_members_model.dart';
+import 'package:front/features/project/data/models/project_model.dart';
+import 'package:front/features/project/data/models/project_create_model.dart';
 
 abstract class ProjectRemoteDataSource {
   Future<List<ProjectModel>> getProjectsByTeamId(int teamId);
   Future<ProjectModel> getProjectById(int projectId);
-  Future<ProjectModel> createProject(ProjectRequestModel project, int teamId);
-  Future<ProjectRequestModel> updateProjectById(
-      ProjectRequestModel project, int projectId);
+  Future<ProjectModel> createProject(ProjectCreateModel project, int teamId);
+  Future<ProjectCreateModel> updateProjectById(
+      ProjectCreateModel project, int projectId);
   Future<void> deleteProjectById(int projectId);
+  Future<ProjectMembersModel> getProjectMembers(int projectId);
 }
 
 class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
@@ -22,10 +24,16 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   @override
   Future<List<ProjectModel>> getProjectsByTeamId(int teamId) async {
     try {
-      dio.options.headers = {'accessToken': 'true'};
-      debugPrint('teamId: $teamId');
+      debugPrint(
+        'teamId: $teamId',
+      );
       var response = await dio.get(
         '/v1/team/$teamId/projects',
+        options: Options(
+          headers: {
+            'accessToken': 'true',
+          },
+        ),
       );
 
       if (response.statusCode == 200 && response.data?['resultCode'] == 200) {
@@ -44,8 +52,14 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   @override
   Future<ProjectModel> getProjectById(int projectId) async {
     try {
-      dio.options.headers = {'accessToken': 'true'};
-      var response = await dio.get('/v1/project/$projectId');
+      var response = await dio.get(
+        '/v1/project/$projectId',
+        options: Options(
+          headers: {
+            'accessToken': 'true',
+          },
+        ),
+      );
 
       if (response.statusCode == 200 && response.data?['resultCode'] == 200) {
         return ProjectModel.fromJson(response.data['result']);
@@ -59,9 +73,8 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
 
   @override
   Future<ProjectModel> createProject(
-      ProjectRequestModel project, int teamId) async {
+      ProjectCreateModel project, int teamId) async {
     try {
-      dio.options.headers = {'accessToken': 'true'};
       var response = await dio.post(
         '/v1/team/$teamId/project',
         data: project.toJson(),
@@ -84,8 +97,14 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   @override
   Future<void> deleteProjectById(int projectId) async {
     try {
-      dio.options.headers = {'accessToken': 'true'};
-      var response = await dio.delete('/v1/project/$projectId');
+      var response = await dio.delete(
+        '/v1/project/$projectId',
+        options: Options(
+          headers: {
+            'accessToken': 'true',
+          },
+        ),
+      );
 
       if (response.statusCode == 200 && response.data?['resultCode'] == 200) {
         return;
@@ -98,17 +117,44 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   }
 
   @override
-  Future<ProjectRequestModel> updateProjectById(
-      ProjectRequestModel project, int projectId) async {
+  Future<ProjectCreateModel> updateProjectById(
+      ProjectCreateModel project, int projectId) async {
     try {
-      dio.options.headers = {'accessToken': 'true'};
       var response = await dio.patch(
         '/v1/project/$projectId',
+        options: Options(
+          headers: {
+            'accessToken': 'true',
+          },
+        ),
         data: project.toJson(),
       );
 
       if (response.statusCode == 204 && response.data?['resultCode'] == 204) {
         return project;
+      } else {
+        throw ServerException();
+      }
+    } on DioException {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<ProjectMembersModel> getProjectMembers(int projectId) async {
+    try {
+      dio.options.headers = {'accessToken': 'true'};
+      var response = await dio.get(
+        '/v1/project/$projectId/members',
+        options: Options(
+          headers: {
+            'accessToken': 'true',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        return ProjectMembersModel.fromJson(response.data['result']);
       } else {
         throw ServerException();
       }
