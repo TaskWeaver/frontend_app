@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:front/core/utils/exception.dart';
 import 'package:front/core/utils/failure.dart';
 import 'package:front/features/project/data/data_sources/temp_data_source.dart';
-import 'package:front/features/project/data/models/project.dart';
+import 'package:front/features/project/data/models/project_model.dart';
 import 'package:front/features/project/data/repositories/project_repository_impl.dart';
 import 'package:mockito/mockito.dart';
 

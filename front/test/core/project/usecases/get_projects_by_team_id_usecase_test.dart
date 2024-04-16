@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:front/core/utils/failure.dart';
-import 'package:front/features/project/data/models/project.dart';
+import 'package:front/features/project/data/models/project_model.dart';
 import 'package:front/features/project/repositories/project_repository.dart';
 import 'package:front/features/project/usecases/get_projects_by_team_id_usecase.dart';
 import 'package:mockito/mockito.dart';

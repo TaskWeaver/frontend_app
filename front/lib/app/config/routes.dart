@@ -1,6 +1,6 @@
 import 'package:front/features/form_example/form_demo2.dart';
 import 'package:front/features/home.dart';
-import 'package:front/features/project/entities/project.dart';
+import 'package:front/features/project/entities/project_entity.dart';
 import 'package:front/features/project/presentaion/screen/project_creation.dart';
 import 'package:front/features/project/presentaion/screen/project_detail.dart';
 import 'package:front/features/project/presentaion/screen/project_update.dart';

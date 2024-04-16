@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front/features/project/presentaion/viewmodel/project_viewmodel.dart';
-import 'package:front/app/locator.dart';
-import 'package:front/features/team/data/models/team_detail.dart';
-import 'package:front/features/team/presentation/pages/team/widgets/dialog.dart';
-import 'package:front/features/team/presentation/pages/team/widgets/selecting_sharing_method_dialog.dart';
 import 'package:front/features/team/presentation/providers/projects_state.dart';
 import 'package:front/features/team/presentation/providers/team_controller.dart';
 import 'package:front/features/team/presentation/providers/team_detail_controller.dart';

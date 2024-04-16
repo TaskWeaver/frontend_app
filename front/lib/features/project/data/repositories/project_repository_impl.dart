@@ -6,8 +6,8 @@ import 'package:front/core/utils/exception.dart';
 import 'package:front/core/utils/failure.dart';
 import 'package:front/features/project/data/data_sources/remote_data_source.dart';
 import 'package:front/features/project/data/data_sources/temp_data_source.dart';
-import 'package:front/features/project/data/models/project_request.dart';
-import 'package:front/features/project/entities/project.dart';
+import 'package:front/features/project/data/models/project_create_model.dart';
+import 'package:front/features/project/entities/project_entity.dart';
 import 'package:front/features/project/repositories/project_repository.dart';
 
 class ProjectRepositoryImpl with ErrorHandler implements ProjectRepository {
@@ -52,7 +52,7 @@ class ProjectRepositoryImpl with ErrorHandler implements ProjectRepository {
       Project project, int projectId) async {
     return catchError(() async {
       await projectRemoteDataSource.updateProjectById(
-          ProjectRequestModel.fromEntity(project), projectId);
+          ProjectCreateModel.fromEntity(project), projectId);
       projects.addAll({projectId: project});
       return project;
     });
@@ -60,7 +60,7 @@ class ProjectRepositoryImpl with ErrorHandler implements ProjectRepository {
 
   @override
   Future<Either<Failure, Project>> createProject(
-      ProjectRequestModel project, int teamId) async {
+      ProjectCreateModel project, int teamId) async {
     return catchError(() async {
       var result = await projectRemoteDataSource.createProject(project, teamId);
       projects.addAll({result.projectId: result.toEntity()});

@@ -1,5 +1,5 @@
-import 'package:front/features/project/data/models/project.dart';
-import 'package:front/features/project/data/models/project_request.dart';
+import 'package:front/features/project/data/models/project_model.dart';
+import 'package:front/features/project/data/models/project_create_model.dart';
 
 class ProjectTempDataSource {
   Future<List<ProjectModel>> getProjectsByTeamId(int teamId) async {
@@ -17,7 +17,7 @@ class ProjectTempDataSource {
         const Duration(seconds: 3), () => Future.value(projectModelList));
   }
 
-  Future<ProjectModel> createProject(ProjectRequestModel project) async {
+  Future<ProjectModel> createProject(ProjectCreateModel project) async {
     var projectModel = ProjectModel(
       projectId: 1,
       name: 'name1',

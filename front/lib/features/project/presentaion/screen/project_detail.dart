@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:front/core/const/enum.dart';
-import 'package:front/features/project/entities/project.dart';
 import 'package:front/features/project/presentaion/component/task_component.dart';
 import 'package:front/features/project/presentaion/viewmodel/project_viewmodel.dart';
 import 'package:front/shared/atom/bottom_navigation_bar.dart';

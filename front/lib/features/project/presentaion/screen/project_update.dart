@@ -1,15 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:front/core/const/enum.dart';
-import 'package:front/features/user/models/user.dart';
-import 'package:front/features/project/data/models/project_request.dart';
-import 'package:front/features/project/entities/project.dart';
+import 'package:front/features/project/entities/project_entity.dart';
 import 'package:front/features/project/presentaion/component/project_from.dart';
 import 'package:front/features/project/presentaion/component/project_manager_selector.dart';
 import 'package:front/features/project/presentaion/viewmodel/project_viewmodel.dart';
-
+import 'package:front/features/user/models/user.dart';
 import 'package:front/shared/atom/bottom_navigation_bar.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';
 import 'package:go_router/go_router.dart';

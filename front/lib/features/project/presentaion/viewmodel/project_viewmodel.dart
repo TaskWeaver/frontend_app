@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:front/features/project/data/models/project_request.dart';
-import 'package:front/features/project/entities/project.dart';
+import 'package:front/features/project/data/models/project_create_model.dart';
+import 'package:front/features/project/entities/project_entity.dart';
 import 'package:front/features/project/usecases/riverpod.dart';
 import 'package:front/features/team/presentation/providers/projects_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -29,6 +28,9 @@ class ProjectViewmodel extends _$ProjectViewmodel {
       return projects.firstWhere((element) => element.projectId == projectId);
     });
     if (project != null) {
+      if(project.members == null) {
+        
+      }
       return project;
     } else {
       var result = await ref.read(getProjectByIdUseCaseProvider)(projectId);
@@ -42,7 +44,7 @@ class ProjectViewmodel extends _$ProjectViewmodel {
     }
   }
 
-  Future<void> createProject(ProjectRequestModel project, int teamId) async {
+  Future<void> createProject(ProjectCreateModel project, int teamId) async {
     var result = await ref.read(createProjectUseCaseProvider)(project, teamId);
     return result.fold(
       (l) => throw l,
@@ -82,7 +84,9 @@ class ProjectViewmodel extends _$ProjectViewmodel {
         if (state.mapOrNull((value) => true) != null) {
           state = ProjectsState([
             ...state.whenOrNull((projects) {
-              return projects.where((element) => element.projectId != projectId).toList();
+              return projects
+                  .where((element) => element.projectId != projectId)
+                  .toList();
             })!
           ]);
         }

@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 
 import 'package:front/core/utils/failure.dart';
-import 'package:front/features/project/data/models/project_request.dart';
-import 'package:front/features/project/entities/project.dart';
+import 'package:front/features/project/data/models/project_create_model.dart';
+import 'package:front/features/project/entities/project_entity.dart';
 import 'package:front/features/project/repositories/project_repository.dart';
 
 class CreateProjectUseCase {
@@ -10,7 +10,7 @@ class CreateProjectUseCase {
   final ProjectRepository projectRepository;
 
   Future<Either<Failure, Project>> call(
-      ProjectRequestModel project, int teamId) {
+      ProjectCreateModel project, int teamId) {
     return projectRepository.createProject(project, teamId);
   }
 }

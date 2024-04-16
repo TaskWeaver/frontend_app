@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:front/features/project/data/models/project_request.dart';
+import 'package:front/features/project/data/models/project_create_model.dart';
 
 import '../../../helpers/json_reader.dart';
 
 void main() {
-  var testProjectRequestModel = const ProjectRequestModel(
+  var testProjectRequestModel = const ProjectCreateModel(
     name: 'name1',
     description: 'description1',
     managerId: 2,
@@ -16,7 +16,7 @@ void main() {
     Map<String, dynamic> jsonMap = json.decode(
         readJson('helpers/dummy_data/project/project_request_dummy_data.json'));
 
-    var result = ProjectRequestModel.fromJson(jsonMap);
+    var result = ProjectCreateModel.fromJson(jsonMap);
 
     expect(result, equals(testProjectRequestModel));
   });
