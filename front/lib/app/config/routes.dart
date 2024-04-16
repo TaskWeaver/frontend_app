@@ -16,6 +16,7 @@ import 'package:front/features/user/presentation/screens/main_screen.dart';
 import 'package:front/features/user/presentation/screens/my_info_screen.dart';
 import 'package:front/features/user/presentation/screens/signin.dart';
 import 'package:front/features/user/presentation/screens/social_login_info_screen.dart';
+import 'package:front/main/widgetbook.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(initialLocation: '/', routes: [
@@ -79,6 +80,11 @@ final router = GoRouter(initialLocation: '/', routes: [
       path: 'main',
       name: 'main',
       builder: (context, state) => const MainScreen(),
+    ),
+    GoRoute(
+      path: 'design',
+      name: 'design',
+      builder: (context, state) => const WidgetbookApp(),
     ),
     GoRoute(
         path: 'taskDetail',

@@ -8,6 +8,7 @@ import 'package:front/features/team/presentation/providers/projects_state.dart';
 import 'package:front/features/team/presentation/providers/team_controller.dart';
 import 'package:front/features/team/presentation/providers/team_detail.dart';
 import 'package:front/features/team/presentation/providers/team_detail_controller.dart';
+import 'package:front/features/user/presentation/viewmodel/main_screen_viewmodel.dart';
 
 class TeamDetailView extends ConsumerStatefulWidget {
   final String teamId;
