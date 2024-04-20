@@ -22,10 +22,14 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   @override
   Future<List<ProjectModel>> getProjectsByTeamId(int teamId) async {
     try {
-      dio.options.headers = {'accessToken': 'true'};
       debugPrint('teamId: $teamId');
       var response = await dio.get(
         '/v1/team/$teamId/projects',
+        options: Options(
+          headers: {
+            'accessToken': 'true',
+          },
+        ),
       );
 
       if (response.statusCode == 200 && response.data?['resultCode'] == 200) {
@@ -44,8 +48,11 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   @override
   Future<ProjectModel> getProjectById(int projectId) async {
     try {
-      dio.options.headers = {'accessToken': 'true'};
-      var response = await dio.get('/v1/project/$projectId');
+      var response = await dio.get('/v1/project/$projectId',options: Options(
+          headers: {
+            'accessToken': 'true',
+          },
+        ),);
 
       if (response.statusCode == 200 && response.data?['resultCode'] == 200) {
         return ProjectModel.fromJson(response.data['result']);
@@ -61,7 +68,6 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   Future<ProjectModel> createProject(
       ProjectRequestModel project, int teamId) async {
     try {
-      dio.options.headers = {'accessToken': 'true'};
       var response = await dio.post(
         '/v1/team/$teamId/project',
         data: project.toJson(),
@@ -84,8 +90,11 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   @override
   Future<void> deleteProjectById(int projectId) async {
     try {
-      dio.options.headers = {'accessToken': 'true'};
-      var response = await dio.delete('/v1/project/$projectId');
+      var response = await dio.delete('/v1/project/$projectId',options: Options(
+          headers: {
+            'accessToken': 'true',
+          },
+        ),);
 
       if (response.statusCode == 200 && response.data?['resultCode'] == 200) {
         return;
@@ -101,10 +110,14 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   Future<ProjectRequestModel> updateProjectById(
       ProjectRequestModel project, int projectId) async {
     try {
-      dio.options.headers = {'accessToken': 'true'};
       var response = await dio.patch(
         '/v1/project/$projectId',
         data: project.toJson(),
+        options: Options(
+          headers: {
+            'accessToken': 'true',
+          },
+        ),
       );
 
       if (response.statusCode == 204 && response.data?['resultCode'] == 204) {

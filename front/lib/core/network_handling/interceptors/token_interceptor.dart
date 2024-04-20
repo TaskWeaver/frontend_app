@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:front/core/const/const.dart';
 
@@ -9,14 +10,16 @@ class TokenInterceptor implements InterceptorsWrapper {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-    final accessToken = options.headers.remove('accessToken') == 'true';
+    if(options.headers['accessToken'] == 'true') {
+      debugPrint(options.headers.toString());
 
-    if (!accessToken) return handler.next(options);
+      options.headers.remove('accessToken');
 
-    final token = await storage.read(key: accessTokenKey);
+      final token = await storage.read(key: accessTokenKey);
 
-    if (token != null) {
-      options.headers['Authorization'] = 'Bearer $token';
+      if (token != null) {
+        options.headers['Authorization'] = 'Bearer $token';
+      }
     }
     return handler.next(options);
   }
