@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front/features/project/presentaion/viewmodel/project_viewmodel.dart';
+import 'package:front/app/locator.dart';
+import 'package:front/features/team/data/models/team_detail.dart';
 import 'package:front/features/team/presentation/pages/team/widgets/dialog.dart';
 import 'package:front/features/team/presentation/pages/team/widgets/selecting_sharing_method_dialog.dart';
 import 'package:front/features/team/presentation/providers/projects_state.dart';
@@ -11,16 +13,7 @@ import 'package:go_router/go_router.dart';
 class TeamDetailView extends ConsumerStatefulWidget {
   final int teamId;
 
-  TeamDetailView(this.teamId, {super.key});
-
-  final elevatedButtonStyle = ElevatedButton.styleFrom(
-    padding: const EdgeInsets.all(16.0),
-    alignment: Alignment.centerLeft,
-    shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.zero)),
-    backgroundColor: const Color(0xFFD9D9D9),
-    foregroundColor: Colors.transparent,
-  );
+  const TeamDetailView(this.teamId, {super.key});
 
   @override
   ConsumerState<TeamDetailView> createState() => _TeamDetailScreenState();
@@ -36,9 +29,7 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailView> {
     super.initState();
     viewmodel = ref.read(projectViewmodelProvider(widget.teamId).notifier);
     viewmodel.getProjectsByTeamId(1);
-    ref
-        .read(teamDetailControllerProvider.notifier)
-        .getTeamById(widget.teamId);
+    ref.read(teamDetailControllerProvider.notifier).getTeamById(widget.teamId);
   }
 
   @override
@@ -86,69 +77,6 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailView> {
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              //TODO: extract these widgets and move to component
-              Text(
-                ' 의 Board',
-                style: textStyle.copyWith(fontSize: 20),
-              ),
-              const SizedBox(
-                height: 22,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Team Member ',
-                    style: textStyle.copyWith(fontSize: 15),
-                  ),
-                  TextButton(
-                    onPressed: () => context.dialog(
-                      child: SelectingSharingMethodDialog(
-                        teamId: widget.teamId,
-                      ),
-                    ),
-                    child: const Text('share'),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              SizedBox(
-                height: 40,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 15,
-                    itemExtent: 48,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: const ShapeDecoration(
-                            color: Color(0xFFD9D9D9),
-                            shape: OvalBorder(),
-                          ),
-                        ),
-                      );
-                    }),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0, top: 16.0),
-                child: Text(
-                  'Team Project',
-                  style: textStyle.copyWith(fontSize: 15),
-                ),
-              ),
               Expanded(
                 child: ProjectList(
                     widget: widget,
@@ -171,19 +99,19 @@ class _TeamDetailScreenState extends ConsumerState<TeamDetailView> {
 class ProjectList extends StatelessWidget {
   const ProjectList({
     super.key,
-    required this.widget,
     required this.textStyle,
     required this.projectsState,
+    required this.widget,
   });
 
-  final TeamDetailView widget;
   final TextStyle textStyle;
   final ProjectsState projectsState;
+  final TeamDetailView widget;
 
   @override
   Widget build(BuildContext context) {
     return projectsState.when(
-          (projects) {
+      (projects) {
         return CustomScrollView(
           slivers: <Widget>[
             SliverList.builder(
@@ -193,9 +121,9 @@ class ProjectList extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 16),
                   child: ElevatedButton(
                     onPressed: () {
-                      context.push('/projectDetail/${widget.teamId}/${projects[index].projectId}');
+                      context.push(
+                          '/projectDetail/${widget.teamId}/${projects[index].projectId}');
                     },
-                    style: widget.elevatedButtonStyle,
                     child: Text(
                       projects[index].name,
                       style: textStyle.copyWith(fontSize: 15),
@@ -207,8 +135,7 @@ class ProjectList extends StatelessWidget {
           ],
         );
       },
-      loading: () =>
-      const Center(
+      loading: () => const Center(
         child: CircularProgressIndicator(),
       ),
       error: (message) {
