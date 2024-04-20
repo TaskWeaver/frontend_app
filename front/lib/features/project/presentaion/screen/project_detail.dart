@@ -3,16 +3,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front/core/const/enum.dart';
 import 'package:front/features/project/entities/project.dart';
 import 'package:front/features/project/presentaion/component/task_component.dart';
-import 'package:front/features/project/presentaion/viewmodel/project.dart';
+import 'package:front/features/project/presentaion/viewmodel/project_viewmodel.dart';
 import 'package:front/shared/atom/bottom_navigation_bar.dart';
 import 'package:front/shared/utils/intl_format_date.dart';
 import 'package:go_router/go_router.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class ProjectDetailScreen extends ConsumerStatefulWidget {
-  const ProjectDetailScreen({super.key, required this.projectId});
+  const ProjectDetailScreen(
+      {super.key, required this.projectId, required this.teamId});
 
   final int projectId;
+  final int teamId;
 
   @override
   ConsumerState<ProjectDetailScreen> createState() =>
@@ -25,13 +27,29 @@ class _ProjectDetailScreenState extends ConsumerState<ProjectDetailScreen> {
   @override
   void initState() {
     super.initState();
-    viewmodel = ref.read(projectViewmodelProvider.notifier);
+    viewmodel = ref.read(projectViewmodelProvider(widget.teamId).notifier);
     viewmodel.getProjectById(widget.projectId);
+  }
+
+  Widget buildDeleteButton() {
+    return TextButton(
+      onPressed: () async {
+        try {
+          await viewmodel.deleteProject(widget.projectId);
+          context.pop();
+        } catch (e) {
+          debugPrint(e.toString());
+        }
+      },
+      child: Text(
+        '삭제',
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    var projectState = ref.watch(projectViewmodelProvider);
+    var projectState = viewmodel.getProjectById(widget.projectId);
     var projectStartTime = DateTime.now();
     var projectTask = [];
     var h1Textstyle =
@@ -42,28 +60,37 @@ class _ProjectDetailScreenState extends ConsumerState<ProjectDetailScreen> {
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: SingleChildScrollView(
-            child: projectState.when(
-              (project) => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${project.name}의 TimeLine',
-                    style: h1Textstyle,
-                  ),
-                  Text('${intlFormatDate(projectStartTime)}~'),
-                  Text(project.description),
-                  for (int i = 0; i < projectTask.length; i++)
-                    TaskComponent(task: projectTask[i]),
-                  TextButton(
-                    child: Text('수정d'),
-                    onPressed: () =>
-                        context.push('/projectUpdate', extra: project),
-                  )
-                ],
-              ),
-              loading: () => const CircularProgressIndicator(),
-              error: (message) => Text(message.toString()),
-              
+            child: FutureBuilder(
+              future: projectState,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  var project = snapshot.data!;
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${project.name}의 TimeLine',
+                        style: h1Textstyle,
+                      ),
+                      Text('${intlFormatDate(projectStartTime)}~'),
+                      Text(project.description),
+                      for (int i = 0; i < projectTask.length; i++)
+                        TaskComponent(task: projectTask[i]),
+                      TextButton(
+                        child: Text('수정'),
+                        onPressed: () => context.push(
+                            '/projectUpdate/${widget.teamId}',
+                            extra: project),
+                      ),
+                      buildDeleteButton(),
+                    ],
+                  );
+                } else if (snapshot.hasError) {
+                  return Text(snapshot.error.toString());
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
             ),
           ),
         ),
@@ -97,5 +124,7 @@ class _AddTaskButton extends StatelessWidget {
 )
 Widget ProjectDetailScreenUseCase(BuildContext context) {
   return ProjectDetailScreen(
-      projectId: 1);
+    projectId: 1,
+    teamId: 1,
+  );
 }

@@ -5,9 +5,10 @@ import 'package:front/features/user/models/user.dart';
 import 'package:front/features/project/data/models/project_request.dart';
 import 'package:front/features/project/presentaion/component/project_from.dart';
 import 'package:front/features/project/presentaion/component/project_manager_selector.dart';
-import 'package:front/features/project/presentaion/viewmodel/project.dart';
+import 'package:front/features/project/presentaion/viewmodel/project_viewmodel.dart';
 import 'package:front/shared/atom/bottom_navigation_bar.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';
+import 'package:go_router/go_router.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class ProjectCreateScreen extends ConsumerStatefulWidget {
@@ -36,9 +37,9 @@ class _ProjectCreateScreenState extends ConsumerState<ProjectCreateScreen> {
   final _formKey = GlobalKey<CustomFormState>();
   late CustomFormState? currentState;
   var manager =
-      UserModel(id: 1, nickname: '코난', email: 'test@gmail.com', type: 'LEADER');
+      UserModel(id: 4, nickname: '코난', email: 'test@gmail.com', type: 'LEADER');
   final List<UserModel> teamMembers = [
-    UserModel(id: 1, email: '코난', nickname: 'test@gmail.com', type: 'LEADER'),
+    UserModel(id: 4, email: '코난', nickname: 'test@gmail.com', type: 'LEADER'),
   ];
 
   @override
@@ -79,7 +80,7 @@ class _ProjectCreateScreenState extends ConsumerState<ProjectCreateScreen> {
   void initState() {
     super.initState();
     currentState = _formKey.currentState;
-    viewmodel = ref.read(projectViewmodelProvider.notifier);
+    viewmodel = ref.read(projectViewmodelProvider(widget.teamId).notifier);
   }
 
   void onFormChanged() {
@@ -118,15 +119,18 @@ class _ProjectCreateScreenState extends ConsumerState<ProjectCreateScreen> {
         TextButton(
           onPressed: () async {
             if (_formKey.currentState?.validate(null) ?? false) {
-              var result = await viewmodel.createProject(
-                  ProjectRequestModel(
-                    managerId: manager.id,
-                    name: currentState!.fields['name']!.value,
-                    description: currentState!.fields['description']!.value,
-                  ),
-                  teamId);
-              result.fold((l) => debugPrint(l.toString()),
-                  (r) => debugPrint(r.toString()));
+              try {
+                await viewmodel.createProject(
+                    ProjectRequestModel(
+                      managerId: manager.id,
+                      name: currentState!.fields['name']!.value,
+                      description: currentState!.fields['description']!.value,
+                    ),
+                    teamId);
+                context.pop();
+              } catch (e) {
+                debugPrint(e.toString());
+              }
             }
           },
           child: Text(

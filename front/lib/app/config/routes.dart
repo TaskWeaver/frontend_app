@@ -55,14 +55,16 @@ final router = GoRouter(initialLocation: '/', routes: [
       path: 'teamDetail/:teamId',
       name: 'teamDetail/:teamId',
       builder: (context, state) {
-        return TeamDetailView(state.pathParameters['teamId']!);
+        return TeamDetailView(int.parse(state.pathParameters['teamId']!));
       },
     ),
     GoRoute(
-      path: 'projectDetail/:projectId',
-      name: 'projectDetail/:projectId',
+      path: 'projectDetail/:teamId/:projectId',
+      name: 'projectDetail/:teamId/:projectId',
       builder: (context, state) => ProjectDetailScreen(
-          projectId: int.parse(state.pathParameters['projectId']!)),
+        teamId: int.parse(state.pathParameters['teamId']!),
+        projectId: int.parse(state.pathParameters['projectId']!),
+      ),
     ),
     GoRoute(
       path: 'projectCreate/:teamId',
@@ -71,10 +73,10 @@ final router = GoRouter(initialLocation: '/', routes: [
           teamId: int.parse(state.pathParameters['teamId']!)),
     ),
     GoRoute(
-      path: 'projectUpdate',
-      name: 'projectUpdate',
+      path: 'projectUpdate/:teamId',
+      name: 'projectUpdate/:teamId',
       builder: (context, state) =>
-          ProjectUpdateScreen(project: state.extra! as Project),
+          ProjectUpdateScreen(project: state.extra! as Project, teamId: int.parse(state.pathParameters['teamId']!)),
     ),
     GoRoute(
       path: 'main',

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:front/core/network_handling/app_dio.dart';
 
 import 'package:front/core/utils/exception.dart';
 import 'package:front/features/project/data/models/project.dart';
@@ -15,16 +16,20 @@ abstract class ProjectRemoteDataSource {
 }
 
 class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
-  ProjectRemoteDataSourceImpl({required this.dio});
-  final Dio dio;
+  ProjectRemoteDataSourceImpl();
+  final Dio dio = AppDio.instance;
 
   @override
   Future<List<ProjectModel>> getProjectsByTeamId(int teamId) async {
     try {
-      dio.options.headers = {'accessToken': 'true'};
       debugPrint('teamId: $teamId');
       var response = await dio.get(
         '/v1/team/$teamId/projects',
+        options: Options(
+          headers: {
+            'accessToken': 'true',
+          },
+        ),
       );
 
       if (response.statusCode == 200 && response.data?['resultCode'] == 200) {
@@ -35,17 +40,19 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
       } else {
         throw ServerException();
       }
-    } on DioException catch (e) {
-      debugPrint(e.response?.data.toString());
-      throw ServerException();
+    } on DioException {
+      rethrow;
     }
   }
 
   @override
   Future<ProjectModel> getProjectById(int projectId) async {
     try {
-      dio.options.headers = {'accessToken': 'true'};
-      var response = await dio.get('/v1/project/$projectId');
+      var response = await dio.get('/v1/project/$projectId',options: Options(
+          headers: {
+            'accessToken': 'true',
+          },
+        ),);
 
       if (response.statusCode == 200 && response.data?['resultCode'] == 200) {
         return ProjectModel.fromJson(response.data['result']);
@@ -53,7 +60,7 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
         throw ServerException();
       }
     } on DioException {
-      throw ServerException();
+      rethrow;
     }
   }
 
@@ -61,7 +68,6 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   Future<ProjectModel> createProject(
       ProjectRequestModel project, int teamId) async {
     try {
-      dio.options.headers = {'accessToken': 'true'};
       var response = await dio.post(
         '/v1/team/$teamId/project',
         data: project.toJson(),
@@ -76,26 +82,27 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
       } else {
         throw ServerException();
       }
-    } on DioException catch (e) {
-      debugPrint(e.response?.data.toString());
-      throw ServerException();
+    } on DioException {
+      rethrow;
     }
   }
 
   @override
   Future<void> deleteProjectById(int projectId) async {
     try {
-      dio.options.headers = {'accessToken': 'true'};
-      var response = await dio.delete('/v1/project/$projectId');
+      var response = await dio.delete('/v1/project/$projectId',options: Options(
+          headers: {
+            'accessToken': 'true',
+          },
+        ),);
 
       if (response.statusCode == 200 && response.data?['resultCode'] == 200) {
         return;
       } else {
         throw ServerException();
       }
-    } on DioException catch (e){
-      debugPrint(e.response?.toString());
-      throw ServerException();
+    } on DioException {
+      rethrow;
     }
   }
 
@@ -103,18 +110,23 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   Future<ProjectRequestModel> updateProjectById(
       ProjectRequestModel project, int projectId) async {
     try {
-      dio.options.headers = {'accessToken': 'true'};
-      var response =
-          await dio.patch('/v1/project/$projectId', data: project.toJson(),);
+      var response = await dio.patch(
+        '/v1/project/$projectId',
+        data: project.toJson(),
+        options: Options(
+          headers: {
+            'accessToken': 'true',
+          },
+        ),
+      );
 
       if (response.statusCode == 204 && response.data?['resultCode'] == 204) {
         return project;
       } else {
         throw ServerException();
       }
-    } on DioException catch (e) {
-      debugPrint(e.response?.toString());
-      throw ServerException();
+    } on DioException {
+      rethrow;
     }
   }
 }
