@@ -18,10 +18,46 @@ ThemeData themeData = ThemeData(
   ),
   elevatedButtonTheme: elevatedButtonThemeData,
   textTheme: TextTheme(
+    headlineLarge: GoogleFonts.notoSans(
+      fontSize: 40,
+      fontWeight: FontWeight.w300,
+      letterSpacing: -1.5,
+    ),
+    headlineMedium: GoogleFonts.notoSans(
+      fontSize: 32,
+      fontWeight: FontWeight.w300,
+      letterSpacing: -0.5,
+    ),
+    headlineSmall: GoogleFonts.notoSans(
+      fontSize: 24,
+      fontWeight: FontWeight.w400,
+    ),
+    bodyLarge: GoogleFonts.notoSans(
+      fontSize: 18,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.5,
+    ),
+    bodyMedium: GoogleFonts.notoSans(
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.25,
+    ),
+    bodySmall: GoogleFonts.notoSans(
+      fontSize: 10,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.25,
+    ),
+    labelSmall: GoogleFonts.notoSans(
+      fontSize: 14,
+      fontWeight: FontWeight.w700,
+    ),
+    labelMedium: GoogleFonts.notoSans(
+      fontSize: 18,
+      fontWeight: FontWeight.w700,
+    ),
     labelLarge: GoogleFonts.notoSans(
-      fontSize: 16,
+      fontSize: 22,
       fontWeight: FontWeight.w700,
     ),
   ),
-
 );

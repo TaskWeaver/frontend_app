@@ -1,13 +1,13 @@
-import 'package:dartz/dartz.dart';
-import 'package:front/core/utils/failure.dart';
-import 'package:front/features/project/entities/project.dart';
-import 'package:front/features/project/repositories/project_repository.dart';
+import 'package:front/core/utils/api_response.dart';
+import 'package:front/core/utils/result.dart';
+import 'package:front/features/project/data/models/project_model.dart';
+import 'package:front/features/project/data/repositories/project_repositories.dart';
 
-class GetProjectsByTeamIdUseCase {
-  const GetProjectsByTeamIdUseCase(this.projectRepository);
-  final ProjectRepository projectRepository;
+final class GetProjectsByTeamIdUseCase {
+  const GetProjectsByTeamIdUseCase(this._projectRepository);
+  final ProjectRepository _projectRepository;
 
-  Future<Either<Failure, List<Project>>> call(int teamId) {
-    return projectRepository.getProjectsByTeamId(teamId);
+  Future<Result<ApiResponse<List<ProjectModel>>>> call(int teamId) async {
+    return _projectRepository.getProjectsByTeamId(teamId);
   }
 }
