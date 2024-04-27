@@ -1,15 +1,18 @@
+import 'package:front/core/utils/api_response.dart';
+import 'package:front/features/team/data/models/create_team_request.dart';
+import 'package:front/features/team/data/models/create_team_response.dart';
 import 'package:front/features/team/data/models/invite_response.dart';
 import 'package:front/features/team/data/models/invite_team.dart';
-import 'package:front/features/team/data/models/team.dart';
-import 'package:front/features/team/data/models/team_detail.dart';
-import 'package:front/core/utils/api_response.dart';
+import 'package:front/features/team/data/models/team_detail_model.dart';
+import 'package:front/features/team/data/models/team_model.dart';
 
 abstract class TeamRemoteDataSource {
   Future<ApiResponse<List<TeamModel>>> getTeams();
 
   Future<ApiResponse<TeamDetailModel>> getTeamById(int teamId);
 
-  Future<ApiResponse<TeamModel>> createTeam(Map<String, dynamic> name);
+  Future<ApiResponse<CreateTeamResponse>> createTeam(
+      CreateTeamRequest createTeamRequest);
 
   Future<ApiResponse> inviteTeamByEmail(InviteTeam inviteTeam);
 

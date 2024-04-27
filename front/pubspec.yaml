@@ -40,7 +40,9 @@ dependencies:
   slang_build_runner: ^3.30.0
   get_it: ^7.6.7
   hooks_riverpod: ^2.5.1
-  
+  google_fonts: ^6.2.0
+  flutter_hooks: ^0.20.5
+ 
   
 dev_dependencies:
   import_sorter: ^4.6.0

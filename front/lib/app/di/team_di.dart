@@ -9,6 +9,7 @@ import 'package:front/features/team/usecases/answer_to_invitation_usecase.dart';
 import 'package:front/features/team/usecases/create_team_usecase.dart';
 import 'package:front/features/team/usecases/delete_member_usecase.dart';
 import 'package:front/features/team/usecases/get_team_by_id_usecase.dart';
+import 'package:front/features/team/usecases/get_team_members_by_team_id_usecase.dart';
 import 'package:front/features/team/usecases/get_teams_use_case.dart';
 import 'package:front/features/team/usecases/invitation_notification_usecase.dart';
 import 'package:front/features/team/usecases/invite_team_by_email_usecase.dart';
@@ -70,6 +71,11 @@ class TeamDependencyInjection {
       )
       ..registerFactory<AnswerToInvitationUseCase>(
         () => AnswerToInvitationUseCase(
+          teamRepository,
+        ),
+      )
+      ..registerFactory<GetTeamMembersByTeamIdUseCase>(
+        () => GetTeamMembersByTeamIdUseCase(
           teamRepository,
         ),
       );

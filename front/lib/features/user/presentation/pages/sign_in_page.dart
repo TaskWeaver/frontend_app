@@ -4,6 +4,7 @@ import 'package:front/app/locator.dart';
 import 'package:front/features/user/data/models/sign_in_request.dart';
 import 'package:front/features/user/data/models/token.dart';
 import 'package:front/features/user/presentation/viewModel/sign_in_viewmodel.dart';
+import 'package:front/resources/resources.dart';
 import 'package:go_router/go_router.dart';
 
 class SignInScreen extends ConsumerStatefulWidget {
@@ -19,7 +20,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
 
   String? _email; // Add variable to store entered username
   String? _password; // Add variable to store entered password
-  bool _autoLogin = false; // Add variable to store checkbox value
+  // Add variable to store checkbox value
   late SignInViewModel signInViewModel;
 
   @override
@@ -31,109 +32,96 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     var signInState = ref.watch(signInViewModelProvider);
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'TeamW2aver',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 12,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w400,
-                height: 0,
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(32),
+            child: Form(
+              key: _formKey, // Assign form key to the Form widget
+              child: Center(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 32),
+                    logo(),
+                    const SizedBox(height: 32),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        hintText: '아이디',
+                      ),
+                      onChanged: (value) {
+                        _email =
+                            value; // Store the entered value in the variable
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return '아이디를 입력하세요.'; // Add validation error message
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        hintText: '비밀번호',
+                      ),
+                      onChanged: (value) {
+                        _password =
+                            value; // Store the entered value in the variable
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return '비밀번호를 입력하세요.'; // Add validation error message
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          await signInViewModel.signIn(SignInRequest(
+                            email: _email!,
+                            password: _password!,
+                          ));
+
+                          signInState = ref.watch(signInViewModelProvider);
+                          signInState.whenOrNull(
+                            data: (value) {
+                              var token = TokenModel(
+                                  accessToken: value.accessToken,
+                                  refreshToken: value.refreshToken);
+                              saveTokenUseCase.call(token).then((value) {
+                                tokenChangeNotifer.checkToken();
+                              });
+
+                              context.go('/team');
+                            },
+                          );
+                        }
+                      },
+                      child: signInState.whenOrNull(
+                        loading: () => const CircularProgressIndicator(),
+                        data: (_) => const Text('로그인'),
+                        error: (error, _) => Text('Error: $error'),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          ],
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formKey, // Assign form key to the Form widget
-          child: Column(
-            children: [
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: '아이디',
-                ),
-                onChanged: (value) {
-                  _email = value; // Store the entered value in the variable
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return '아이디를 입력하세요.'; // Add validation error message
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: '비밀번호',
-                ),
-                onChanged: (value) {
-                  _password = value; // Store the entered value in the variable
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return '비밀번호를 입력하세요.'; // Add validation error message
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Checkbox(
-                    value: _autoLogin,
-                    onChanged: (value) {
-                      setState(() {
-                        _autoLogin = value ??
-                            false; // Store the checkbox value in the variable
-                      });
-                    },
-                  ),
-                  const Text('자동 로그인'),
-                ],
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    await signInViewModel.signIn(SignInRequest(
-                      email: _email!,
-                      password: _password!,
-                    ));
-                    await signInState.when(pending: () {
-                      debugPrint('pending');
-                    }, loading: () {
-                      debugPrint('loading');
-                    }, error: (e) {
-                      debugPrint(e);
-                    }, success: (value) async {
-                      var token = TokenModel(
-                          accessToken: value.accessToken,
-                          refreshToken: value.refreshToken);
-                      await saveTokenUseCase.call(token).then((value) {
-                        tokenChangeNotifer.checkToken();
-                      });
-
-                      context.go('/myInfo');
-                    }, failed: () {
-                      debugPrint('failed');
-                    });
-                  }
-                },
-                child: const Text('Sign In'),
-              ),
-            ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget logo() {
+    return Container(
+      child: Image.asset(Images.onbordingIcon),
     );
   }
 }

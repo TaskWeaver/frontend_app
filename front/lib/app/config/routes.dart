@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/locator.dart';
-import 'package:front/features/form_example/form_demo2.dart';
 import 'package:front/features/home.dart';
 import 'package:front/features/project/presentaion/screen/project_creation.dart';
 import 'package:front/features/project/presentaion/screen/project_detail.dart';
-import 'package:front/features/project/presentaion/screen/project_update.dart';
-import 'package:front/features/team/presentation/pages/team/team_create.dart';
+import 'package:front/features/team/presentation/pages/team/team_create_page.dart';
 import 'package:front/features/team/presentation/pages/team/team_datail.dart';
-import 'package:front/features/team/presentation/pages/team/teams_list.dart';
+import 'package:front/features/team/presentation/pages/team/team_home.dart';
 import 'package:front/features/user/presentation/component/change_info_list.dart';
 import 'package:front/features/user/presentation/pages/my_info_screen.dart';
 import 'package:front/features/user/presentation/pages/sign_in_page.dart';
@@ -35,41 +33,40 @@ final router = GoRouter(
       builder: (context, state) => const HomeScreen(),
       routes: [
         GoRoute(
-          path: 'example',
-          name: 'example',
-          builder: (context, state) => const FormDemoScreen2(),
-        ),
-        GoRoute(
-          path: 'teamsList',
-          name: 'teamsList',
-          builder: (context, state) => const TeamsListScreen(),
-        ),
-        GoRoute(
-          path: 'teamCreate',
-          name: 'teamCreate',
-          builder: (context, state) => const TeamCreateScreen(),
-        ),
-        GoRoute(
-          path: 'teamDetail/:teamId',
-          name: 'teamDetail/:teamId',
-          builder: (context, state) {
-            return TeamDetailScreen(state.pathParameters['teamId']!);
-          },
-        ),
-        GoRoute(
-          path: 'projectDetail',
-          name: 'projectDetail',
-          builder: (context, state) => const ProjectDetailScreen(),
-        ),
-        GoRoute(
-          path: 'projectCreation',
-          name: 'projectCreation',
-          builder: (context, state) => ProjectCreationScreen(),
-        ),
-        GoRoute(
-          path: 'projectUpdate',
-          name: 'projectUpdate',
-          builder: (context, state) => ProjectUpdateScreen(),
+          path: 'team',
+          name: 'team',
+          builder: (context, state) => const TeamHome(),
+          routes: [
+            GoRoute(
+              path: 'create',
+              name: 'create',
+              builder: (context, state) => const TeamCreatePage(),
+            ),
+            GoRoute(
+              path: ':teamId',
+              name: 'teamDetail',
+              builder: (context, state) {
+                return TeamDetailScreen(
+                    teamId: state.pathParameters['teamId']!);
+              },
+              routes: [
+                GoRoute(
+                  path: 'project/create',
+                  name: 'projectCreate',
+                  builder: (context, state) => ProjectCreationScreen(
+                      teamId: state.pathParameters['teamId']!),
+                ),
+                GoRoute(
+                  path: 'project/:projectId',
+                  name: 'project',
+                  builder: (context, state) {
+                    return ProjectDetailScreen(
+                        projectId: state.pathParameters['projectId']!);
+                  },
+                )
+              ],
+            ),
+          ],
         ),
         GoRoute(
           path: 'signIn',
@@ -95,7 +92,7 @@ final router = GoRouter(
       ],
     )
   ],
-  redirect: (context, state) {
+/*   redirect: (context, state) {
     var isAuthenticated = tokenChangeNotifer.isToken;
     if (state.fullPath == '/signIn') {
       return isAuthenticated ? null : '/signIn';
@@ -104,5 +101,5 @@ final router = GoRouter(
     /// null redirects to Initial Location
 
     return isAuthenticated ? null : '/signIn';
-  },
+  }, */
 );

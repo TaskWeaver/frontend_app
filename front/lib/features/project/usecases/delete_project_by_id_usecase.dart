@@ -1,13 +1,12 @@
-import 'package:dartz/dartz.dart';
+import 'package:front/core/utils/api_response.dart';
+import 'package:front/core/utils/result.dart';
+import 'package:front/features/project/data/repositories/project_repositories.dart';
 
-import 'package:front/core/utils/failure.dart';
-import 'package:front/features/project/repositories/project_repository.dart';
+final class DeleteProjectByIdUseCase {
+  const DeleteProjectByIdUseCase(this._projectRepository);
+  final ProjectRepository _projectRepository;
 
-class DeleteProjectByIdUseCase {
-  const DeleteProjectByIdUseCase(this.projectRepository);
-  final ProjectRepository projectRepository;
-
-  Future<Either<Failure, void>> call(int teamId) {
-    return projectRepository.deleteProjectById(teamId);
+  Future<Result<ApiResponse>> call(int projectId) async {
+    return _projectRepository.deleteProjectById(projectId);
   }
 }

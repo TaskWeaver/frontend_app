@@ -1,236 +1,212 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:front/features/team/data/models/team_detail.dart';
-import 'package:front/features/team/presentation/pages/team/widgets/dialog.dart';
-import 'package:front/features/team/presentation/pages/team/widgets/selecting_sharing_method_dialog.dart';
-import 'package:front/features/team/presentation/providers/projects_state.dart';
-import 'package:front/features/team/presentation/providers/team_controller.dart';
-import 'package:front/features/team/presentation/providers/team_detail.dart';
+import 'package:front/features/project/data/models/project_model.dart';
+import 'package:front/features/team/viewmodel/selected_team_project_list_provider.dart';
+import 'package:front/features/team/viewmodel/selected_team_provider.dart';
+import 'package:front/shared/theme/theme.dart';
+import 'package:go_router/go_router.dart';
 
-class TeamDetailScreen extends ConsumerStatefulWidget {
+class TeamDetailScreen extends ConsumerWidget {
+  const TeamDetailScreen({super.key, required this.teamId});
   final String teamId;
 
-  TeamDetailScreen(this.teamId, {super.key});
-
-  final elevatedButtonStyle = ElevatedButton.styleFrom(
-    padding: const EdgeInsets.all(16.0),
-    alignment: Alignment.centerLeft,
-    shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.zero)),
-    backgroundColor: const Color(0xFFD9D9D9),
-    foregroundColor: Colors.transparent,
-  );
-
   @override
-  ConsumerState<TeamDetailScreen> createState() => _TeamDetailScreenState();
-}
-
-class _TeamDetailScreenState extends ConsumerState<TeamDetailScreen> {
-  late TeamDetailViewmodel viewmodel;
-  late TeamController teamController;
-
-  @override
-  void initState() {
-    super.initState();
-    viewmodel = ref.read(teamDetailViewmodelProvider.notifier);
-    viewmodel.getProjectsByTeamId(1);
-    ref
-        .read(teamControllerProvider.notifier)
-        .getTeamById(int.parse(widget.teamId));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    var projectsState = ref.watch(teamDetailViewmodelProvider);
-    // final mainScreenViewModelState = ref.watch(mainScreenViewModelProvider);
-    final teamState = ref.watch(teamControllerProvider);
-
-    String nickName = '';
-
-    var textStyle = const TextStyle(
-      color: Colors.black,
-      fontFamily: 'Inter',
-      fontWeight: FontWeight.w400,
-      height: 0,
-    );
-
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        scrolledUnderElevation: 0.0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        title: const Text('팀 관리'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
+        child: Column(
           children: [
-            const Text(
-              'TeamW2aver',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 12,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w400,
-                height: 0,
-              ),
+            TeamCard(
+              teamId: teamId,
             ),
-            Column(
-              children: [
-                Container(
-                  width: 30,
-                  height: 30,
-                  decoration: const ShapeDecoration(
-                    color: Color(0xFFD9D9D9),
-                    shape: OvalBorder(),
-                  ),
-                ),
-                Text(
-                  '알림',
-                  textAlign: TextAlign.center,
-                  style: textStyle.copyWith(fontSize: 15),
-                ),
-              ],
+            ProjectCardList(
+              teamId: teamId,
             ),
           ],
         ),
       ),
-      body: teamState.when(
-        (teamDetailModel) {
-          teamDetailModel as TeamDetailModel;
-
-
-          // mainScreenViewModelState.when(
-          //   data: (data) {
-          //
-          //     print('data : $data');
-          //     if(data != null) {
-          //       nickName = data.nickname;
-          //     }
-          //   },
-          //   error: (error, stack) => Text('Error: $error'),
-          //   loading: () => CircularProgressIndicator(),
-          // );
-
-          // final userInfo = ref.watch(getLocalUserInfoUseCaseProvider).call();
-          // userInfo.then((value) => value.fold((l) => null, (r) => debugPrint(r?.nickname)));
-
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //TODO: extract these widgets and move to component
-                Text(
-                  '${teamDetailModel.name} 의 Board',
-                  style: textStyle.copyWith(fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 22,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Team Member (${teamDetailModel.memberCount})',
-                      style: textStyle.copyWith(fontSize: 15),
-                    ),
-                    TextButton(
-                      onPressed: () => context.dialog(
-                        child: SelectingSharingMethodDialog(
-                          teamId: int.parse(widget.teamId),
-                        ),
-                      ),
-                      child: const Text('share'),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                SizedBox(
-                  height: 40,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 15,
-                      itemExtent: 48,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            decoration: const ShapeDecoration(
-                              color: Color(0xFFD9D9D9),
-                              shape: OvalBorder(),
-                            ),
-                          ),
-                        );
-                      }),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0, top: 16.0),
-                  child: Text(
-                    'Team Project',
-                    style: textStyle.copyWith(fontSize: 15),
-                  ),
-                ),
-                Expanded(
-                  child: ProjectList(
-                      widget: widget,
-                      textStyle: textStyle,
-                      projectsState: projectsState),
-                ),
-              ],
-            ),
-          );
-        },
-        loading: () => Center(child: CircularProgressIndicator()),
-        error: (message) => Text(message ?? ''),
-      ),
     );
   }
 }
 
-class ProjectList extends StatelessWidget {
-  const ProjectList({
-    super.key,
-    required this.widget,
-    required this.textStyle,
-    required this.projectsState,
-  });
+class TeamCard extends ConsumerStatefulWidget {
+  const TeamCard({super.key, required this.teamId});
 
-  final TeamDetailScreen widget;
-  final TextStyle textStyle;
-  final ProjectsState projectsState;
+  final String teamId;
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _TeamCardState();
+}
 
+class _TeamCardState extends ConsumerState<TeamCard> {
   @override
   Widget build(BuildContext context) {
-    return projectsState.when(
-      (projects) {
-        return CustomScrollView(
-          slivers: <Widget>[
-            SliverList.builder(
-              itemCount: projects.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: widget.elevatedButtonStyle,
-                    child: Text(
-                      projects[index].name,
-                      style: textStyle.copyWith(fontSize: 15),
+    var selectedTeam =
+        ref.watch(selectedTeamProvider(int.parse(widget.teamId)));
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      color: Theme.of(context).primaryColor,
+      child: InkWell(
+          borderRadius: BorderRadius.circular(8),
+          onTap: () {},
+          child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: selectedTeam.when(
+                data: (value) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(value.name,
+                            style: themeData.textTheme.headlineMedium!.copyWith(
+                              color: Colors.white,
+                            )),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(value.description ?? '',
+                            style: themeData.textTheme.headlineMedium!.copyWith(
+                              color: Colors.white,
+                            )),
+                      ),
+                    ],
+                  );
+                },
+                error: (error, stackTrace) => Text('Error: $error'),
+                loading: () => const Padding(
+                      padding: EdgeInsets.all(30.0),
+                      child: Center(
+                        child: SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    )),
+          )),
+    );
+  }
+}
+
+class ProjectCardList extends ConsumerStatefulWidget {
+  const ProjectCardList({super.key, required this.teamId});
+  final String teamId;
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ProjectCardListState();
+}
+
+class _ProjectCardListState extends ConsumerState<ProjectCardList> {
+  @override
+  Widget build(BuildContext context) {
+    var selectedTeamProjectList =
+        ref.watch(selectedTeamProjectListProvider(int.parse(widget.teamId)));
+
+    return selectedTeamProjectList.when(
+      data: (value) {
+        return Column(
+          children: [
+            const SizedBox(
+              height: 16,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+              child: Row(
+                children: [
+                  Text(
+                    '프로젝트',
+                    style: themeData.textTheme.labelMedium!
+                        .copyWith(color: Colors.black),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.add),
+                    onPressed: () {
+                      context.go('/team/${widget.teamId}/project/create');
+                    },
+                  ),
+                ],
+              ),
+            ),
+            if (value.isEmpty)
+              Card(
+                color: Colors.grey[200],
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(5)),
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
+                      child: Center(
+                        child: Text(
+                          '프로젝트를 추가해주세요',
+                          style: themeData.textTheme.bodyMedium!
+                              .copyWith(color: Colors.black),
+                        ),
+                      ),
                     ),
                   ),
-                );
-              },
-            ),
+                ),
+              )
+            else ...[
+              for (var project in value)
+                ProjectCard(project: project, teamId: widget.teamId),
+            ],
           ],
         );
       },
-      loading: () => const Center(
-        child: CircularProgressIndicator(),
-      ),
-      error: (message) {
-        return Text(message ?? '');
+      loading: () {
+        return const CircularProgressIndicator();
       },
+      error: (error, stack) {
+        return Text('Error: $error');
+      },
+    );
+  }
+}
+
+class ProjectCard extends StatelessWidget {
+  const ProjectCard({super.key, required this.project, required this.teamId});
+  final ProjectModel project;
+  final String teamId;
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: InkWell(
+        borderRadius: BorderRadius.circular(5),
+        onTap: () {
+          context.go('/team/$teamId/project/${project.projectId}');
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                child: Text(
+                  project.name,
+                  style: themeData.textTheme.bodyMedium!
+                      .copyWith(color: Colors.black),
+                ),
+              )),
+        ),
+      ),
     );
   }
 }

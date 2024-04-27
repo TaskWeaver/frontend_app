@@ -1,10 +1,13 @@
-import 'package:front/features/team/data/data_source/team_remote_data_source.dart';
-import 'package:front/features/team/data/models/invite_response.dart';
-import 'package:front/features/team/data/models/invite_team.dart';
-import 'package:front/features/team/data/models/team.dart';
-import 'package:front/features/team/data/models/team_detail.dart';
 import 'package:front/core/utils/api_response.dart';
 import 'package:front/core/utils/result.dart';
+import 'package:front/features/team/data/data_source/team_remote_data_source.dart';
+import 'package:front/features/team/data/models/create_team_request.dart';
+import 'package:front/features/team/data/models/create_team_response.dart';
+import 'package:front/features/team/data/models/invite_response.dart';
+import 'package:front/features/team/data/models/invite_team.dart';
+import 'package:front/features/team/data/models/team_detail_model.dart';
+import 'package:front/features/team/data/models/team_member.dart';
+import 'package:front/features/team/data/models/team_model.dart';
 import 'package:front/features/team/repositories/team_repository.dart';
 
 class TeamRepositoryImpl implements TeamRepository {
@@ -15,11 +18,10 @@ class TeamRepositoryImpl implements TeamRepository {
   final TeamRemoteDataSource _teamRemoteDataSource;
 
   @override
-  Future<Result<ApiResponse<TeamModel>>> createTeam(String name) async {
+  Future<Result<ApiResponse<CreateTeamResponse>>> createTeam(
+      CreateTeamRequest createTeamRequest) async {
     try {
-      final result = await _teamRemoteDataSource.createTeam({
-        'name': name,
-      });
+      final result = await _teamRemoteDataSource.createTeam(createTeamRequest);
 
       return Result.success(result);
     } on Exception catch (e) {
@@ -91,6 +93,23 @@ class TeamRepositoryImpl implements TeamRepository {
     try {
       final result = await _teamRemoteDataSource.getTeams();
       return Result.success(result);
+    } on Exception catch (e) {
+      return Result.failure(e);
+    }
+  }
+
+  @override
+  Future<Result<List<TeamMemberModel>>> getTeamMembersByTeamId(
+      int teamId) async {
+    try {
+      final result = await _teamRemoteDataSource.getTeamById(teamId);
+      // 얻은 데이터 값에서 팀 멤버를 뽑아내고 , 타입을 List<TeamMerberModel로 변경
+
+      List<TeamMemberModel> teamMembers = result.result!.teamMembers
+          .map((e) => TeamMemberModel.fromJson(e))
+          .toList();
+
+      return Result.success(teamMembers);
     } on Exception catch (e) {
       return Result.failure(e);
     }

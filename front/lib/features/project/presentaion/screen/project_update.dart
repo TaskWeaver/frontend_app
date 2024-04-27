@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+/* // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,7 +8,6 @@ import 'package:front/features/project/data/models/project_request.dart';
 import 'package:front/features/project/entities/project.dart';
 import 'package:front/features/project/presentaion/component/project_from.dart';
 import 'package:front/features/project/presentaion/component/project_manager_selector.dart';
-import 'package:front/features/project/presentaion/viewmodel/project.dart';
 
 import 'package:front/shared/atom/bottom_navigation_bar.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';
@@ -62,7 +61,7 @@ class _Body extends ConsumerStatefulWidget {
 }
 
 class _BodyState extends ConsumerState<_Body> {
-  late ProjectViewmodel viewmodel;
+ // late ProjectViewmodel viewmodel;
   final _formKey = GlobalKey<CustomFormState>();
   late CustomFormState? currentState;
   var manager =
@@ -79,7 +78,7 @@ class _BodyState extends ConsumerState<_Body> {
   void initState() {
     super.initState();
     currentState = _formKey.currentState;
-    viewmodel = ref.read(projectViewmodelProvider.notifier);
+   // viewmodel = ref.read(projectViewmodelProvider.notifier);
   }
 
   void onFormChanged() {
@@ -150,7 +149,7 @@ class _BodyState extends ConsumerState<_Body> {
     return TextButton(
       onPressed: () async {
         if (_formKey.currentState?.validate(null) ?? false) {
-          var result = await viewmodel.updateProject(
+       //   var result = await viewmodel.updateProject(
               ProjectRequestModel(
                   managerId: 1,
                   name: _formKey.currentState!.fields['name']!.value,
@@ -191,3 +190,4 @@ class _BodyState extends ConsumerState<_Body> {
 Widget projectCreationScreenUseCase(BuildContext context) {
   return ProjectUpdateScreen();
 }
+ */

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front/app/config/routes.dart';
-import 'package:front/core/config/providers/secure_storage.dart';
 import 'package:front/main/app_config.dart';
+import 'package:front/shared/theme/theme.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
     var config = AppConfig.of(context)!;
     return _EagerInitialization(
         child: MaterialApp.router(
+      theme: themeData,
       debugShowCheckedModeBanner: false,
       title: config.appName,
       routeInformationParser: router.routeInformationParser,
@@ -32,8 +33,6 @@ class _EagerInitialization extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(secureStorageProvider);
-
     return child;
   }
 }
