@@ -1,15 +1,15 @@
-import 'package:dartz/dartz.dart';
-import 'package:front/core/utils/failure.dart';
-import 'package:front/features/project/data/models/project_request.dart';
-import 'package:front/features/project/entities/project.dart';
-import 'package:front/features/project/repositories/project_repository.dart';
+import 'package:front/core/utils/api_response.dart';
+import 'package:front/core/utils/result.dart';
+import 'package:front/features/project/data/models/create_project_request.dart';
+import 'package:front/features/project/data/models/project_model.dart';
+import 'package:front/features/project/data/repositories/project_repositories.dart';
 
-class UpdateProjectUseCase {
-  const UpdateProjectUseCase(this.projectRepository);
-  final ProjectRepository projectRepository;
+final class UpdateProjectByIdUseCase {
+  const UpdateProjectByIdUseCase(this._projectRepository);
+  final ProjectRepository _projectRepository;
 
-  Future<Either<Failure, Project>> call(
-      Project project, int projectId) {
-    return projectRepository.updateProjectById(project, projectId);
+  Future<Result<ApiResponse<ProjectModel>>> call(
+      CreateProjectRequest project, int projectId) async {
+    return _projectRepository.updateProjectById(project, projectId);
   }
 }

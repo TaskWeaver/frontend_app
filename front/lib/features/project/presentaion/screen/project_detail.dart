@@ -1,130 +1,100 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:front/core/const/enum.dart';
-import 'package:front/features/project/entities/project.dart';
-import 'package:front/features/project/presentaion/component/task_component.dart';
-import 'package:front/features/project/presentaion/viewmodel/project_viewmodel.dart';
-import 'package:front/shared/atom/bottom_navigation_bar.dart';
-import 'package:front/shared/utils/intl_format_date.dart';
-import 'package:go_router/go_router.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+import 'package:front/features/project/presentaion/viewmodel/project_detail_viewmodel.dart';
 
 class ProjectDetailScreen extends ConsumerStatefulWidget {
-  const ProjectDetailScreen(
-      {super.key, required this.projectId, required this.teamId});
-
-  final int projectId;
-  final int teamId;
+  const ProjectDetailScreen({super.key, required this.projectId});
+  final String projectId;
 
   @override
-  ConsumerState<ProjectDetailScreen> createState() =>
+  ConsumerState<ConsumerStatefulWidget> createState() =>
       _ProjectDetailScreenState();
 }
 
 class _ProjectDetailScreenState extends ConsumerState<ProjectDetailScreen> {
-  late ProjectViewmodel viewmodel;
-
   @override
   void initState() {
     super.initState();
-    viewmodel = ref.read(projectViewmodelProvider(widget.teamId).notifier);
-    viewmodel.getProjectById(widget.projectId);
-  }
-
-  Widget buildDeleteButton() {
-    return TextButton(
-      onPressed: () async {
-        try {
-          await viewmodel.deleteProject(widget.projectId);
-          context.pop();
-        } catch (e) {
-          debugPrint(e.toString());
-        }
-      },
-      child: Text(
-        '삭제',
-      ),
-    );
+    Future.microtask(() => ref
+        .read(projectDetailViewModelProvider.notifier)
+        .loadProjectDetail(int.parse(widget.projectId)));
   }
 
   @override
   Widget build(BuildContext context) {
-    var projectState = viewmodel.getProjectById(widget.projectId);
-    var projectStartTime = DateTime.now();
-    var projectTask = [];
-    var h1Textstyle =
-        const TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
-    return Scaffold(
-      appBar: AppBar(),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: SingleChildScrollView(
-            child: FutureBuilder(
-              future: projectState,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  var project = snapshot.data!;
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${project.name}의 TimeLine',
-                        style: h1Textstyle,
-                      ),
-                      Text('${intlFormatDate(projectStartTime)}~'),
-                      Text(project.description),
-                      for (int i = 0; i < projectTask.length; i++)
-                        TaskComponent(task: projectTask[i]),
-                      TextButton(
-                        child: Text('수정'),
-                        onPressed: () => context.push(
-                            '/projectUpdate/${widget.teamId}',
-                            extra: project),
-                      ),
-                      buildDeleteButton(),
-                    ],
-                  );
-                } else if (snapshot.hasError) {
-                  return Text(snapshot.error.toString());
-                } else {
-                  return const CircularProgressIndicator();
-                }
-              },
-            ),
+    final viewModel = ref.watch(projectDetailViewModelProvider);
+    return viewModel.when(
+      data: (project) => Scaffold(
+        appBar: AppBar(title: Text(project.name)),
+        body: const _Body(),
+        floatingActionButton: const _AddTaskButton(),
+      ),
+      error: (error, _) => Scaffold(
+        appBar: AppBar(title: const Text('Error')),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('An error occurred: $error'),
+              ElevatedButton(
+                onPressed: () => ref
+                    .read(projectDetailViewModelProvider.notifier)
+                    .loadProjectDetail(int.parse(widget.projectId)),
+                child: const Text('Retry'),
+              ),
+            ],
           ),
         ),
       ),
-      floatingActionButton: const _AddTaskButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      bottomNavigationBar: const ProjectBottomNavigationBar(),
+      loading: () => Scaffold(
+        appBar: AppBar(title: const Text('Loading...')),
+        body: const Center(child: CircularProgressIndicator()),
+      ),
     );
   }
 }
 
-class _AddTaskButton extends StatelessWidget {
+class _Body extends ConsumerStatefulWidget {
+  const _Body({super.key});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => __BodyState();
+}
+
+class __BodyState extends ConsumerState<_Body> {
+  @override
+  Widget build(BuildContext context) {
+    return const SingleChildScrollView(
+      child: Column(
+        children: [
+          // 여기에 프로젝트 세부 정보 UI 구성 요소를 추가하세요.
+          Text('Project Details will be displayed here'),
+          // 예를 들어, 프로젝트 설명, 태스크 리스트 등을 추가할 수 있습니다.
+        ],
+      ),
+    );
+  }
+}
+
+class _AddTaskButton extends ConsumerWidget {
   const _AddTaskButton({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return FloatingActionButton(
       backgroundColor: Colors.grey[300],
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.0)),
       onPressed: () {
-        // Task 추가 로직을 이곳에 구현합니다.
+        // Todo: Task 추가 페이지 로직을 이곳에 구현합니다.
+        showDialog(
+          context: context,
+          builder: (context) => const AlertDialog(
+            title: Text('Add Task'),
+            content:
+                Text('Task adding functionality will be implemented here.'),
+          ),
+        );
       },
-      child: const Text('Task 추가하기'),
+      child: const Icon(Icons.add),
     );
   }
-}
-
-@widgetbook.UseCase(
-  name: '',
-  type: ProjectDetailScreen,
-)
-Widget ProjectDetailScreenUseCase(BuildContext context) {
-  return ProjectDetailScreen(
-    projectId: 1,
-    teamId: 1,
-  );
 }

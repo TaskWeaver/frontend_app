@@ -1,63 +1,44 @@
-import 'dart:io';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:flutter/material.dart';
-import 'package:front/features/task/domain/entities/task.dart';
+part 'task.freezed.dart';
+part 'task.g.dart';
 
-class TaskModel {
-  TaskModel(
-      {required this.title,
-      required this.content,
-      this.dueDate,
-      required this.participants,
-      this.color,
-      this.file,
-      required this.iconPath,
-      this.numOfTotalTask,
-      this.numOfComplateTask});
+@freezed
+class TaskModel with _$TaskModel {
+  factory TaskModel({
+    required int taskId,
+    required String projectId,
+    required String projectStateId,
+    required String taskStateId,
+    int? parentTaskId,
+    required String title,
+    required String content,
+    required String deletedAt,
+    required String color,
+    required int imo,
+    required String createdAt,
+    required String startDate,
+    required String endDate,
+  }) = _TaskModel;
 
-  factory TaskModel.fromJson(Map<String, dynamic> json) {
+  factory TaskModel.fromJson(Map<String, dynamic> json) =>
+      _$TaskModelFromJson(json);
+
+  factory TaskModel.fromModel(TaskModel task) {
     return TaskModel(
-        title: json['title'],
-        content: json['content'],
-        dueDate:
-            json['dueDate'] != null ? DateTime.parse(json['dueDate']) : null,
-        participants: json['participants'] != null
-            ? List<String>.from(json['participants'])
-            : [],
-        color: Color(json['color']),
-        file: json['file'] != null ? File(json['file']) : null,
-        iconPath: json['iconPath'],
-        numOfTotalTask: json['numOfTotalTask'],
-        numOfComplateTask: json['numOfComplateTask']);
-  }
-
-  final String title;
-  final String content;
-  final DateTime? dueDate;
-  final List<String> participants;
-  final Color? color;
-  final File? file;
-  final String iconPath;
-  final int? numOfComplateTask;
-  final int? numOfTotalTask;
-
-  Map<String, dynamic> toJson() {
-    return {
-      'title': title,
-      'content': content,
-      'dueDate': dueDate?.toIso8601String(),
-      'participants': participants,
-      'color': color?.value,
-      'file': file?.path,
-      'iconPath': iconPath,
-    };
-  }
-
-  TaskEntity toEntity() {
-    return TaskEntity(
-        title: title,
-        content: content,
-        participants: participants,
-        iconPath: iconPath);
+      taskId: task.taskId,
+      projectId: task.projectId,
+      projectStateId: task.projectStateId,
+      taskStateId: task.taskStateId,
+      parentTaskId: task.parentTaskId,
+      title: task.title,
+      content: task.content,
+      deletedAt: task.deletedAt,
+      color: task.color,
+      imo: task.imo,
+      createdAt: task.createdAt,
+      startDate: task.startDate,
+      endDate: task.endDate,
+    );
   }
 }

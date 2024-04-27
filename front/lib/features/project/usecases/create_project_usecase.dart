@@ -1,16 +1,15 @@
-import 'package:dartz/dartz.dart';
+import 'package:front/core/utils/api_response.dart';
+import 'package:front/core/utils/result.dart';
+import 'package:front/features/project/data/models/create_project_request.dart';
+import 'package:front/features/project/data/models/project_model.dart';
+import 'package:front/features/project/data/repositories/project_repositories.dart';
 
-import 'package:front/core/utils/failure.dart';
-import 'package:front/features/project/data/models/project_request.dart';
-import 'package:front/features/project/entities/project.dart';
-import 'package:front/features/project/repositories/project_repository.dart';
+final class CreateProjectUseCase {
+  const CreateProjectUseCase(this._projectRepository);
+  final ProjectRepository _projectRepository;
 
-class CreateProjectUseCase {
-  const CreateProjectUseCase(this.projectRepository);
-  final ProjectRepository projectRepository;
-
-  Future<Either<Failure, Project>> call(
-      ProjectRequestModel project, int teamId) {
-    return projectRepository.createProject(project, teamId);
+  Future<Result<ApiResponse<ProjectModel>>> call(
+      CreateProjectRequest project, int teamId) async {
+    return _projectRepository.createProject(project, teamId);
   }
 }

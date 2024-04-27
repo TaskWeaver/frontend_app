@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:front/features/project/entities/project.dart';
 
 class ProjectRequestModel extends Equatable {
   const ProjectRequestModel({
@@ -13,14 +12,6 @@ class ProjectRequestModel extends Equatable {
       name: json['name'],
       description: json['description'],
       managerId: json['managerId'],
-    );
-  }
-
-  factory ProjectRequestModel.fromEntity(Project project) {
-    return ProjectRequestModel(
-      name: project.name,
-      description: project.description,
-      managerId: project.managerId,
     );
   }
 
