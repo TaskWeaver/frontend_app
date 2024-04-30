@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:front/features/user/models/user.dart';
 import 'package:front/features/team/presentation/pages/team/widgets/dialog.dart';
+import 'package:front/features/user/data/models/user.dart';
 import 'package:front/i18n/strings.g.dart';
 
 typedef VoidCallback = void Function(UserModel user);
@@ -50,7 +50,7 @@ class TaskMemberAdder extends StatelessWidget {
               padding: const EdgeInsets.all(0.0),
               child: CircleAvatar(
                 backgroundColor: Colors.grey[300],
-                child: Text(taskMembers[index].nickname[0].toUpperCase()),
+                child: Text(taskMembers[index].nickName[0].toUpperCase()),
               ),
             );
           },
@@ -104,7 +104,7 @@ class TaskMemberAdder extends StatelessWidget {
             const SizedBox(
               width: 5,
             ),
-            Text(user.nickname),
+            Text(user.nickName),
           ],
         ),
       ),

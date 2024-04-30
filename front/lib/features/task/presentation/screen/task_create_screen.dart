@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:front/features/user/models/user.dart';
 import 'package:front/features/task/presentation/component/picker_component.dart';
 import 'package:front/features/task/presentation/component/task_create_form_component.dart';
 import 'package:front/features/task/presentation/component/task_member_adder_component.dart';
+import 'package:front/features/user/data/models/user.dart';
 import 'package:front/i18n/strings.g.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';
 
@@ -44,11 +44,11 @@ class _TaskCreateScreenState extends ConsumerState<_Body> {
   late CustomFormState? currentState;
   List<UserModel> members = [];
   final List<UserModel> projectMembers = [
-    UserModel(id: 1, email: 'email', nickname: 'user1', type: 'MEMBER'),
-    UserModel(id: 1, email: 'email', nickname: 'user2', type: 'MEMBER'),
-    UserModel(id: 1, email: 'email', nickname: 'user3', type: 'MEMBER'),
-    UserModel(id: 1, email: 'email', nickname: 'user4', type: 'MEMBER'),
-    UserModel(id: 1, email: 'email', nickname: 'user5', type: 'MEMBER'),
+    UserModel(id: 1, email: 'email', nickName: 'user1', type: 'MEMBER'),
+    UserModel(id: 1, email: 'email', nickName: 'user2', type: 'MEMBER'),
+    UserModel(id: 1, email: 'email', nickName: 'user3', type: 'MEMBER'),
+    UserModel(id: 1, email: 'email', nickName: 'user4', type: 'MEMBER'),
+    UserModel(id: 1, email: 'email', nickName: 'user5', type: 'MEMBER'),
   ];
 
   @override
