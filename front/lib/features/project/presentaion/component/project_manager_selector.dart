@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'package:front/features/user/models/user.dart';
 import 'package:front/features/team/presentation/pages/team/widgets/dialog.dart';
+import 'package:front/features/user/data/models/user.dart';
 
 typedef VoidCallback = void Function(UserModel user);
 
@@ -38,7 +37,7 @@ class ProjectManagerSelector extends StatelessWidget {
           backgroundColor: Colors.grey[300],
           child: const Text('⭐'),
         ),
-        Text(administrator.nickname ?? ''),
+        Text(administrator.nickName ?? ''),
       ],
     );
   }
@@ -88,7 +87,7 @@ class ProjectManagerSelector extends StatelessWidget {
             const SizedBox(
               width: 5,
             ),
-            Text(user.nickname ?? ''),
+            Text(user.nickName ?? ''),
           ],
         ),
       ),
@@ -105,7 +104,7 @@ class ProjectManagerSelector extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('프로젝트 담당자 ${user.nickname}'),
+          Text('프로젝트 담당자 ${user.nickName}'),
           const Text('으로 변경하시겠습니까?'),
           const SizedBox(height: 16),
           Row(
@@ -115,7 +114,7 @@ class ProjectManagerSelector extends StatelessWidget {
                 onPressed: () {
                   Navigator.pop(context);
                   onChanged(user);
-                  _showConfirmationDialog(user.nickname ?? '', context);
+                  _showConfirmationDialog(user.nickName ?? '', context);
                 },
                 child: const Text('확인'),
               ),
