@@ -1,11 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:front/features/user/models/user.dart';
 import 'package:front/features/project/data/models/project_request.dart';
 import 'package:front/features/project/presentaion/component/project_from.dart';
 import 'package:front/features/project/presentaion/component/project_manager_selector.dart';
 import 'package:front/features/project/presentaion/viewmodel/project_viewmodel.dart';
+import 'package:front/features/user/data/models/user.dart';
 import 'package:front/shared/atom/bottom_navigation_bar.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';
 import 'package:go_router/go_router.dart';
@@ -36,10 +36,14 @@ class _ProjectCreateScreenState extends ConsumerState<ProjectCreateScreen> {
   late ProjectViewmodel viewmodel;
   final _formKey = GlobalKey<CustomFormState>();
   late CustomFormState? currentState;
-  var manager =
-      UserModel(id: 4, nickname: '코난', email: 'test@gmail.com', type: 'LEADER');
+  var manager = UserModel(
+    id: 4,
+    nickName: '코난',
+    email: 'test@gmail.com',
+    type: 'LEADER',
+  );
   final List<UserModel> teamMembers = [
-    UserModel(id: 4, email: '코난', nickname: 'test@gmail.com', type: 'LEADER'),
+    UserModel(id: 4, email: '코난', nickName: 'test@gmail.com', type: 'LEADER'),
   ];
 
   @override

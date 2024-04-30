@@ -8,5 +8,6 @@ void main() {
     expect(File(Images.iconBook).existsSync(), isTrue);
     expect(File(Images.iconCheck).existsSync(), isTrue);
     expect(File(Images.iconPencil).existsSync(), isTrue);
+    expect(File(Images.onbordingIcon).existsSync(), isTrue);
   });
 }

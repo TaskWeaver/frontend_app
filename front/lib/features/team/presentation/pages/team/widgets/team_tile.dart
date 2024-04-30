@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:front/features/team/presentation/pages/team/widgets/team_member_clips.dart';
 import 'package:go_router/go_router.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 class TeamTile extends StatelessWidget {
   final int teamId;
-  final String name;
 
   const TeamTile({
     required this.teamId,
-    required this.name,
     super.key,
   });
 
@@ -23,8 +22,8 @@ class TeamTile extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(
-                  '[$name]',
+                const Text(
+                  '[ 팀 이름 ]',
                   style: TextStyle(fontSize: 16),
                 ),
                 const SizedBox(
@@ -32,7 +31,7 @@ class TeamTile extends StatelessWidget {
                 ),
                 Container(
                   decoration: const BoxDecoration(color: Colors.white),
-                  child: Padding(
+                  child: const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: Text(
                       '팀장',
@@ -49,3 +48,8 @@ class TeamTile extends StatelessWidget {
     );
   }
 }
+
+// @widgetbook.UseCase(name: '', type: TeamTile)
+// Widget loginScreenUseCase(BuildContext context) {
+//   return const WidgetBookContainer(child: TeamTile());
+// }

@@ -21,17 +21,16 @@ class _AppDio with DioMixin implements Dio {
 
     httpClientAdapter = IOHttpClientAdapter();
     options = BaseOptions(
-      connectTimeout: Duration(milliseconds: 30000),
-      receiveTimeout: Duration(milliseconds: 30000),
-      sendTimeout: Duration(milliseconds: 30000),
-      baseUrl: 'http://ec2-3-34-95-39.ap-northeast-2.compute.amazonaws.com:8083',
+      connectTimeout: const Duration(milliseconds: 30000),
+      receiveTimeout: const Duration(milliseconds: 30000),
+      sendTimeout: const Duration(milliseconds: 30000),
       receiveDataWhenStatusError: true,
     );
 
     (transformer as BackgroundTransformer).jsonDecodeCallback = parseJson;
 
     interceptors.addAll([
-      TokenInterceptor(storage: getStorage),
+      TokenInterceptor(storage: secureStorage, dio: this),
       LoggerInterceptor(),
     ]);
   }
@@ -40,7 +39,7 @@ class _AppDio with DioMixin implements Dio {
 // compute 메소드 적용
 // 최상단 메소드에서 실행
 // compute 함수 내부 에러 핸들링 추가
-_parseAndDecode(String response) {
+dynamic _parseAndDecode(String response) {
   try {
     return jsonDecode(response);
   } catch (e) {

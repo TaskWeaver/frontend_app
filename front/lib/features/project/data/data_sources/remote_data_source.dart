@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:front/core/network_handling/app_dio.dart';
-
 import 'package:front/core/utils/exception.dart';
 import 'package:front/features/project/data/models/project.dart';
 import 'package:front/features/project/data/models/project_request.dart';
@@ -16,7 +15,7 @@ abstract class ProjectRemoteDataSource {
 }
 
 class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
-  ProjectRemoteDataSourceImpl();
+  ProjectRemoteDataSourceImpl({required Dio dio});
   final Dio dio = AppDio.instance;
 
   @override
@@ -48,11 +47,14 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   @override
   Future<ProjectModel> getProjectById(int projectId) async {
     try {
-      var response = await dio.get('/v1/project/$projectId',options: Options(
+      var response = await dio.get(
+        '/v1/project/$projectId',
+        options: Options(
           headers: {
             'accessToken': 'true',
           },
-        ),);
+        ),
+      );
 
       if (response.statusCode == 200 && response.data?['resultCode'] == 200) {
         return ProjectModel.fromJson(response.data['result']);
@@ -90,11 +92,14 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   @override
   Future<void> deleteProjectById(int projectId) async {
     try {
-      var response = await dio.delete('/v1/project/$projectId',options: Options(
+      var response = await dio.delete(
+        '/v1/project/$projectId',
+        options: Options(
           headers: {
             'accessToken': 'true',
           },
-        ),);
+        ),
+      );
 
       if (response.statusCode == 200 && response.data?['resultCode'] == 200) {
         return;
