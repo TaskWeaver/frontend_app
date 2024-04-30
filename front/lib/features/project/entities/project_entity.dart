@@ -3,7 +3,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:front/core/const/enum.dart';
 
-part 'project.freezed.dart';
+part 'project_entity.freezed.dart';
 
 @freezed
 class Project with _$Project {
