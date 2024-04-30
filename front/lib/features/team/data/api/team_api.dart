@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart' hide Headers;
-import 'package:front/features/team/data/models/change_teamLeader.dart';
+import 'package:front/core/utils/api_response.dart';
+import 'package:front/features/team/data/models/create_team_response.dart';
 import 'package:front/features/team/data/models/invite_response.dart';
 import 'package:front/features/team/data/models/invite_team.dart';
-import 'package:front/features/team/data/models/team.dart';
-import 'package:front/features/team/data/models/team_detail.dart';
-import 'package:front/core/utils/api_response.dart';
+import 'package:front/features/team/data/models/team_detail_model.dart';
+import 'package:front/features/team/data/models/team_model.dart';
 import 'package:retrofit/http.dart';
 
 part 'team_api.g.dart';
@@ -19,11 +19,12 @@ abstract class TeamAPI {
 
   @POST('/team')
   @Headers({'accessToken': 'true'})
-  Future<ApiResponse<TeamModel>> createTeam({
-    @Body() required Map<String, dynamic> name,
+  Future<ApiResponse<CreateTeamResponse>> createTeam({
+    @Body() required Map<String, dynamic> createTeamRequest,
   });
 
   @GET('/team/{teamId}')
+  @Headers({'accessToken': 'true'})
   Future<ApiResponse<TeamDetailModel>> getTeamById({
     @Path() required int teamId,
   });
@@ -49,11 +50,5 @@ abstract class TeamAPI {
   @Headers({'accessToken': 'true'})
   Future<ApiResponse> answerToInvitation(
     @Body() InviteResponse inviteResponse,
-  );
-
-  @POST('/team/{teamId}/changeLeader')
-  @Headers({'accessToken': 'true'})
-  Future<ApiResponse> changeTeamLeader(
-    @Body() ChangeTeamLeaderModel changeTeamLeaderModel,
   );
 }

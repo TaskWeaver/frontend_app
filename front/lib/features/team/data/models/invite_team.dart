@@ -4,11 +4,12 @@ part 'invite_team.g.dart';
 @JsonSerializable()
 class InviteTeam {
   final String email;
-  final int teamId;
+  // 카멜 케이스로 수정
+  final int team_id;
 
   InviteTeam({
     required this.email,
-    required this.teamId,
+    required this.team_id,
   });
 
   factory InviteTeam.fromJson(Map<String, dynamic> json) =>

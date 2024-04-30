@@ -1,7 +1,7 @@
 import 'package:front/features/project/data/models/project_create_model.dart';
 import 'package:front/features/project/entities/project_entity.dart';
+import 'package:front/features/project/presentaion/state/projects_state.dart';
 import 'package:front/features/project/usecases/riverpod.dart';
-import 'package:front/features/team/presentation/providers/projects_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'project_viewmodel.g.dart';

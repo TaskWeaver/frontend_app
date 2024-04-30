@@ -5,7 +5,7 @@ import 'package:front/features/project/entities/project_entity.dart';
 import 'package:front/features/project/presentaion/component/project_from.dart';
 import 'package:front/features/project/presentaion/component/project_manager_selector.dart';
 import 'package:front/features/project/presentaion/viewmodel/project_viewmodel.dart';
-import 'package:front/features/user/models/user.dart';
+import 'package:front/features/user/data/models/user.dart';
 import 'package:front/shared/atom/bottom_navigation_bar.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';
 import 'package:go_router/go_router.dart';
@@ -35,13 +35,13 @@ class _ProjectUpdateScreenState extends ConsumerState<ProjectUpdateScreen> {
   final _formKey = GlobalKey<CustomFormState>();
   late CustomFormState? currentState;
   var manager =
-      UserModel(id: 1, nickname: 'user1', email: 'email', type: 'type');
+      UserModel(id: 1, nickName: 'user1', email: 'email', type: 'type');
   final List<UserModel> teamMembers = [
-    UserModel(id: 4, email: 'email', nickname: 'user1', type: 'MEMBER'),
-    UserModel(id: 4, email: 'email', nickname: 'user2', type: 'MEMBER'),
-    UserModel(id: 4, email: 'email', nickname: 'user3', type: 'MEMBER'),
-    UserModel(id: 4, email: 'email', nickname: 'user4', type: 'MEMBER'),
-    UserModel(id: 4, email: 'email', nickname: 'user5', type: 'MEMBER'),
+    UserModel(id: 4, email: 'email', nickName: 'user1', type: 'MEMBER'),
+    UserModel(id: 4, email: 'email', nickName: 'user2', type: 'MEMBER'),
+    UserModel(id: 4, email: 'email', nickName: 'user3', type: 'MEMBER'),
+    UserModel(id: 4, email: 'email', nickName: 'user4', type: 'MEMBER'),
+    UserModel(id: 4, email: 'email', nickName: 'user5', type: 'MEMBER'),
   ];
 
   @override

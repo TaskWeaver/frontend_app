@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:front/core/network_handling/app_dio.dart';
-
 import 'package:front/core/utils/exception.dart';
 import 'package:front/features/project/data/models/project_members_model.dart';
 import 'package:front/features/project/data/models/project_model.dart';
@@ -18,7 +17,7 @@ abstract class ProjectRemoteDataSource {
 }
 
 class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
-  ProjectRemoteDataSourceImpl();
+  ProjectRemoteDataSourceImpl({required Dio dio});
   final Dio dio = AppDio.instance;
 
   @override
