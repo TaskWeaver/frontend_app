@@ -74,8 +74,14 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
   // }
   @override
   Future<UserModel> getMe() async {
-    dio.options.headers = {'accessToken': 'true'};
-    var response = await dio.get('/v1/user');
+    var response = await dio.get(
+      '/v1/user',
+      options: Options(
+        headers: {
+          'accessToken': 'true',
+        },
+      ),
+    );
     if (response.statusCode == 200) {
       return UserModel.fromJson(response.data['result']);
     } else {

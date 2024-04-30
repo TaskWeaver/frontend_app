@@ -18,6 +18,5 @@ void main() async {
     apiBaseUrl: 'https://dev.taskWeaver.com/',
     child: MyApp(),
   );
-
   runApp(ProviderScope(child: TranslationProvider(child: configuredApp)));
 }

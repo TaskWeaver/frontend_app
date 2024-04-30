@@ -24,9 +24,7 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   @override
   Future<List<ProjectModel>> getProjectsByTeamId(int teamId) async {
     try {
-      debugPrint(
-        'teamId: $teamId',
-      );
+      debugPrint('teamId: $teamId');
       var response = await dio.get(
         '/v1/team/$teamId/projects',
         options: Options(

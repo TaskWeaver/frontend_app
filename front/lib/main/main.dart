@@ -4,6 +4,7 @@ import 'package:front/app/config/routes.dart';
 import 'package:front/core/config/providers/secure_storage.dart';
 import 'package:front/features/user/data_sources/rivorpod.dart';
 import 'package:front/main/app_config.dart';
+import 'package:front/shared/theme/theme.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: config.appName,
+      theme: themeData,
       routeInformationParser: router.routeInformationParser,
       routeInformationProvider: router.routeInformationProvider,
       routerDelegate: router.routerDelegate,
