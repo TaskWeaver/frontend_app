@@ -14,7 +14,9 @@ class ProjectModel with _$ProjectModel {
     required String name,
     required String description,
     required int managerId,
+    List<int>? memberId, // 수정된 부분: memberId는 nullable이며 기본값이 null입니다.
     required String projectState,
+    required DateTime createdAt,
   }) = _ProjectModel;
 
   factory ProjectModel.fromJson(Map<String, dynamic> json) =>
@@ -24,6 +26,8 @@ class ProjectModel with _$ProjectModel {
     return ProjectModel(
       projectId: project.projectId,
       managerId: project.managerId,
+      createdAt: project.createdAt,
+      memberId: project.memberId,
       name: project.name,
       description: project.description,
       projectState: project.projectState.code,
@@ -34,6 +38,8 @@ class ProjectModel with _$ProjectModel {
 
   Project toEntity() {
     return Project(
+      createdAt: createdAt,
+      memberId: memberId,
       projectId: projectId,
       managerId: managerId,
       name: name,

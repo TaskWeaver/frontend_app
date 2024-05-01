@@ -21,6 +21,8 @@ class _AppDio with DioMixin implements Dio {
 
     httpClientAdapter = IOHttpClientAdapter();
     options = BaseOptions(
+      baseUrl:
+          'http://ec2-3-34-95-39.ap-northeast-2.compute.amazonaws.com:8083',
       connectTimeout: const Duration(milliseconds: 30000),
       receiveTimeout: const Duration(milliseconds: 30000),
       sendTimeout: const Duration(milliseconds: 30000),

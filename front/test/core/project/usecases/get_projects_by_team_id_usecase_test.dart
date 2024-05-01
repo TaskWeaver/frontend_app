@@ -21,6 +21,7 @@ void main() {
   var projectModelList = List.generate(
       3,
       (index) => ProjectModel(
+            createdAt: DateTime.now(),
             projectId: index,
             name: 'name$index',
             description: 'description$index',

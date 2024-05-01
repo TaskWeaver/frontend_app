@@ -13,5 +13,7 @@ class Project with _$Project {
     required String description,
     required int managerId,
     required ProjectStateEnum projectState,
+    required DateTime createdAt,
+    List<int>? memberId,
   }) = _Project;
 }
