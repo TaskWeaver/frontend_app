@@ -18,6 +18,7 @@ void main() {
   var projectModelList = List.generate(
       3,
       (index) => ProjectModel(
+            createdAt: DateTime.now(),
             projectId: 1,
             name: 'name1',
             description: 'description1',
@@ -27,6 +28,7 @@ void main() {
   var projectsEntity = projectModelList.map((e) => e.toEntity()).toList();
 
   var projectModel = ProjectModel(
+    createdAt: DateTime.now(),
     projectId: 1,
     name: 'name1',
     description: 'description1',

@@ -129,6 +129,7 @@ class _ProjectUpdateScreenState extends ConsumerState<ProjectUpdateScreen> {
           try {
             await viewmodel.updateProject(
                 Project(
+                    createdAt: widget.project.createdAt,
                     managerId: manager.id,
                     name: _formKey.currentState!.fields['name']!.value,
                     description:

@@ -9,6 +9,7 @@ import '../../../helpers/json_reader.dart';
 
 void main() {
   var testProjectModel = ProjectModel(
+    createdAt: DateTime.now(),
     projectId: 1,
     name: 'name1',
     description: 'description1',
@@ -16,6 +17,7 @@ void main() {
     projectState: 'BEFORE',
   );
   var testProject = Project(
+    createdAt: DateTime.now(),
     projectId: 1,
     name: 'name1',
     description: 'description1',
