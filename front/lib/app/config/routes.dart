@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:front/app/locator.dart';
 import 'package:front/features/home.dart';
 import 'package:front/features/team/presentation/pages/team/team_create_page.dart';
+import 'package:front/features/team/presentation/pages/team/team_datail.dart';
 import 'package:front/features/team/presentation/pages/team/team_home.dart';
 import 'package:front/features/user/presentation/component/change_info_list.dart';
 import 'package:front/features/user/presentation/pages/my_info_screen.dart';
@@ -39,13 +40,14 @@ final router = GoRouter(
               name: 'create',
               builder: (context, state) => const TeamCreatePage(),
             ),
-            // GoRoute(
-            //   path: ':teamId',
-            //   name: 'teamDetail',
-            //   builder: (context, state) {
-            //     return TeamDetailScreen(
-            //         teamId: state.pathParameters['teamId']!);
-            //   },
+            GoRoute(
+              path: ':teamId',
+              name: 'teamDetail',
+              builder: (context, state) {
+                return TeamDetailScreen(
+                    teamId: state.pathParameters['teamId']!);
+              },
+            )
             //   routes: [
             //     GoRoute(
             //       path: 'project/create',
