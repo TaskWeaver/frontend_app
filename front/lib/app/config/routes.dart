@@ -1,6 +1,9 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:front/app/locator.dart';
 import 'package:front/features/home.dart';
+import 'package:front/features/project/presentaion/screen/project_creation.dart';
 import 'package:front/features/team/presentation/pages/team/team_create_page.dart';
 import 'package:front/features/team/presentation/pages/team/team_datail.dart';
 import 'package:front/features/team/presentation/pages/team/team_home.dart';
@@ -47,24 +50,14 @@ final router = GoRouter(
                 return TeamDetailScreen(
                     teamId: state.pathParameters['teamId']!);
               },
-            )
-            //   routes: [
-            //     GoRoute(
-            //       path: 'project/create',
-            //       name: 'projectCreate',
-            //       builder: (context, state) => ProjectCreationScreen(
-            //           teamId: state.pathParameters['teamId']!),
-            //     ),
-            //     GoRoute(
-            //       path: 'project/:projectId',
-            //       name: 'project',
-            //       builder: (context, state) {
-            //         return ProjectDetailScreen(
-            //             projectId: state.pathParameters['projectId']!);
-            //       },
-            //     )
-            //   ],
-            // ),
+              routes: [
+                GoRoute(
+              path: 'project/create',
+              builder: (context, state) => ProjectCreateScreen(teamId: int.parse(state.pathParameters['teamId']!),),
+            ),
+              ]
+            ),
+            
           ],
         ),
         GoRoute(
