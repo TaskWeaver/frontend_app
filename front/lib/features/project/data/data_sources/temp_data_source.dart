@@ -6,8 +6,6 @@ class ProjectTempDataSource {
     var projectModelList = List.generate(
         3,
         (index) => ProjectModel(
-              createdAt: DateTime.now(),
-              memberId: [index + 1],
               projectId: index,
               name: 'name$index',
               description: 'description$index',
@@ -21,8 +19,6 @@ class ProjectTempDataSource {
 
   Future<ProjectModel> createProject(ProjectCreateModel project) async {
     var projectModel = ProjectModel(
-      createdAt: DateTime.now(),
-      memberId: [2],
       projectId: 1,
       name: 'name1',
       description: 'description1',

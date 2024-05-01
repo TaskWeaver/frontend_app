@@ -8,8 +8,7 @@ class UpdateProjectUseCase {
   const UpdateProjectUseCase(this.projectRepository);
   final ProjectRepository projectRepository;
 
-  Future<Either<Failure, Project>> call(
-      Project project, int projectId) {
+  Future<Either<Failure, Project>> call(Project project, int projectId) {
     return projectRepository.updateProjectById(project, projectId);
   }
 }

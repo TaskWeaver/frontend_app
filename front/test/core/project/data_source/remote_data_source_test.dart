@@ -20,8 +20,7 @@ void main() {
   var projectModelList = List.generate(
       4,
       (index) => ProjectModel(
-            createdAt: DateTime.now(),
-            memberId: [index + 1],
+            members: [index + 1],
             projectId: index,
             name: 'name$index',
             description: 'description$index',
@@ -30,8 +29,7 @@ void main() {
           ));
 
   var projectModel = ProjectModel(
-    createdAt: DateTime.now(),
-    memberId: [2],
+    members: [2],
     projectId: 1,
     name: 'name1',
     description: 'description1',
@@ -42,7 +40,8 @@ void main() {
   var projectRequestModel = ProjectCreateModel(
       managerId: projectModel.managerId,
       name: projectModel.name,
-      description: projectModel.description, members: []);
+      description: projectModel.description,
+      members: []);
 
   setUp(() {
     dio = container.read(dioProvider);
