@@ -28,7 +28,7 @@ class ProjectViewmodel extends _$ProjectViewmodel {
       return projects.firstWhere((element) => element.projectId == projectId);
     });
     if (project != null) {
-      if (project.members == null) {}
+      if (project.memberId == null) {}
       return project;
     } else {
       var result = await ref.read(getProjectByIdUseCaseProvider)(projectId);

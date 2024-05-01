@@ -13,6 +13,6 @@ class Project with _$Project {
     required String description,
     required int managerId,
     required ProjectStateEnum projectState,
-    List<int>? members,
+    List<int>? memberId,
   }) = _Project;
 }

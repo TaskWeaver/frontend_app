@@ -20,7 +20,7 @@ void main() {
   var projectModelList = List.generate(
       4,
       (index) => ProjectModel(
-            members: [index + 1],
+            memberId: [index + 1],
             projectId: index,
             name: 'name$index',
             description: 'description$index',
@@ -29,7 +29,7 @@ void main() {
           ));
 
   var projectModel = ProjectModel(
-    members: [2],
+    memberId: [2],
     projectId: 1,
     name: 'name1',
     description: 'description1',

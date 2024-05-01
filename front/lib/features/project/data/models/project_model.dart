@@ -15,7 +15,7 @@ class ProjectModel extends Equatable {
     required this.description,
     required this.managerId,
     required this.projectState,
-    this.members,
+    this.memberId,
   });
 
   factory ProjectModel.fromEntity(Project project) {
@@ -25,7 +25,7 @@ class ProjectModel extends Equatable {
       name: project.name,
       description: project.description,
       projectState: project.projectState.code,
-      members: project.members,
+      memberId: project.memberId,
     );
   }
 
@@ -34,7 +34,7 @@ class ProjectModel extends Equatable {
   final String description;
   final int managerId;
   final String projectState;
-  final List<int>? members;
+  final List<int>? memberId;
 
   Project toEntity() {
     return Project(
@@ -43,7 +43,7 @@ class ProjectModel extends Equatable {
       name: name,
       description: description,
       projectState: ProjectStateEnum.getByCode(projectState),
-      members: members,
+      memberId: memberId,
     );
   }
 
@@ -53,5 +53,5 @@ class ProjectModel extends Equatable {
 
   @override
   List<Object?> get props =>
-      [projectId, name, description, managerId, projectState, members];
+      [projectId, name, description, managerId, projectState, memberId];
 }
