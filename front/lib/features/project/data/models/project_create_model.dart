@@ -10,7 +10,7 @@ class ProjectCreateModel extends Equatable {
     required this.name,
     required this.description,
     required this.managerId,
-    required this.memberId,
+    required this.memberIdList,
   });
 
   factory ProjectCreateModel.fromEntity(Project project) {
@@ -18,14 +18,14 @@ class ProjectCreateModel extends Equatable {
       name: project.name,
       description: project.description,
       managerId: project.managerId,
-      memberId: project.memberId!,
+      memberIdList: project.memberIdList!,
     );
   }
 
   final int managerId;
   final String name;
   final String description;
-  final List<int> memberId;
+  final List<int> memberIdList;
 
   @override
   List<Object?> get props => [managerId, name, description];

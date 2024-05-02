@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front/app/locator.dart';
 import 'package:front/features/user/data/models/sign_in_request.dart';
 import 'package:front/features/user/data/models/token.dart';
-import 'package:front/features/user/presentation/viewModel/sign_in_viewmodel.dart';
+import 'package:front/features/user/presentation/viewmodel/sign_in_viewmodel.dart';
 import 'package:front/resources/resources.dart';
 import 'package:go_router/go_router.dart';
 
