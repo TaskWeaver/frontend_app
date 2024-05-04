@@ -1,10 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:front/app/locator.dart';
 import 'package:front/features/project/data/models/project_create_model.dart';
 import 'package:front/features/project/presentaion/component/project_from.dart';
 import 'package:front/features/project/presentaion/component/project_manager_selector.dart';
 import 'package:front/features/project/presentaion/viewmodel/project_viewmodel.dart';
+import 'package:front/features/team/data/models/team_detail_member_model.dart';
 import 'package:front/features/user/data/models/user.dart';
 import 'package:front/shared/atom/bottom_navigation_bar.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';
@@ -48,6 +50,7 @@ class _ProjectCreateScreenState extends ConsumerState<ProjectCreateScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var users = getTeamMembersByTeamIdUseCase(teamId: widget.teamId);
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
@@ -59,10 +62,20 @@ class _ProjectCreateScreenState extends ConsumerState<ProjectCreateScreen> {
               children: [
                 buildHeader(),
                 const SizedBox(height: 10),
-                ProjectManagerSelector(
-                    teamMembers: teamMembers,
-                    manager: manager,
-                    onChanged: onManagerChanged),
+                FutureBuilder(
+                    future:
+                        users,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done ) {
+                        return snapshot.data?.fold(onSuccess: (users)=>ProjectManagerSelector(
+                          teamMembers: users,
+                          manager: manager,
+                          onChanged: onManagerChanged,
+                        ), onFailure: (e)=>Text('e')) ?? Text('no Data');
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                    }),
                 Expanded(
                   child: ProjectFrom(
                     formKey: _formKey,

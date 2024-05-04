@@ -5,8 +5,8 @@ import 'package:front/features/team/data/models/create_team_response.dart';
 import 'package:front/features/team/data/models/invite_response.dart';
 import 'package:front/features/team/data/models/invite_team.dart';
 import 'package:front/features/team/data/models/team_detail_model.dart';
-import 'package:front/features/team/data/models/team_member.dart';
 import 'package:front/features/team/data/models/team_model.dart';
+import 'package:front/features/user/data/models/user.dart';
 
 abstract class TeamRepository {
   Future<Result<ApiResponse<List<TeamModel>>>> getTeams();
@@ -24,7 +24,7 @@ abstract class TeamRepository {
     required List<int> memberId,
   });
 
-  Future<Result<List<TeamMemberModel>>> getTeamMembersByTeamId(int teamId);
+  Future<Result<List<UserModel>>> getTeamMembersByTeamId(int teamId);
 
   Future<Result<ApiResponse>> invitationNotification();
 

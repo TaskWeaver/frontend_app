@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:flutter/material.dart';
 import 'package:front/core/utils/api_response.dart';
 import 'package:front/core/utils/result.dart';
 import 'package:front/features/team/data/data_source/team_remote_data_source.dart';
@@ -5,10 +8,12 @@ import 'package:front/features/team/data/models/create_team_request.dart';
 import 'package:front/features/team/data/models/create_team_response.dart';
 import 'package:front/features/team/data/models/invite_response.dart';
 import 'package:front/features/team/data/models/invite_team.dart';
+import 'package:front/features/team/data/models/team_detail_member_model.dart';
 import 'package:front/features/team/data/models/team_detail_model.dart';
 import 'package:front/features/team/data/models/team_member.dart';
 import 'package:front/features/team/data/models/team_model.dart';
 import 'package:front/features/team/repositories/team_repository.dart';
+import 'package:front/features/user/data/models/user.dart';
 
 class TeamRepositoryImpl implements TeamRepository {
   const TeamRepositoryImpl({
@@ -98,19 +103,20 @@ class TeamRepositoryImpl implements TeamRepository {
     }
   }
 
+  //TODO: get team from cache
   @override
-  Future<Result<List<TeamMemberModel>>> getTeamMembersByTeamId(
-      int teamId) async {
+  Future<Result<List<UserModel>>> getTeamMembersByTeamId(int teamId) async {
     try {
       final result = await _teamRemoteDataSource.getTeamById(teamId);
       // 얻은 데이터 값에서 팀 멤버를 뽑아내고 , 타입을 List<TeamMerberModel로 변경
 
-      List<TeamMemberModel> teamMembers = result.result!.teamMembers
-          .map((e) => TeamMemberModel.fromJson(e))
+      List<UserModel> teamMembers = result.result['teamMembers']
+          .map<UserModel>((e) => TeamDetailMemberModel.fromJson(e).toUserModel())
           .toList();
-
+      log('teamMembers: $teamMembers');
       return Result.success(teamMembers);
     } on Exception catch (e) {
+      log('getTeamMembersByTeamId error: $e');
       return Result.failure(e);
     }
   }

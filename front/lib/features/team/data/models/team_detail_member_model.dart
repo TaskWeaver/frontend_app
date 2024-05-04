@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:front/features/team/entities/team_members.dart';
+import 'package:front/features/user/data/models/user.dart';
 
 part 'team_detail_member_model.freezed.dart';
 part 'team_detail_member_model.g.dart';
@@ -24,6 +25,16 @@ class TeamDetailMemberModel with _$TeamDetailMemberModel {
       imageUrl: teamMembers.imageUrl,
       nickname: teamMembers.nickname,
       role: teamMembers.role,
+    );
+  }
+
+  UserModel toUserModel() {
+    return UserModel(
+      id: id,
+      email: email,
+      nickName: nickname,
+      imageUrl: imageUrl,
+      type: 'DEFAULT',
     );
   }
 
