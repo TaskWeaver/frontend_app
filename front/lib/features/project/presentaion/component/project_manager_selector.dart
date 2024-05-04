@@ -23,26 +23,26 @@ class ProjectManagerSelector extends StatelessWidget {
       children: [
         const Text('프로젝트 담당자'),
         GestureDetector(
-          onTap: () => _setAdministrator(context, teamMembers),
-          child: _buildAdministratorRow(manager),
+          onTap: () => _setManager(context, teamMembers),
+          child: _buildManagerRow(manager),
         ),
       ],
     );
   }
 
-  Row _buildAdministratorRow(UserModel administrator) {
+  Row _buildManagerRow(UserModel manager) {
     return Row(
       children: [
         CircleAvatar(
           backgroundColor: Colors.grey[300],
           child: const Text('⭐'),
         ),
-        Text(administrator.nickName ?? ''),
+        Text(manager.nickName ?? ''),
       ],
     );
   }
 
-  void _setAdministrator(BuildContext context, List<UserModel> teamMembers) {
+  void _setManager(BuildContext context, List<UserModel> teamMembers) {
     context.dialog(child: _buildDialog(context, teamMembers));
   }
 
