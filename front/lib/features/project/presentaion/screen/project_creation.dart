@@ -172,7 +172,7 @@ class _ProjectCreateScreenState extends ConsumerState<ProjectCreateScreen> {
                 await viewmodel.createProject(
                     ProjectCreateModel(
                       managerId: manager.id,
-                      memberIdList: [manager.id],
+                      memberIdList: projectMemberIdLsit,
                       name: currentState!.fields['name']!.value,
                       description: currentState!.fields['description']!.value,
                     ),

@@ -26,15 +26,19 @@ class _ProjectMemberSelectorState extends State<ProjectMemberSelector> {
   @override
   void initState() {
     super.initState();
-    for (var element in widget.teamMembers) {
-      membersState[element.id] = false;
-    }
-    membersState[widget.manager.id] = true;
+    setState(() {
+      for (var element in widget.teamMembers) {
+        membersState[element.id] = false;
+      }
+      membersState[widget.manager.id] = true;
+    });
+    debugPrint('membersState: $membersState');
   }
 
   void onMemberChanged(UserModel user) {
     setState(() {
       membersState[user.id] = !membersState[user.id]!;
+      membersState = Map.from(membersState);
     });
   }
 
@@ -44,29 +48,37 @@ class _ProjectMemberSelectorState extends State<ProjectMemberSelector> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text('프로젝트 멤버'),
-        GestureDetector(
-          onTap: () =>
-              _buildProjectMemberSelectDialog(context, widget.teamMembers),
-          child: _buildTeamMemberList(widget.teamMembers),
-        ),
+        SizedBox(
+            height: 50,
+            child: Row(
+              children: [
+                ..._buildTeamMemberList(widget.teamMembers),
+              ],
+            )),
       ],
     );
   }
 
-  Widget _buildTeamMemberList(List<UserModel> members) {
-    return ListView.builder(itemBuilder: (
-      context,
-      index,
-    ) {
-      return Row(
-        children: [
-          CircleAvatar(
-            backgroundColor: Colors.grey[300],
-            child: Text(members[index].nickName),
-          ),
-        ],
-      );
-    });
+  List<Widget> _buildTeamMemberList(List<UserModel> teamMembers) {
+    var result = <Widget>[];
+    for (var i = 0; i < teamMembers.length; i++) {
+      debugPrint(
+          'memberId: ${teamMembers[i].id} membersState: ${membersState[teamMembers[i].id]}');
+      if (membersState[teamMembers[i].id] == true) {
+        result.add(GestureDetector(
+            child: CircleAvatar(
+          backgroundColor: Colors.grey[300],
+          child: Text(teamMembers[i].nickName),
+        )));
+      }
+    }
+    result.add(GestureDetector(
+        onTap: () => _buildProjectMemberSelectDialog(context, teamMembers),
+        child: CircleAvatar(
+          backgroundColor: Colors.grey[500],
+          child: Text('+'),
+        )));
+    return result;
   }
 
   void _buildProjectMemberSelectDialog(
