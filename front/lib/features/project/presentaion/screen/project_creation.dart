@@ -2,9 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front/app/locator.dart';
+import 'package:front/core/utils/result.dart';
 import 'package:front/features/project/data/models/project_create_model.dart';
 import 'package:front/features/project/presentaion/component/project_from.dart';
 import 'package:front/features/project/presentaion/component/project_manager_selector.dart';
+import 'package:front/features/project/presentaion/component/project_member_selector.dart';
 import 'package:front/features/project/presentaion/viewmodel/project_viewmodel.dart';
 import 'package:front/features/team/data/models/team_detail_member_model.dart';
 import 'package:front/features/user/data/models/user.dart';
@@ -48,6 +50,16 @@ class _ProjectCreateScreenState extends ConsumerState<ProjectCreateScreen> {
     UserModel(id: 4, email: '코난', nickName: 'test@gmail.com', type: 'LEADER'),
   ];
 
+  var projectMemberIdLsit = <int>[];
+
+  @override
+  void initState() {
+    super.initState();
+    projectMemberIdLsit.add(manager.id);
+    currentState = _formKey.currentState;
+    viewmodel = ref.read(projectViewmodelProvider(widget.teamId).notifier);
+  }
+
   @override
   Widget build(BuildContext context) {
     var users = getTeamMembersByTeamIdUseCase(teamId: widget.teamId);
@@ -63,15 +75,33 @@ class _ProjectCreateScreenState extends ConsumerState<ProjectCreateScreen> {
                 buildHeader(),
                 const SizedBox(height: 10),
                 FutureBuilder(
-                    future:
-                        users,
+                    future: users,
                     builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done ) {
-                        return snapshot.data?.fold(onSuccess: (users)=>ProjectManagerSelector(
-                          teamMembers: users,
-                          manager: manager,
-                          onChanged: onManagerChanged,
-                        ), onFailure: (e)=>Text('e')) ?? Text('no Data');
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return snapshot.data?.fold(
+                                onSuccess: (users) => ProjectManagerSelector(
+                                      teamMembers: users,
+                                      manager: manager,
+                                      onChanged: onManagerChanged,
+                                    ),
+                                onFailure: (e) => Text('e')) ??
+                            Text('no Data');
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                    }),
+                FutureBuilder(
+                    future: users,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return snapshot.data?.fold(
+                                onSuccess: (users) => ProjectMemberSelector(
+                                      teamMembers: users,
+                                      manager: manager,
+                                      onChanged: onProjectMemberChanged,
+                                    ),
+                                onFailure: (e) => Text('e')) ??
+                            Text('no Data');
                       } else {
                         return CircularProgressIndicator();
                       }
@@ -93,13 +123,6 @@ class _ProjectCreateScreenState extends ConsumerState<ProjectCreateScreen> {
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    currentState = _formKey.currentState;
-    viewmodel = ref.read(projectViewmodelProvider(widget.teamId).notifier);
-  }
-
   void onFormChanged() {
     setState(() {
       currentState = _formKey.currentState;
@@ -109,6 +132,15 @@ class _ProjectCreateScreenState extends ConsumerState<ProjectCreateScreen> {
   void onManagerChanged(UserModel user) {
     setState(() {
       manager = user;
+      if (!projectMemberIdLsit.contains(user.id)) {
+        projectMemberIdLsit = [user.id, ...projectMemberIdLsit];
+      }
+    });
+  }
+
+  void onProjectMemberChanged(List<int> memberIdList) {
+    setState(() {
+      projectMemberIdLsit = memberIdList;
     });
   }
 

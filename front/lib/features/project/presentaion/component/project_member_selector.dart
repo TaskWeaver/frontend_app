@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:front/features/team/presentation/pages/team/widgets/dialog.dart';
 import 'package:front/features/user/data/models/user.dart';
 
-typedef VoidCallback = void Function(UserModel user);
+typedef VoidCallback = void Function(List<int> projectMemberIdList);
 
-class ProjectMemeberSelector extends StatelessWidget {
-  const ProjectMemeberSelector(
+class ProjectMemberSelector extends StatefulWidget {
+  const ProjectMemberSelector(
       {Key? key,
       required this.teamMembers,
-      required this.manager, 
+      required this.manager,
       required this.onChanged})
       : super(key: key);
 
@@ -17,140 +17,119 @@ class ProjectMemeberSelector extends StatelessWidget {
   final VoidCallback onChanged;
 
   @override
+  State<ProjectMemberSelector> createState() => _ProjectMemberSelectorState();
+}
+
+class _ProjectMemberSelectorState extends State<ProjectMemberSelector> {
+  late Map<int, bool> membersState = {};
+
+  @override
+  void initState() {
+    super.initState();
+    for (var element in widget.teamMembers) {
+      membersState[element.id] = false;
+    }
+    membersState[widget.manager.id] = true;
+  }
+
+  void onMemberChanged(UserModel user) {
+    setState(() {
+      membersState[user.id] = !membersState[user.id]!;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('프로젝트 담당자'),
+        const Text('프로젝트 멤버'),
         GestureDetector(
-          onTap: () => _setAdministrator(context, teamMembers),
-          child: _buildAdministratorRow(manager),
+          onTap: () =>
+              _buildProjectMemberSelectDialog(context, widget.teamMembers),
+          child: _buildTeamMemberList(widget.teamMembers),
         ),
       ],
     );
   }
 
-  Row _buildAdministratorRow(UserModel administrator) {
-    return Row(
-      children: [
-        CircleAvatar(
-          backgroundColor: Colors.grey[300],
-          child: const Text('⭐'),
-        ),
-        Text(administrator.nickName ?? ''),
-      ],
-    );
+  Widget _buildTeamMemberList(List<UserModel> members) {
+    return ListView.builder(itemBuilder: (
+      context,
+      index,
+    ) {
+      return Row(
+        children: [
+          CircleAvatar(
+            backgroundColor: Colors.grey[300],
+            child: Text(members[index].nickName),
+          ),
+        ],
+      );
+    });
   }
 
-  void _setAdministrator(BuildContext context, List<UserModel> teamMembers) {
-    context.dialog(child: _buildDialog(context, teamMembers));
-  }
-
-  Widget _buildDialog(BuildContext context, List<UserModel> teamMembers) {
-    return SingleChildScrollView(
+  void _buildProjectMemberSelectDialog(
+      BuildContext context, List<UserModel> teamMembers) {
+    context.dialog(
+        child: SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           const Text('프로젝트 담당자를 변경하시겠습니까?'),
-          ..._buildAssignerComponets(context, teamMembers),
+          ..._buildMemberTileList(context, teamMembers),
           const SizedBox(height: 16),
           ElevatedButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              Navigator.pop(context);
+              var projectMembers = <int>[];
+              membersState.forEach((key, value) {
+                if (value) {
+                  projectMembers.add(key);
+                }
+              });
+              widget.onChanged(projectMembers);
+            },
             child: const Text('닫기'),
           ),
         ],
       ),
-    );
+    ));
   }
 
-  List<Widget> _buildAssignerComponets(
+  List<Widget> _buildMemberTileList(
       BuildContext context, List<UserModel> teamMembers) {
     // ignore: omit_local_variable_types
     List<Widget> result = [];
     for (var i = 0; i < teamMembers.length; i++) {
-      result.add(_buildAssignerComponent(teamMembers[i], context));
+      result.add(_buildMemberTile(teamMembers[i], context));
     }
     return result;
   }
 
-  GestureDetector _buildAssignerComponent(
-      UserModel user, BuildContext context) {
+  GestureDetector _buildMemberTile(UserModel user, BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
-      onTap: () => _showInformationDialog(user, context),
+      onTap: () => onMemberChanged(user),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            CircleAvatar(
-              backgroundColor: Colors.grey[300],
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Text(user.nickName ?? ''),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _showInformationDialog(UserModel user, BuildContext context) {
-    context.dialog(child: _buildInformationDialog(user, context));
-  }
-
-  Widget _buildInformationDialog(UserModel user, BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text('프로젝트 담당자 ${user.nickName}'),
-          const Text('으로 변경하시겠습니까?'),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisSize: MainAxisSize.min,
+        child: Container(
+          color: membersState[user.id]!
+              ? colorScheme.primary
+              : colorScheme.background,
+          child: Row(
             children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  onChanged(user);
-                  _showConfirmationDialog(user.nickName ?? '', context);
-                },
-                child: const Text('확인'),
+              CircleAvatar(
+                backgroundColor: Colors.grey[300],
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('취소'),
+              const SizedBox(
+                width: 5,
               ),
+              Text(user.nickName ?? ''),
             ],
           ),
-        ],
-      ),
-    );
-  }
-
-  void _showConfirmationDialog(String assignerName, BuildContext context) {
-    context.dialog(child: _buildConfirmationDialog(assignerName, context));
-  }
-
-  Widget _buildConfirmationDialog(String assignerName, BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text('프로젝트 담당자 $assignerName'),
-        const Text('으로 변경되었습니다.'),
-        const SizedBox(height: 16),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-            Navigator.pop(context);
-          },
-          child: const Text('닫기'),
         ),
-      ],
+      ),
     );
   }
 }
-
