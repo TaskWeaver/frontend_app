@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart'
-    hide Options;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:front/app/locator.dart';
 import 'package:front/core/const/const.dart';
 
-class TokenInterceptor implements InterceptorsWrapper {
+class TokenInterceptor extends Interceptor {
   TokenInterceptor({required this.storage, required this.dio});
   final FlutterSecureStorage storage;
   final Dio dio;
@@ -17,7 +17,7 @@ class TokenInterceptor implements InterceptorsWrapper {
     if (!accessTokenRequired) return handler.next(options);
 
     final token = await storage.read(key: accessTokenKey);
-
+    debugPrint('TokenInterceptor: $token');
     if (token != null) {
       options.headers['Authorization'] = 'Bearer $token';
     }
@@ -27,31 +27,43 @@ class TokenInterceptor implements InterceptorsWrapper {
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 401) {
+      if (err.requestOptions.headers.containsKey('retried')) {
+        // Already retried, do not retry again
+        return handler.next(err);
+      }
+
       final refreshToken = await storage.read(key: refreshTokenKey);
+
       final oldAccessToken = await storage.read(key: accessTokenKey);
 
       if (refreshToken != null) {
-        debugPrint('refresh Token is not null');
+        debugPrint('Attempting to refresh token...');
         try {
-          final response = await dio.post('$apiUrl/v1/user/token', data: {
+          final response = await dio.post('/v1/user/token', data: {
             'refresh_token': refreshToken,
-            'oldAccessToken': oldAccessToken // Removed the extra space in key
+            'oldAccessToken': oldAccessToken
           });
           final newAccessToken = response.data['access_token'];
           await storage.write(key: accessTokenKey, value: newAccessToken);
+
+          // Add retry flag to RequestOptions
           err.requestOptions.headers['Authorization'] =
               'Bearer $newAccessToken';
-          return handler.resolve(await dio.request(err.requestOptions.path,
-              options: Options(
-                  method: err.requestOptions.method,
-                  headers: err.requestOptions.headers),
-              data: err.requestOptions.data,
-              queryParameters: err.requestOptions.queryParameters));
+          err.requestOptions.headers['retried'] =
+              'true'; // Flag to prevent multiple retries
+
+          final retryResponse = await dio.fetch(err.requestOptions);
+          return handler.resolve(retryResponse);
         } catch (e) {
-          // Log out or handle token refresh failure
+          debugPrint('Failed to refresh token: $e');
+          await storage.deleteAll(); // Clear all stored keys
+          authController.isToken = false;
+          return handler.reject(err);
         }
       }
     }
+
+    // Continue with any other error handling
     handler.next(err);
   }
 
