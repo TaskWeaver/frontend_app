@@ -14,7 +14,7 @@ class ShareDirectlyDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = TextEditingController();
-    String email = '';
+    var email = '';
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -45,18 +45,20 @@ class ShareDirectlyDialog extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () async {
-
                       final result = await inviteTeamByEmailUseCase.call(
                         inviteTeam: InviteTeam(
                           email: controller.text.trim(),
                           team_id: teamId,
                         ),
                       );
-                      await result.fold(onSuccess: (value) {
-                        print('value $value');
-                      }, onFailure: (e) {
-                        print('fail $e');
-                      });
+                      result.fold(
+                        (failure) {
+                          debugPrint(failure.toString());
+                        },
+                        (_) {
+                          debugPrint('success');
+                        },
+                      );
                     },
                     icon: const Icon(Icons.add),
                   ),
