@@ -10,7 +10,7 @@ import 'package:front/features/user/data/models/sign_up_request.dart';
 import 'package:front/features/user/data/models/sign_up_response.dart';
 import 'package:front/features/user/data/models/token.dart';
 import 'package:front/features/user/data/models/user.dart';
-import 'package:front/features/user/repositories/user_repositories.dart';
+import 'package:front/features/user/repositories/user_repository.dart';
 
 final class UserRepositoryImpl with ErrorHandler implements UserRepository {
   const UserRepositoryImpl({
