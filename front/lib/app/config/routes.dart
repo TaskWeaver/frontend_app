@@ -23,7 +23,7 @@ final router = GoRouter(
 
   /// The listeners are typically used to notify clients that the object has been
   /// updated.
-  refreshListenable: tokenChangeNotifer,
+  refreshListenable: authController,
 
   routes: [
     GoRoute(

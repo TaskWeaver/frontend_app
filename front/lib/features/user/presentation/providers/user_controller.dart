@@ -11,12 +11,11 @@ class AuthController with ChangeNotifier {
     var result = await checkTokenUseCase.call();
 
     result.fold(
-      onSuccess: (value) {
-        isToken = value;
-      },
-      onFailure: (e) {
+      (l) {
         isToken = false;
-        print(e.toString());
+      },
+      (r) {
+        isToken = r;
       },
     );
 
