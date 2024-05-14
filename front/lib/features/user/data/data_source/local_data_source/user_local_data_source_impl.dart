@@ -40,7 +40,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   }
 
   @override
-  Future<bool> tokenCheck() {
+  Future<bool> checkToken() {
     return Future.wait([
       flutterSecureStorage.read(key: accessTokenKey),
       flutterSecureStorage.read(key: refreshTokenKey),
@@ -64,5 +64,13 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   @override
   Future<void> setAutoSignInTrue() async {
     await sharedPreferences.setBool(autoSigninKey, true);
+  }
+
+  @override
+  Future<void> signOut() {
+    return Future.wait([
+      flutterSecureStorage.delete(key: accessTokenKey),
+      flutterSecureStorage.delete(key: refreshTokenKey),
+    ]);
   }
 }
