@@ -1,10 +1,11 @@
-import 'package:front/features/user/data/models/token.dart';
+import 'package:front/features/user/data/models/token_model.dart';
 
 abstract class UserLocalDataSource {
   Future<void> saveToken(TokenModel token);
   Future<TokenModel> getToken();
   Future<void> deleteToken();
-  Future<bool> tokenCheck();
+  Future<bool> checkToken();
+  Future<void> signOut();
   //Future<UserModel> getUserInfo();
   //Future<void> saveUserInfo(UserModel usermodel);
 

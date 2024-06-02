@@ -5,7 +5,7 @@ import 'package:front/features/project/entities/project.dart';
 import 'package:front/features/project/presentaion/component/project_from.dart';
 import 'package:front/features/project/presentaion/component/project_manager_selector.dart';
 import 'package:front/features/project/presentaion/viewmodel/project_viewmodel.dart';
-import 'package:front/features/user/data/models/user.dart';
+import 'package:front/features/user/data/models/user_model.dart';
 import 'package:front/shared/atom/bottom_navigation_bar.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';
 import 'package:go_router/go_router.dart';

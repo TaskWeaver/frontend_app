@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front/features/task/presentation/component/picker_component.dart';
 import 'package:front/features/task/presentation/component/task_create_form_component.dart';
 import 'package:front/features/task/presentation/component/task_member_adder_component.dart';
-import 'package:front/features/user/data/models/user.dart';
+import 'package:front/features/user/data/models/user_model.dart';
 import 'package:front/i18n/strings.g.dart';
 import 'package:front/shared/helper/FormHelper/form.dart';
 

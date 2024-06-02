@@ -16,7 +16,7 @@ import 'package:front/features/team/usecases/invite_team_by_email_usecase.dart';
 import 'package:front/features/user/data/data_source/local_data_source/user_local_data_source.dart';
 import 'package:front/features/user/data/data_source/remote_data_source/user_remote_data_source.dart';
 import 'package:front/features/user/presentation/providers/user_controller.dart';
-import 'package:front/features/user/repositories/user_repositories.dart';
+import 'package:front/features/user/repositories/user_repository.dart';
 import 'package:front/features/user/usecase/change_password_usecase.dart';
 import 'package:front/features/user/usecase/check_token_usecase.dart';
 import 'package:front/features/user/usecase/get_token_usecase.dart';
@@ -28,6 +28,7 @@ import 'package:front/features/user/usecase/sign_up_usecase.dart';
 import 'package:get_it/get_it.dart';
 
 final GetIt locator = GetIt.I;
+//dio
 
 final teamRemoteDataSource = locator<TeamRemoteDataSource>();
 final teamRepository = locator<TeamRepository>();
@@ -69,4 +70,4 @@ void initLocator() {
   UserDependencyInjection().init();
 }
 
-final tokenChangeNotifer = locator<AuthController>();
+final authController = locator<AuthController>();

@@ -14,19 +14,25 @@ class BoardViewModel extends _$BoardViewModel {
   Future<void> getTeams() async {
     final response = await getTeamsUseCase.call();
 
-    response.fold(
-        onSuccess: (value) {
-          debugPrint(value.result.runtimeType.toString());
-          List<dynamic> teams = value.result;
-          var teamList = teams
-              .map((team) => TeamModel.fromJson(team as Map<String, dynamic>))
-              .toList();
+    response.fold((l) => state = AsyncValue.error(l, StackTrace.current), (r) {
+      state = AsyncValue.data(r);
+      for (var team in r) {
+        debugPrint('team: ${team.name}');
+      }
+    });
 
-          state = AsyncValue.data(teamList);
-          for (var team in teamList) {
-            debugPrint('team: ${team.name}');
-          }
-        },
-        onFailure: (e) => state = AsyncValue.error(e, StackTrace.current));
+    // onSuccess: (value) {
+    //   debugPrint(value.result.runtimeType.toString());
+    //   List<dynamic> teams = value.result;
+    //   var teamList = teams
+    //       .map((team) => TeamModel.fromJson(team as Map<String, dynamic>))
+    //       .toList();
+
+    //   state = AsyncValue.data(teamList);
+    //   for (var team in teamList) {
+    //     debugPrint('team: ${team.name}');
+    //   }
+    // },
+    // onFailure: (e) => state = AsyncValue.error(e, StackTrace.current));
   }
 }

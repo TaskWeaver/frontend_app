@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:front/app/locator.dart';
-import 'package:front/features/user/data/models/sign_in_request.dart';
-import 'package:front/features/user/data/models/token.dart';
+import 'package:front/features/user/data/models/sign_in_request_model.dart';
+import 'package:front/features/user/data/models/token_model.dart';
 import 'package:front/features/user/presentation/viewModel/sign_in_viewmodel.dart';
 import 'package:front/resources/resources.dart';
 import 'package:go_router/go_router.dart';
@@ -83,7 +82,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                     ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          await signInViewModel.signIn(SignInRequest(
+                          await signInViewModel.signIn(SignInRequestModel(
                             email: _email!,
                             password: _password!,
                           ));
@@ -94,11 +93,9 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                               var token = TokenModel(
                                   accessToken: value.accessToken,
                                   refreshToken: value.refreshToken);
-                              saveTokenUseCase.call(token).then((value) {
-                                tokenChangeNotifer.checkToken();
+                              signInViewModel.saveToken(token).then((value) {
+                                context.go('/team');
                               });
-
-                              context.go('/team');
                             },
                           );
                         }

@@ -12,7 +12,9 @@ Future<TeamDetailModel> selectedTeam(
   final response = await getTeamByIdUseCase.call(teamId: teamId);
 
   return response.fold(
-    onSuccess: (value) => TeamDetailModel.fromJson(value.result),
-    onFailure: (e) => throw e,
+    (l) => throw l,
+    (r) => r,
+    // onSuccess: (value) => TeamDetailModel.fromJson(value.result),
+    // onFailure: (e) => throw e,
   );
 }

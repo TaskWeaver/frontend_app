@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/locator.dart';
-import 'package:front/features/team/data/models/invite_team.dart';
+import 'package:front/features/team/data/models/invite_team_model.dart';
 import 'package:go_router/go_router.dart';
 
 class ShareDirectlyDialog extends StatelessWidget {
@@ -14,7 +14,7 @@ class ShareDirectlyDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = TextEditingController();
-    String email = '';
+    var email = '';
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -45,18 +45,20 @@ class ShareDirectlyDialog extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () async {
-
                       final result = await inviteTeamByEmailUseCase.call(
                         inviteTeam: InviteTeam(
                           email: controller.text.trim(),
                           team_id: teamId,
                         ),
                       );
-                      await result.fold(onSuccess: (value) {
-                        print('value $value');
-                      }, onFailure: (e) {
-                        print('fail $e');
-                      });
+                      result.fold(
+                        (failure) {
+                          debugPrint(failure.toString());
+                        },
+                        (_) {
+                          debugPrint('success');
+                        },
+                      );
                     },
                     icon: const Icon(Icons.add),
                   ),

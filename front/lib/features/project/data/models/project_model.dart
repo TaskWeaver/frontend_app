@@ -4,8 +4,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:front/core/const/enum.dart';
 import 'package:front/features/project/entities/project.dart';
 
-part 'project.freezed.dart';
-part 'project.g.dart';
+part 'project_model.freezed.dart';
+part 'project_model.g.dart';
 
 @freezed
 class ProjectModel with _$ProjectModel {

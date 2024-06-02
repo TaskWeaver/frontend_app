@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-part 'invite_team.g.dart';
+part 'invite_team_model.g.dart';
 
 @JsonSerializable()
 class InviteTeam {

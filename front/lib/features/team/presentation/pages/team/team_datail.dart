@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:front/features/project/data/models/project.dart';
+import 'package:front/features/project/data/models/project_model.dart';
 import 'package:front/features/team/viewmodel/selected_team_project_list_provider.dart';
 import 'package:front/features/team/viewmodel/selected_team_provider.dart';
 import 'package:front/shared/theme/theme.dart';

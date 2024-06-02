@@ -1,7 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:front/app/locator.dart';
-import 'package:front/features/user/data/models/sign_in_request.dart';
-import 'package:front/features/user/data/models/sign_in_response.dart';
-import 'package:front/features/user/data/models/token.dart';
+import 'package:front/features/user/data/models/sign_in_request_model.dart';
+import 'package:front/features/user/data/models/token_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'sign_in_viewmodel.g.dart';
@@ -11,23 +11,20 @@ class SignInViewModel extends _$SignInViewModel {
   @override
   AsyncValue build() => const AsyncValue.data(null);
 
-  Future<void> signIn(SignInRequest signInRequest) async {
+  Future<void> signIn(SignInRequestModel signInRequest) async {
     state = const AsyncValue.loading();
 
     final response = await signInUseCase.call(signInRequest);
 
-    response.fold(
-        onSuccess: (value) {
-          var signInResponse = SignInResponse.fromJson(value.result);
-          state = AsyncValue.data(signInResponse);
-        },
-        onFailure: (e) => state = AsyncValue.error(e, StackTrace.current));
+    response.fold((l) {
+      debugPrint(l.toString());
+      state = AsyncValue.error(l, StackTrace.current);
+    }, (r) => state = AsyncValue.data(r));
   }
 
   Future<void> saveToken(TokenModel token) async {
     final response = await saveTokenUseCase.call(token);
-    return response.fold(
-        onSuccess: (_) => state = const AsyncValue.data(null),
-        onFailure: (e) => state = AsyncValue.error(e, StackTrace.current));
+    return response.fold((l) => state = AsyncValue.error(l, StackTrace.current),
+        (r) => state = const AsyncValue.data(null));
   }
 }

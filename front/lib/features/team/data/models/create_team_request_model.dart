@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'create_team_request.g.dart';
+part 'create_team_request_model.g.dart';
 
 @JsonSerializable()
 class CreateTeamRequest {
