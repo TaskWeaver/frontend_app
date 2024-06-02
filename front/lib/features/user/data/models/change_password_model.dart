@@ -10,7 +10,7 @@ class ChangePasswordModel {
   });
 
   factory ChangePasswordModel.fromJson(Map<String, dynamic> json) =>
-      _$ChangePasswordFromJson(json);
+      _$ChangePasswordModelFromJson(json);
   final String oldPassword, newPassword;
-  Map<String, dynamic> toJson() => _$ChangePasswordToJson(this);
+  Map<String, dynamic> toJson() => _$ChangePasswordModelToJson(this);
 }

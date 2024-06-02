@@ -12,8 +12,8 @@ class SignInResponseModel {
       required this.refreshToken});
 
   factory SignInResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$SignInResponseFromJson(json);
+      _$SignInResponseModelFromJson(json);
   final int id;
   final String email, type, accessToken, refreshToken;
-  Map<String, dynamic> toJson() => _$SignInResponseToJson(this);
+  Map<String, dynamic> toJson() => _$SignInResponseModelToJson(this);
 }

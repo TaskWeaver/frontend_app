@@ -10,7 +10,7 @@ class SignInRequestModel {
   });
 
   factory SignInRequestModel.fromJson(Map<String, dynamic> json) =>
-      _$SignInRequestFromJson(json);
+      _$SignInRequestModelFromJson(json);
   final String email, password;
-  Map<String, dynamic> toJson() => _$SignInRequestToJson(this);
+  Map<String, dynamic> toJson() => _$SignInRequestModelToJson(this);
 }

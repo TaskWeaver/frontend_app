@@ -28,5 +28,5 @@ class SignUpResponseModel {
   final String? password;
   final String? imageUrl;
 
-  Map<String, dynamic> toJson() => _$SignUpResponseToJson(this);
+  Map<String, dynamic> toJson() => _$SignUpResponseModelToJson(this);
 }

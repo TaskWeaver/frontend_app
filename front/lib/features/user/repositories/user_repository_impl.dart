@@ -74,10 +74,10 @@ final class UserRepositoryImpl with ErrorHandler implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, SignUpResponseModel>> signUp(SignUpRequestModel
-      SignUpRequestModel signUpRequest) {
+  Future<Either<Failure, SignUpResponseModel>> signUp(
+      SignUpRequestModel signUpRequestModel) {
     return catchError(() async {
-      return await _userRemoteDataSource.signUp(signUpRequest);
+      return await _userRemoteDataSource.signUp(signUpRequestModel);
     });
   }
 }

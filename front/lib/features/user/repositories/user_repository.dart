@@ -14,8 +14,8 @@ abstract class UserRepository {
   Future<Either<Failure, void>> changePassword(
       ChangePasswordModel changePassword);
 
-  Future<Either<Failure, SignUpResponseModel>> signUp(SignUpRequestModel
-      SignUpRequestModel signUpRequest);
+  Future<Either<Failure, SignUpResponseModel>> signUp(
+      SignUpRequestModel signUpRequestModel);
   Future<Either<Failure, SignInResponseModel>> signIn(
       SignInRequestModel signInRequest);
   Future<Either<Failure, void>> signOut();
