@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:front/app/locator.dart';
-import 'package:front/features/user/data/models/sign_in_request.dart';
-import 'package:front/features/user/data/models/token.dart';
+import 'package:front/features/user/data/models/sign_in_request_model.dart';
+import 'package:front/features/user/data/models/token_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'sign_in_viewmodel.g.dart';
@@ -11,7 +11,7 @@ class SignInViewModel extends _$SignInViewModel {
   @override
   AsyncValue build() => const AsyncValue.data(null);
 
-  Future<void> signIn(SignInRequest signInRequest) async {
+  Future<void> signIn(SignInRequestModel signInRequest) async {
     state = const AsyncValue.loading();
 
     final response = await signInUseCase.call(signInRequest);

@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'invite_response.g.dart';
+part 'invite_response_model.g.dart';
 
 @JsonSerializable()
 class InviteResponse {

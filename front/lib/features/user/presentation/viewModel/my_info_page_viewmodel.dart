@@ -1,7 +1,7 @@
 import 'package:front/app/locator.dart';
-import 'package:front/features/user/data/models/change_password.dart';
-import 'package:front/features/user/data/models/token.dart';
-import 'package:front/features/user/data/models/user.dart';
+import 'package:front/features/user/data/models/change_password_model.dart';
+import 'package:front/features/user/data/models/token_model.dart';
+import 'package:front/features/user/data/models/user_model.dart';
 import 'package:front/features/user/presentation/state/user_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -18,7 +18,7 @@ class MyInfoViewModel extends _$MyInfoViewModel {
         (r) => state = UserState<UserModel>(r));
   }
 
-  Future<void> changePassword(ChangePassword changePassword) async {
+  Future<void> changePassword(ChangePasswordModel changePassword) async {
     final response = await changePasswordUseCase.call(changePassword);
     return response.fold((l) => state = UserState.error(message: l.toString()),
         (r) => state = UserState<void>(r));

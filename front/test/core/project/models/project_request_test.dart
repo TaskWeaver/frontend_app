@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:front/features/project/data/models/project_request.dart';
+import 'package:front/features/project/data/models/project_request_model.dart';
 
 import '../../../helpers/json_reader.dart';
 

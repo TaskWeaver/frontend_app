@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:front/core/utils/failure.dart';
-import 'package:front/features/user/data/models/token.dart';
+import 'package:front/features/user/data/models/token_model.dart';
 import 'package:front/features/user/repositories/user_repository.dart';
 
 final class SaveTokenUseCase {

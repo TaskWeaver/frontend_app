@@ -1,5 +1,5 @@
 
-import 'package:front/features/team/data/models/team_member.dart';
+import 'package:front/features/team/data/models/team_member_model.dart';
 import 'package:front/features/team/repositories/team_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:front/core/utils/failure.dart';

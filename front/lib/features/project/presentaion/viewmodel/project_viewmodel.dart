@@ -1,4 +1,4 @@
-import 'package:front/features/project/data/models/project_request.dart';
+import 'package:front/features/project/data/models/project_request_model.dart';
 import 'package:front/features/project/entities/project.dart';
 import 'package:front/features/project/presentaion/state/projects_state.dart';
 import 'package:front/features/project/usecases/riverpod.dart';

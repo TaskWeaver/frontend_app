@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:front/core/const/enum.dart';
-import 'package:front/features/project/data/models/project.dart';
+import 'package:front/features/project/data/models/project_model.dart';
 import 'package:front/features/project/entities/project.dart';
 
 import '../../../helpers/json_reader.dart';

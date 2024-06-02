@@ -1,20 +1,23 @@
 import 'package:dartz/dartz.dart';
 import 'package:front/core/utils/failure.dart';
-import 'package:front/features/user/data/models/change_password.dart';
-import 'package:front/features/user/data/models/sign_in_request.dart';
-import 'package:front/features/user/data/models/sign_in_response.dart';
-import 'package:front/features/user/data/models/sign_up_request.dart';
-import 'package:front/features/user/data/models/sign_up_response.dart';
-import 'package:front/features/user/data/models/token.dart';
-import 'package:front/features/user/data/models/user.dart';
+import 'package:front/features/user/data/models/change_password_model.dart';
+import 'package:front/features/user/data/models/sign_in_request_model.dart';
+import 'package:front/features/user/data/models/sign_in_response_model.dart';
+import 'package:front/features/user/data/models/sign_up_request_model.dart';
+import 'package:front/features/user/data/models/sign_up_response_model.dart';
+import 'package:front/features/user/data/models/token_model.dart';
+import 'package:front/features/user/data/models/user_model.dart';
 
 abstract class UserRepository {
   Future<Either<Failure, UserModel>> getUserInfo();
 
-  Future<Either<Failure, void>> changePassword(ChangePassword changePassword);
+  Future<Either<Failure, void>> changePassword(
+      ChangePasswordModel changePassword);
 
-  Future<Either<Failure, SignUpResponse>> signUp(SignUpRequest signUpRequest);
-  Future<Either<Failure, SignInResponse>> signIn(SignInRequest signInRequest);
+  Future<Either<Failure, SignUpResponseModel>> signUp(SignUpRequestModel
+      SignUpRequestModel signUpRequest);
+  Future<Either<Failure, SignInResponseModel>> signIn(
+      SignInRequestModel signInRequest);
   Future<Either<Failure, void>> signOut();
 
   /// setAutoSignInCheck == true && tokenCheck == true 가 만족해야 autoSignIn 가능

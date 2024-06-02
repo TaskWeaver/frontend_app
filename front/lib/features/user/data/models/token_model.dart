@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'token.g.dart';
+part 'token_model.g.dart';
 
 @JsonSerializable()
 class TokenModel {

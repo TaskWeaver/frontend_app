@@ -3,8 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:front/core/config/providers/dio.dart';
 import 'package:front/core/utils/exception.dart';
 import 'package:front/features/project/data/data_sources/remote_data_source.dart';
-import 'package:front/features/project/data/models/project.dart';
-import 'package:front/features/project/data/models/project_request.dart';
+import 'package:front/features/project/data/models/project_model.dart';
+import 'package:front/features/project/data/models/project_request_model.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 
 import '../../../helpers/dummy_data/project/api_response.dart';

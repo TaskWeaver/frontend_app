@@ -1,11 +1,11 @@
 ///회원가입 시 서버로부터 받는 응답
 import 'package:json_annotation/json_annotation.dart';
 
-part 'sign_up_response.g.dart';
+part 'sign_up_response_model.g.dart';
 
 @JsonSerializable()
-class SignUpResponse {
-  SignUpResponse({
+class SignUpResponseModel {
+  SignUpResponseModel({
     required this.id,
     required this.email,
     required this.type,
@@ -16,8 +16,8 @@ class SignUpResponse {
     this.imageUrl,
   });
 
-  factory SignUpResponse.fromJson(Map<String, dynamic> json) =>
-      _$SignUpResponseFromJson(json);
+  factory SignUpResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$SignUpResponseModelFromJson(json);
 
   final String id;
   final String email;

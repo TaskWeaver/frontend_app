@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:front/features/user/data/models/sign_in_response.dart';
 
 part 'sign_in_state.freezed.dart';
 

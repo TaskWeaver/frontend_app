@@ -2,12 +2,12 @@ import 'package:dartz/dartz.dart';
 import 'package:front/core/config/custom_interceptor.dart';
 import 'package:front/core/utils/failure.dart';
 import 'package:front/features/team/data/data_source/team_remote_data_source.dart';
-import 'package:front/features/team/data/models/create_team_request.dart';
-import 'package:front/features/team/data/models/create_team_response.dart';
-import 'package:front/features/team/data/models/invite_response.dart';
-import 'package:front/features/team/data/models/invite_team.dart';
+import 'package:front/features/team/data/models/create_team_request_model.dart';
+import 'package:front/features/team/data/models/create_team_response_model.dart';
+import 'package:front/features/team/data/models/invite_response_model.dart';
+import 'package:front/features/team/data/models/invite_team_model.dart';
 import 'package:front/features/team/data/models/team_detail_model.dart';
-import 'package:front/features/team/data/models/team_member.dart';
+import 'package:front/features/team/data/models/team_member_model.dart';
 import 'package:front/features/team/data/models/team_model.dart';
 import 'package:front/features/team/repositories/team_repository.dart';
 

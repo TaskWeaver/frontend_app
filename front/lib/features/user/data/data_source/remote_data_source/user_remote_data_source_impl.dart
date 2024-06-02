@@ -1,19 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:front/core/utils/exception.dart';
 import 'package:front/features/user/data/data_source/remote_data_source/user_remote_data_source.dart';
-import 'package:front/features/user/data/models/change_password.dart';
-import 'package:front/features/user/data/models/sign_in_request.dart';
-import 'package:front/features/user/data/models/sign_in_response.dart';
-import 'package:front/features/user/data/models/sign_up_request.dart';
-import 'package:front/features/user/data/models/sign_up_response.dart';
-import 'package:front/features/user/data/models/user.dart';
+import 'package:front/features/user/data/models/change_password_model.dart';
+import 'package:front/features/user/data/models/sign_in_request_model.dart';
+import 'package:front/features/user/data/models/sign_in_response_model.dart';
+import 'package:front/features/user/data/models/sign_up_request_model.dart';
+import 'package:front/features/user/data/models/sign_up_response_model.dart';
+import 'package:front/features/user/data/models/user_model.dart';
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   UserRemoteDataSourceImpl({required this.dio});
   final Dio dio;
 
   @override
-  Future<void> changePassword(ChangePassword changePassword) {
+  Future<void> changePassword(ChangePasswordModel changePassword) {
     return dio
         .post(
           '/v1/user/password',
@@ -52,7 +52,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   }
 
   @override
-  Future<SignInResponse> signIn(SignInRequest signInRequest) {
+  Future<SignInResponseModel> signIn(SignInRequestModel signInRequest) {
     try {
       return dio
           .post(
@@ -66,7 +66,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       )
           .then((response) {
         if (response.statusCode == 200 && response.data?['resultCode'] == 200) {
-          return SignInResponse.fromJson(response.data['result']);
+          return SignInResponseModel.fromJson(response.data['result']);
         } else {
           throw ServerException();
         }
@@ -77,7 +77,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   }
 
   @override
-  Future<SignUpResponse> signUp(SignUpRequest signUpRequest) {
+  Future<SignUpResponseModel> signUp(SignUpRequestModel signUpRequest) {
     try {
       return dio
           .post(
@@ -91,7 +91,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       )
           .then((response) {
         if (response.statusCode == 201 && response.data?['resultCode'] == 201) {
-          return SignUpResponse.fromJson(response.data['result']);
+          return SignUpResponseModel.fromJson(response.data['result']);
         } else {
           throw ServerException();
         }

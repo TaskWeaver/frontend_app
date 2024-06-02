@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:front/features/team/data/models/create_team_request.dart';
+import 'package:front/features/team/data/models/create_team_request_model.dart';
 import 'package:front/features/team/viewmodel/team_create_view_model.dart';
 import 'package:front/shared/theme/theme.dart';
 import 'package:go_router/go_router.dart';

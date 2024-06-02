@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'user.freezed.dart';
-part 'user.g.dart';
+part 'user_model.freezed.dart';
+part 'user_model.g.dart';
 
 ///User의 로그인 및 마이페이지 조회 정보를 받기위해 사용되는 모델
 

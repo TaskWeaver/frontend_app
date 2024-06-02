@@ -3,13 +3,13 @@ import 'package:front/core/config/custom_interceptor.dart';
 import 'package:front/core/utils/failure.dart';
 import 'package:front/features/user/data/data_source/local_data_source/user_local_data_source.dart';
 import 'package:front/features/user/data/data_source/remote_data_source/user_remote_data_source.dart';
-import 'package:front/features/user/data/models/change_password.dart';
-import 'package:front/features/user/data/models/sign_in_request.dart';
-import 'package:front/features/user/data/models/sign_in_response.dart';
-import 'package:front/features/user/data/models/sign_up_request.dart';
-import 'package:front/features/user/data/models/sign_up_response.dart';
-import 'package:front/features/user/data/models/token.dart';
-import 'package:front/features/user/data/models/user.dart';
+import 'package:front/features/user/data/models/change_password_model.dart';
+import 'package:front/features/user/data/models/sign_in_request_model.dart';
+import 'package:front/features/user/data/models/sign_in_response_model.dart';
+import 'package:front/features/user/data/models/sign_up_request_model.dart';
+import 'package:front/features/user/data/models/sign_up_response_model.dart';
+import 'package:front/features/user/data/models/token_model.dart';
+import 'package:front/features/user/data/models/user_model.dart';
 import 'package:front/features/user/repositories/user_repository.dart';
 
 final class UserRepositoryImpl with ErrorHandler implements UserRepository {
@@ -24,7 +24,7 @@ final class UserRepositoryImpl with ErrorHandler implements UserRepository {
 
   @override
   Future<Either<Failure, void>> changePassword(
-      ChangePassword changePassword) async {
+      ChangePasswordModel changePassword) async {
     return catchError(() async {
       await _userRemoteDataSource.changePassword(changePassword);
     });
@@ -59,7 +59,8 @@ final class UserRepositoryImpl with ErrorHandler implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, SignInResponse>> signIn(SignInRequest signInRequest) {
+  Future<Either<Failure, SignInResponseModel>> signIn(
+      SignInRequestModel signInRequest) {
     return catchError(() async {
       return await _userRemoteDataSource.signIn(signInRequest);
     });
@@ -73,7 +74,8 @@ final class UserRepositoryImpl with ErrorHandler implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, SignUpResponse>> signUp(SignUpRequest signUpRequest) {
+  Future<Either<Failure, SignUpResponseModel>> signUp(SignUpRequestModel
+      SignUpRequestModel signUpRequest) {
     return catchError(() async {
       return await _userRemoteDataSource.signUp(signUpRequest);
     });

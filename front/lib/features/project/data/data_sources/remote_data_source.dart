@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:front/core/network_handling/app_dio.dart';
 import 'package:front/core/utils/exception.dart';
-import 'package:front/features/project/data/models/project.dart';
-import 'package:front/features/project/data/models/project_request.dart';
+import 'package:front/features/project/data/models/project_model.dart';
+import 'package:front/features/project/data/models/project_request_model.dart';
 
 abstract class ProjectRemoteDataSource {
   Future<List<ProjectModel>> getProjectsByTeamId(int teamId);

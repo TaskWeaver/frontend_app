@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:front/core/utils/failure.dart';
-import 'package:front/features/team/data/models/invite_team.dart';
+import 'package:front/features/team/data/models/invite_team_model.dart';
 import 'package:front/features/team/repositories/team_repository.dart';
 
 final class InviteTeamByEmailUseCase {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front/features/team/presentation/pages/team/widgets/dialog.dart';
-import 'package:front/features/user/data/models/user.dart';
+import 'package:front/features/user/data/models/user_model.dart';
 
 typedef VoidCallback = void Function(UserModel user);
 

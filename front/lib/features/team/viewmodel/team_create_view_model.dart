@@ -1,6 +1,6 @@
 import 'package:front/app/locator.dart';
-import 'package:front/features/team/data/models/create_team_request.dart';
-import 'package:front/features/team/data/models/create_team_response.dart';
+import 'package:front/features/team/data/models/create_team_request_model.dart';
+import 'package:front/features/team/data/models/create_team_response_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'team_create_view_model.g.dart';

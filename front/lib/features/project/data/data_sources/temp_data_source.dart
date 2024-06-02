@@ -1,5 +1,5 @@
-import 'package:front/features/project/data/models/project.dart';
-import 'package:front/features/project/data/models/project_request.dart';
+import 'package:front/features/project/data/models/project_model.dart';
+import 'package:front/features/project/data/models/project_request_model.dart';
 
 class ProjectTempDataSource {
   Future<List<ProjectModel>> getProjectsByTeamId(int teamId) async {

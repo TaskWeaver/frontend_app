@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'create_team_response.freezed.dart';
-part 'create_team_response.g.dart';
+part 'create_team_response_model.freezed.dart';
+part 'create_team_response_model.g.dart';
 
 @freezed
 class CreateTeamResponse with _$CreateTeamResponse {
